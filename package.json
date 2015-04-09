@@ -1,19 +1,19 @@
 {
-  "name": "damu",
+  "name": "bap",
   "version": "0.0.1",
-  "description": "",
+  "description": "Beatmaking and sequence composition toolkit, using Javascript and Web Audio",
   "private": true,
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/adamrenklint/damu.git"
+    "url": "https://github.com/adamrenklint/bap.git"
   },
   "author": "Adam Renklint <adam@renklint.com> (http://adamrenklint.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adamrenklint/damu/issues"
+    "url": "https://github.com/adamrenklint/bap/issues"
   },
-  "homepage": "https://github.com/adamrenklint/damu",
+  "homepage": "https://github.com/adamrenklint/bap",
   "dependencies": {
     "audio-context": "^0.1.0"
   },
