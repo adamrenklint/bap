@@ -1,35 +1,3 @@
-PLAN OF ATTACK
-
-[ ] delete all old repos, and keep only one: "bap"
-[ ] move all notes and links into that repo, but not in the README
-[ ] setup tests and start developing library and examples
-
-
-
------
-
-
-
-BAP - WORLD DOMINATION
-
-1)  bap library on npm
-2)  bap lib documentation and examples (bap.io/bap.org)
-
-x)  bap code playground (bap.ly/baplet.io)
-
-x)  beatmaking with code TINYLETTER
-    - https://vimeo.com/45026119
-    - http://beatsdrummachine.com/
-    - http://createdigitalmusic.com/2011/10/music-from-code-in-simple-text-live-coding-steve-reich-ian-rhythms-with-free-overtone/
-
-------
-
-
-could it be entirely functional, pure functions
-i.e. GET INPUT > RETURN OUTPUT (NO OTHER SIDE EFFECTS) ?
-
-
-
 the concept of Damu + Dilla, as Bap
 but what is missing?
 - preview and trigger from browser
@@ -196,7 +164,25 @@ TIME/TICK BASED AUTOMATION
 
 ----
 
+1)  bap library on npm
+2)  bap lib documentation and examples (bap.io/bap.org)
 
+x)  bap code playground (bap.ly/baplet.io)
+
+x)  beatmaking with code TINYLETTER
+    - https://vimeo.com/45026119
+    - http://beatsdrummachine.com/
+    - http://createdigitalmusic.com/2011/10/music-from-code-in-simple-text-live-coding-steve-reich-ian-rhythms-with-free-overtone/
+
+------
+
+
+could it be entirely functional, pure functions
+i.e. GET INPUT > RETURN OUTPUT (NO OTHER SIDE EFFECTS) ?
+
+
+
+----
 
 
 - https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
