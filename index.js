@@ -1,2 +1,2 @@
-// var Damu = require('./lib/Damu');
-// module.exports = new Damu();
+var Bap = require('./lib/Bap');
+module.exports = new Bap();
