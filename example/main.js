@@ -18,5 +18,5 @@ damu.use('C', strings);
 dilla.setTempo(88);
 damu.load(function (err) {
   if (err) throw err;
-  dilla.start();
+  dilla.start();os
 });

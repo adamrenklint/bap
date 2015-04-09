@@ -30,7 +30,7 @@ damu.use('C', strings);
 dilla.setTempo(88);
 damu.load(function (err) {
   if (err) throw err;
-  dilla.start();
+  dilla.start();os
 });
 
 },{"../index":6,"./drums":1,"./pattern":3,"./plongs":4,"./strings":5,"audio-context":13,"dilla":39}],3:[function(require,module,exports){
@@ -122,11 +122,14 @@ module.exports = new Damu();
 },{"./lib/Damu":8}],7:[function(require,module,exports){
 var events = require('events');
 var inherits = require('util').inherits;
+var audioContext = require('audio-context');
 
 function Base (options) {
 
   options = options || {};
   events.EventEmitter.call(this, options);
+
+  this.context = audioContext;
 }
 
 inherits(Base, events.EventEmitter);
@@ -136,7 +139,7 @@ inherits(Base, events.EventEmitter);
 
 module.exports = Base;
 
-},{"events":20,"util":38}],8:[function(require,module,exports){
+},{"audio-context":13,"events":20,"util":38}],8:[function(require,module,exports){
 var Base = require('./Base');
 var inherits = require('util').inherits;
 
@@ -144,10 +147,13 @@ function Damu (options) {
 
   options = options || {};
   Base.call(this, options);
+
+  this._kits = {};
 }
 
 inherits(Damu, Base);
 
+// Factories
 var constructors = {
   'Kit': require('./Kit'),
   'Layer': require('./Layer'),
@@ -165,26 +171,48 @@ Object.keys(constructors).forEach(function (name) {
 Damu.prototype.use = function (id, kit) {
   if (!id || typeof id !== 'string') throw new Error('Invalid id');
   if (!(kit instanceof this.Kit)) throw new Error('Invalid kit');
+  this._kits[id] = kit;
+  // kit.parent = this;
+};
 
-  // ...
-}
+Damu.prototype.get = function (id) {
+  if (!id || typeof id !== 'string') throw new Error('Invalid id');
+  return this._kits[id];
+};
 
-// use(id, kit)
-// get(id) > kit
-// has(id) > BOOL
-// ids > []
-// kits { id: kit, ...}
+Damu.prototype.has = function (id) {
+  if (!id || typeof id !== 'string') throw new Error('Invalid id');
+  return !!this._kits[id];
+};
 
-// clearAll
-// clear(id)
+Damu.prototype.ids = function () {
+  return Object.keys(this._kits);
+};
 
-// FACTORIES
-// kit
-// layer
-// sound
-// slot
+Damu.prototype.kits = function () {
+  // TODO: return copy, not reference
+  return this._kits;
+};
 
-// handleStep
+Damu.prototype.clear = function (id) {
+  if (!id || typeof id !== 'string') throw new Error('Invalid id');
+  if (this.has(id)) {
+    // this._slot[id].parent = null;
+    this._kits[id] = null;
+  }
+};
+
+Damu.prototype.clearAll = function () {
+  // var self = this;
+  // Object.keys(this._kits).forEach(function (id) {
+  //   self._kits[id].parent = {};
+  // });
+  this._kits = {};
+};
+
+Damu.prototype.handleStep = function (step) {
+  console.log('handleStep', step);
+};
 
 module.exports = Damu;
 
@@ -192,13 +220,22 @@ module.exports = Damu;
 var Base = require('./Base');
 var inherits = require('util').inherits;
 
+var Slot = require('./Slot');
+
 function Kit (options) {
 
   options = options || {};
   Base.call(this, options);
+  
 }
 
 inherits(Kit, Base);
+
+Kit.prototype.slot = function (index) {
+  // if (!index) return new Slot({});
+  // create new slot
+  // var
+};
 
 module.exports = Kit;
 
@@ -211,7 +248,7 @@ module.exports = Kit;
 // clear(index)
 // clearAll()
 
-},{"./Base":7,"util":38}],10:[function(require,module,exports){
+},{"./Base":7,"./Slot":11,"util":38}],10:[function(require,module,exports){
 var Base = require('./Base');
 var inherits = require('util').inherits;
 
