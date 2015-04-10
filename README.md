@@ -23,8 +23,8 @@ Made by [Adam Renklint](http://adamrenklint.com)
 ### bap
 
 - ```bap.kit()``` returns a new [kit](#kit)
-- ```bap.slot()```
-- ```bap.layer()
+- ```bap.slot()``` returns a new [slot](#slot)
+- ```bap.layer()``` returns a new [layer](#layer)
 - ```bap.pattern()```
 - ```bap.sequence()```
 - ```bap.channel()```
@@ -33,16 +33,20 @@ Made by [Adam Renklint](http://adamrenklint.com)
 ### kit
 
 - ```kit.slot()``` returns blank [slot](#slot) assigned to next index
-- ```kit.slot(index)``` returns existing or blank slot with *index*
-- ```kit.slot(index, slot)``` set existing *slot* at *index*
+- ```kit.slot(index)``` returns existing or blank slot with index
+- ```kit.slot(index, slot)``` set slot instance at index
 
 ### slot
+
+- ```slot.layer()``` returns a blank [layer](#layer) assigned to next index
+- ```slot.layer(index)``` returns existing or blank layer with index
+- ```slot.layer(index, layer)``` set layer instance at index
 
 ### layer
 
 ### pattern
 
-- implements [triggerable](#triggerable)
+- is [playable](#playable)
 
 ### sequence
 
@@ -50,7 +54,7 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 ### note
 
-### triggerable
+### playable
 
 ## Develop
 
