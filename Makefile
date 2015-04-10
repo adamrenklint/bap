@@ -11,13 +11,13 @@ start-example:
 	@make serve-example & make watch-example
 
 serve-example:
-	@node node_modules/3w/3w.js example --3000
+	@node node_modules/3w/3w.js examples --3000
 
 watch-example:
-	@node_modules/watchify/bin/cmd.js example/main.js -o example/bundle.js -v
+	@node_modules/watchify/bin/cmd.js examples/metronome/main.js -o examples/metronome/bundle.js -v
 
 build-example:
-	@node_modules/browserify/bin/cmd.js example/main.js -o example/bundle.js
+	@node_modules/browserify/bin/cmd.js examples/metronome/main.js -o example/bundle.js
 
 test:
 	@$(MOCHA) -s 10

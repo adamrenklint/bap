@@ -1,4 +1,9 @@
-the concept of Damu + Dilla, as Bap
+
+['1.1.01', 'A01', null, 99, -50, -50, { other params} ]
+
+
+
+the concept of Damu + Dilla, as Bap > bapjs.org
 but what is missing?
 - preview and trigger from browser
 - control playback
@@ -6,6 +11,7 @@ but what is missing?
 - better sequencing, loop layering
 - record output (Recorder.js + https://gist.github.com/pramodtech/8347621)
 - slice sample, use pieces > kit js file
+- mpc pad controller for kit > pattern js file
 - sing input notes > pattern/sequence file
 - load module from remote url?
 - embed interactive on website? widget?
@@ -49,11 +55,93 @@ https://github.com/Dinahmoe/tuna
 
 
 
+----
+
+// kit
+
+var kit = bap.kit();
+kit.slot(1).layer('sounds/kick.wav');
+kit.slot(2).layer('sounds/snare.wav');
+kit.slot(3).layer('sounds/hihat.wav');
+
+// pattern
+var pattern = bap.pattern(2 /*bars*/);
+pattern.channel(1).add(
+  ['*.1.01', 'A1'],
+  ['*.2.1', 'A2']
+);
+//pattern.add(notes...) adds to new channel and returns
+pattern.channel(2).add(
+  ['*.*.01', 'A3']
+);
+// pattern.setLength(bars)
+
+// when sounds are loaded, connect and play
+bap.ready(function () {
+  pattern.use('A', kit);
+  pattern.start(/*loop?*/ true);
+  pattern.loop
+});
+
+// or
+
+bap(function () {
+  // what if I try o add a layer in here, and load a sound?
+});
+
+// or should play just wait to start until all sounds are loaded?
+
+or bap.play(pattern/sequence) or bap.run(pattern/sequence);
+
+pattern.play() // start() || sequence.play() // > pattern.pause(), pattern.stop(), pattern.setPosition(), sequence.toNextBeat, toPrevBeat, toNextBar, toPrevBar, to LastStart//restart()
+
+  > what if you can control and live-sequence the patterns and sequences?
+
+  sequence.to(nextSequence)
+
+  > and layer the ad-hoc?
+
+  var newSeq = sequence.and(smallPattern)
+  newSeq.with(outoSequence);
+  or newSeq.without(outoSequence)
+
+  > trigger kits, slots and layers live?
+
+  kit.trigger(note or 'A1')
+  kit.triggerAt(position, note || 'A1')
+  (slot + layer).trigger(/*note*/) + triggerAt(pos, /*note*/)
+  (kit,slot,layer).mute,muteAt,unmute,unmuteAt,solo,soloAt,unsolo,unsoloAt
+
+
+
+
+----
+
+
+
+  Bap           Wraps all constructors and is public event emitter
+  Instrument    Virtual class
+  Triggerable   Mixin: Able to be triggered with note event
+    Kit
+    Slot
+    Layer
+      Oscillator
+      Sample
+  Playable      Mixin: Playable list of note collections
+    Sequence
+    Pattern
+  Channel       Notes collection
+  Note          Note params model
+  Position      Position parser/wrapper
+  StepEvent     Start or stop event to be distributed to kit, slot, layer
+  ExpressionExpander    can reuse Dilla
+
+
 
 
 ## links
 
-- [notes](http://newt.phys.unsw.edu.au/jw/notes.html)
+- [notes](http://newt.phys.unsw.edu.au/jw/notes.html) + http://www.contrabass.com/pages/frequency.html
 - [old bap links](https://gist.github.com/adamrenklint/9adf7e098ee4cbd43b76)
 
 ## hiphop beatmaking/tracker vids
@@ -72,6 +160,10 @@ https://github.com/Dinahmoe/tuna
 - https://www.youtube.com/watch?v=AaT4yaLZmBM
 - https://www.youtube.com/watch?v=MZojloFB2q
 
+## others
+
+- http://taylorlivesthrough.bandcamp.com/album/the-weed-tape-reloaded
+
 
 -----
 
@@ -79,8 +171,10 @@ https://github.com/Dinahmoe/tuna
 pattern.channel()
 
   pos       key   dur   vol rate pan
-['1.1.01', 'A01', null, 99, -50, -50, { other params} ]
 [bap.position(1,1,1), ...]
+
+
+USE -100 - 100 or -1 to 1 for params?
 
 
 ---
@@ -97,11 +191,19 @@ entropic.start();
 
 
 bap.sequence(
-introPattern,
-[2barDrumPattern, 2barSamplePattern],
-[bap.sequence(1barDrumPattern, 1barDrumPattern), 2barSamplePattern]
+  introPattern,
+  [2barDrumPattern, 2barSamplePattern],
+  [bap.sequence(1barDrumPattern, 1barDrumPattern), 2barSamplePattern],
+  [bap.sequence(1barDrumPattern).repeat(/*1*/), 2barSamplePattern],
+  [bap.sequence(1barDrumPattern).repeat(3), 4barSamplePattern]
 )
 
+
+---
+
+HOW DOES TEMPO WORK?
+- where can tempo be set? pattern, sequence, globally?
+- what overrides what? REMEMBER TO THINK "COMPOSABLE", BUT ALSO OUT OF THE BOX RE-USABLE...
 
 ---
 
@@ -196,6 +298,7 @@ i.e. GET INPUT > RETURN OUTPUT (NO OTHER SIDE EFFECTS) ?
 - https://www.npmjs.com/package/web-audio-scheduler
 - http://jshanley.github.io/blip/
 - https://www.npmjs.com/package/sona
+- https://github.com/jxnblk/bumpkit/blob/master/README.md
 - http://mohayonao.github.io/web-audio-scheduler/
 - https://github.com/stigi/mpc1k-node
 - https://github.com/Marak/JSONloops
@@ -241,3 +344,20 @@ i.e. GET INPUT > RETURN OUTPUT (NO OTHER SIDE EFFECTS) ?
 - http://www.one-tab.com/page/hLNxOIUuQAaRlOAYkI8E7Q
 - http://funklet.com/its-a-new-day/
 - http://www.cratekings.com/300-classic-hip-hop-drum-breaks-samples-and-loops/
+
+---
+
+## mpc groove
+
+- http://logic-pro-expert.com/logic-pro-blog/2011/11/18/mythbusting-the-special-groove-of-the-akai-mpc-series.html#.VR0dqHP8LqB
+- http://blog.dubspot.com/swing-creative-use-of-groove-quantization/
+- https://www.gearslutz.com/board/rap-hip-hop-engineering-production/457534-loose-grooves.html
+- http://www.attackmagazine.com/features/roger-linn-swing-groove-magic-mpc-timing/
+
+---
+
+- http://blog.codinghorror.com/the-one-thing-programmers-and-musicians-have-in-common/
+- http://stackoverflow.com/questions/14418530/record-sounds-from-audiocontext-web-audio-api
+- http://chuck.cs.princeton.edu/doc/
+- http://stackoverflow.com/questions/29135334/what-s-a-reliable-way-to-remove-an-ended-listener-from-an-audiobuffersourcenode
+- http://www.academia.edu/970719/Behind_the_Beat_Technical_and_Practical_Aspects_of_Instrumental_Hip-Hop_Composition

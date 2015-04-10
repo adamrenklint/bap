@@ -1,0 +1,1 @@
+console.error("Error: Parsing file /Users/adamrenklint/Projects/bap/examples/metronome/main.js: Unexpected token (17:0)");
