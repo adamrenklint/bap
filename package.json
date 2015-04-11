@@ -29,7 +29,8 @@
     "watchify": "^3.1.0"
   },
   "config": {
-    "coveragelimit": 90
+    "coverageLimit": 90,
+    "codeclimateCoverageId": "2e7a3b0c2e5c9d2b9ae79b528f98a3adb26efe2539425721323129199815df04"
   },
   "scripts": {
     "start": "",
@@ -40,6 +41,8 @@
     "precoverage": "rimraf coverage",
     "coverage": "istanbul cover _mocha -- test/*.test.js -R dot",
     "precoverage:check": "npm run coverage",
-    "coverage:check": "istanbul check-coverage --statement $npm_package_config_coveragelimit --branch $npm_package_config_coveragelimit --function $npm_package_config_coveragelimit"
+    "coverage:check": "istanbul check-coverage --statement $npm_package_config_coverageLimit --branch $npm_package_config_coverageLimit --function $npm_package_config_coverageLimit",
+    "precoverage:report": "npm run coverage",
+    "coverage:report": "CODECLIMATE_REPO_TOKEN=$npm_package_config_codeclimateCoverageId codeclimate < coverage/lcov.info"
   }
 }
