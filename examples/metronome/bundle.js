@@ -36,7 +36,6 @@ module.exports = new Bap();
 },{"./lib/Bap":3}],3:[function(require,module,exports){
 var Base = require('./Base');
 var inherits = require('util').inherits;
-console.log(require('util'))
 
 function Bap (options) {
 

@@ -22,12 +22,12 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 ### bap
 
-- ```bap.kit()``` returns a new [kit](#kit)
+- ```bap.kit(params)``` blank [kit](#kit) constructor
 - ```bap.slot()``` returns a new [slot](#slot)
 - ```bap.layer()``` returns a new [layer](#layer)
-- ```bap.pattern()```
-- ```bap.sequence()```
-- ```bap.channel()```
+- ```bap.pattern()``` returns a new [pattern](#pattern)
+- ```bap.sequence()``` returns a new [sequence](#sequence)
+- ```bap.channel()``` returns a
 - ```bap.note()```
 
 ### kit
@@ -46,7 +46,7 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 ### pattern
 
-- is [playable](#playable)
+- is [playable](#playable) and automatically looped
 
 ### sequence
 
