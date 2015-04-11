@@ -35,14 +35,31 @@ Made by [Adam Renklint](http://adamrenklint.com)
 - ```kit.slot()``` returns blank [slot](#slot) assigned to next index
 - ```kit.slot(index)``` returns existing or blank slot with index
 - ```kit.slot(index, slot)``` set slot instance at index
+- ```kit.trigger(note)``` trigger note immediately with required note
+- ```kit.triggerAt(position, note)``` trigger note at position with required note
 
 ### slot
 
 - ```slot.layer()``` returns a blank [layer](#layer) assigned to next index
 - ```slot.layer(index)``` returns existing or blank layer with index
 - ```slot.layer(index, layer)``` set layer instance at index
+- ```slot.layer(sampleSrc)``` returns a new layer containing [sample](#sample) with src, assigned to next index
+- ```slot.layer(source)``` returns a new layer containing [source](#source), assigned to next index
+- ```slot.layer(index, source)``` creates a new layer containing [source](#source), assigns to index
+- ```slot.layer(index, sampleSrc)``` creates a new layer containing [sample](#sample), assigns to index
+- ```slot.schedule(event)```
+- ```slot.trigger(note)``` trigger slot immediately with optional note
+- ```slot.triggerAt(position, note)``` trigger slot at position with optional note
 
 ### layer
+
+- ```layer.set(source)``` define layer [source](#source)
+
+### source
+
+- sample, oscillator
+
+### sample
 
 ### pattern
 
