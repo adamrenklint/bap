@@ -22,7 +22,7 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 ### bap
 
-- ```bap.kit(params)``` blank [kit](#kit) constructor
+- ```bap.kit(params)``` returns a new [kit](#kit)
 - ```bap.slot()``` returns a new [slot](#slot)
 - ```bap.layer()``` returns a new [layer](#layer)
 - ```bap.pattern()``` returns a new [pattern](#pattern)
