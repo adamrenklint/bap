@@ -17,18 +17,23 @@
     "audio-context": "^0.1.0"
   },
   "devDependencies": {
+    "3w": "0.0.4",
+    "browserify": "^9.0.8",
     "chai": "^2.2.0",
     "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
     "mocha": "^2.2.1",
-    "rimraf": "^2.3.2"
+    "rimraf": "^2.3.2",
+    "watchify": "^3.1.0"
   },
   "config": {
     "coverageLimit": 90,
     "codeclimateCoverageId": "2e7a3b0c2e5c9d2b9ae79b528f98a3adb26efe2539425721323129199815df04"
   },
   "scripts": {
-    "start": "",
+    "prestart": "watchify examples/metronome/main.js -o examples/metronome/bundle.js -v &",
+    "start": "node node_modules/3w/3w.js examples --3000",
+    "build": "browserify examples/metronome/main.js -o example/bundle.js",
     "test": "mocha -s 10",
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",

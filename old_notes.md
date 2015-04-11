@@ -137,6 +137,10 @@ pattern.play() // start() || sequence.play() // > pattern.pause(), pattern.stop(
   ExpressionExpander    can reuse Dilla
 
 
+  Clock
+    "step"
+    setPosition()
+
 
 
 ## links
