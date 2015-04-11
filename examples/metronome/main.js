@@ -10,7 +10,7 @@ var bap = require('../../index');
 // var plong = kit.slot(2).layer(basic.with({ 'frequency': 440 }));
 
 var pattern = bap.pattern(/*1 bar, 4 beats per bar*/);
-pattern.channel(/*1*/).add(
+pattern.channel(1).add(
   ['*.1.01', 'A1'],
   // ['*.2+.01', 'A2', 10]
   ['*.2%1', 'A2']
@@ -18,7 +18,7 @@ pattern.channel(/*1*/).add(
 
 // pattern are automatically looped, sequences are not
 // pattern.use('A', kit).start();
-pattern.start();
+// pattern.start();
 
 var positionEl = document.getElementById('position');
 function draw () {

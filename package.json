@@ -34,7 +34,7 @@
     "prestart": "watchify examples/metronome/main.js -o examples/metronome/bundle.js -v &",
     "start": "node node_modules/3w/3w.js examples --3000",
     "build": "browserify examples/metronome/main.js -o example/bundle.js",
-    "test": "mocha -s 10",
+    "test": "mocha -s 10 test/**/*.test.js",
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",
     "lint": "jshint lib/*.js",

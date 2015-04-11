@@ -11,7 +11,7 @@ var bap = require('../../index');
 // var plong = kit.slot(2).layer(basic.with({ 'frequency': 440 }));
 
 var pattern = bap.pattern(/*1 bar, 4 beats per bar*/);
-pattern.channel(/*1*/).add(
+pattern.channel(1).add(
   ['*.1.01', 'A1'],
   // ['*.2+.01', 'A2', 10]
   ['*.2%1', 'A2']
@@ -19,7 +19,7 @@ pattern.channel(/*1*/).add(
 
 // pattern are automatically looped, sequences are not
 // pattern.use('A', kit).start();
-pattern.start();
+// pattern.start();
 
 var positionEl = document.getElementById('position');
 function draw () {
@@ -37,96 +37,47 @@ module.exports = new Bap();
 var Base = require('./Base');
 var inherits = require('util').inherits;
 
-function Bap (options) {
+function Bap (params) {
 
-  options = options || {};
-  Base.call(this, options);
+  Base.call(this, params);
 
-  this._kits = {};
+  //this.params
+
+  // this.context = options.context || context;
+  // this.clock = options.clock || new Clock();
 }
 
 inherits(Bap, Base);
 
-// Factories
 var constructors = {
-  'Kit': require('./Kit'),
-  'Layer': require('./Layer'),
-  'Slot': require('./Slot'),
-  'Sound': require('./Sound')
+  'Pattern': require('./Pattern')
 };
 Object.keys(constructors).forEach(function (name) {
   var Ctor = constructors[name];
   Bap.prototype[name] = Ctor;
-  Bap.prototype[name.toLowerCase()] = function (options) {
-    return new Ctor(options);
+  Bap.prototype[name.toLowerCase()] = function (params) {
+    // params = params || {};
+    // options.clock = this.clock;
+    return new Ctor(params);
   };
 });
 
-// Bap.prototype.use = function (id, kit) {
-//   if (!id || typeof id !== 'string') throw new Error('Invalid id');
-//   if (!(kit instanceof this.Kit)) throw new Error('Invalid kit');
-//   this._kits[id] = kit;
-//   // kit.parent = this;
-// };
-//
-// Bap.prototype.get = function (id) {
-//   if (!id || typeof id !== 'string') throw new Error('Invalid id');
-//   return this._kits[id];
-// };
-//
-// Bap.prototype.has = function (id) {
-//   if (!id || typeof id !== 'string') throw new Error('Invalid id');
-//   return !!this._kits[id];
-// };
-//
-// Bap.prototype.ids = function () {
-//   return Object.keys(this._kits);
-// };
-//
-// Bap.prototype.kits = function () {
-//   // TODO: return copy, not reference
-//   return this._kits;
-// };
-//
-// Bap.prototype.clear = function (id) {
-//   if (!id || typeof id !== 'string') throw new Error('Invalid id');
-//   if (this.has(id)) {
-//     // this._slot[id].parent = null;
-//     this._kits[id] = null;
-//   }
-// };
-//
-// Bap.prototype.clearAll = function () {
-//   // var self = this;
-//   // Object.keys(this._kits).forEach(function (id) {
-//   //   self._kits[id].parent = {};
-//   // });
-//   this._kits = {};
-// };
-
-// Bap.prototype.handleStep = function (step) {
-//   console.log('handleStep', step);
-// };
-
 module.exports = Bap;
 
-},{"./Base":4,"./Kit":5,"./Layer":6,"./Slot":7,"./Sound":8,"util":15}],4:[function(require,module,exports){
+},{"./Base":4,"./Pattern":6,"util":15}],4:[function(require,module,exports){
 var events = require('events');
 var inherits = require('util').inherits;
 var audioContext = require('audio-context');
 
-function Base (options) {
+function Base (params) {
 
-  options = options || {};
-  events.EventEmitter.call(this, options);
+  this.params = params || {};
+  events.EventEmitter.call(this, params);
 
   this.context = audioContext;
 }
 
 inherits(Base, events.EventEmitter);
-
-
-//Base.prototype.xxx = fn...
 
 module.exports = Base;
 
@@ -134,86 +85,86 @@ module.exports = Base;
 var Base = require('./Base');
 var inherits = require('util').inherits;
 
-var Slot = require('./Slot');
+function Channel (params) {
 
-function Kit (options) {
+  Base.call(this, params);
 
-  options = options || {};
-  Base.call(this, options);
-  
+  //this.params
 }
 
-inherits(Kit, Base);
+inherits(Channel, Base);
+var proto = Channel.prototype;
 
-Kit.prototype.slot = function (index) {
-  // if (!index) return new Slot({});
-  // create new slot
-  // var
+proto.add = function () {
+  var notes = [].slice.call(arguments);
+  console.log(notes);
 };
 
-module.exports = Kit;
+module.exports = Channel;
 
-
-// slot() > create new slot, return
-// slot(index) > create or return existing slot at id
-
-// slots() > array of slots
-
-// clear(index)
-// clearAll()
-
-},{"./Base":4,"./Slot":7,"util":15}],6:[function(require,module,exports){
+},{"./Base":4,"util":15}],6:[function(require,module,exports){
 var Base = require('./Base');
 var inherits = require('util').inherits;
+var Channel = require('./Channel');
+var IndexedParent = require('./mixins/IndexedParent');
+var assert = require('./utils/assert');
 
-function Layer (options) {
+function Pattern (params) {
 
-  options = options || {};
-  Base.call(this, options);
+  Base.call(this, params);
+  IndexedParent.call(this);
 }
 
-inherits(Layer, Base);
+inherits(Pattern, Base);
+var proto = Pattern.prototype;
 
-module.exports = Layer;
+proto.channel = function (index, existing) {
+  // assert.number(index, 'index');
+  // var channel = existing || new Channel();
+  // this._children[index] = channel;
+  // return channel;
+  // return existing ? this : channel;
+};
 
-},{"./Base":4,"util":15}],7:[function(require,module,exports){
-// layer (src) > create and return new layer with sample with src
-// layer (sample) > create and return new layer with sample with src
+// proto.clear = function (index) {
+//   if (typeof index === 'number') {
+//     this._children[index] = null;
+//   }
+//   else if (index) {
+//     index = this._children.indexOf(index);
+//     if (~index) return this.clear(index);
+//   }
+//   return this;
+// }
 
-// layers() > array of layers
+module.exports = Pattern;
 
-// remove(layer)
-// clear(index)
-// clearAll > remove all layers on slot
+},{"./Base":4,"./Channel":5,"./mixins/IndexedParent":7,"./utils/assert":8,"util":15}],7:[function(require,module,exports){
+function IndexedParent () {
 
-var Base = require('./Base');
-var inherits = require('util').inherits;
+  this.params.children = [];
 
-function Slot (options) {
+  var proto = this.constructor.prototype;
 
-  options = options || {};
-  Base.call(this, options);
+  proto.add = function () {
+    
+  };
 }
 
-inherits(Slot, Base);
+module.exports = IndexedParent;
 
-module.exports = Slot;
-
-},{"./Base":4,"util":15}],8:[function(require,module,exports){
-var Base = require('./Base');
-var inherits = require('util').inherits;
-
-function Sound (options) {
-
-  options = options || {};
-  Base.call(this, options);
+},{}],8:[function(require,module,exports){
+function primitive (type) {
+  return function (o, name) {
+    if (!o || typeof o !== type) {
+      throw new Error('Invalid argument: ' + name + ' is not a valid ' + type)
+    }
+  }
 }
 
-inherits(Sound, Base);
+exports.number = primitive('number');
 
-module.exports = Sound;
-
-},{"./Base":4,"util":15}],9:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var window = require('global/window');
 
 var Context = window.AudioContext || window.webkitAudioContext;

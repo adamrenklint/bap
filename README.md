@@ -73,6 +73,8 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 ### channel
 
+- ```pattern.add(notes...)``` add one or more notes (primitive or instances)
+
 ### note
 
 ### playable
@@ -86,6 +88,14 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 ## Develop
 
+- ```npm install```
+- ```npm start```
+- ```npm test```
+- ```npm run test:watch```
+- ```npm run coverage```
+
 ## Contribute
 
 ## License
+
+MIT © [Adam Renklint](http://adamrenklint.com)
