@@ -41,10 +41,10 @@ Made by [Adam Renklint](http://adamrenklint.com)
 ### slot
 
 - ```slot.layer()``` returns a blank [layer](#layer) assigned to next index
+- ```slot.layer(source)``` returns a new layer containing [source](#source), assigned to next index
+- ```slot.layer(sampleSrc)``` returns a new layer containing [sample](#sample) with src, assigned to next index
 - ```slot.layer(index)``` returns existing or blank layer with index
 - ```slot.layer(index, layer)``` set layer instance at index
-- ```slot.layer(sampleSrc)``` returns a new layer containing [sample](#sample) with src, assigned to next index
-- ```slot.layer(source)``` returns a new layer containing [source](#source), assigned to next index
 - ```slot.layer(index, source)``` creates a new layer containing [source](#source), assigns to index
 - ```slot.layer(index, sampleSrc)``` creates a new layer containing [sample](#sample), assigns to index
 - ```slot.schedule(event)```
