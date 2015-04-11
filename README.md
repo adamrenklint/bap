@@ -1,6 +1,6 @@
 # Bap
 
-> Beatmaking and sequence composition toolkit, using Javascript and Web Audio
+Beatmaking and sequence composition toolkit, using Javascript and Web Audio
 
 Made by [Adam Renklint](http://adamrenklint.com)
 
