@@ -27,8 +27,8 @@ Made by [Adam Renklint](http://adamrenklint.com)
 - ```bap.layer()``` returns a new [layer](#layer)
 - ```bap.pattern()``` returns a new [pattern](#pattern)
 - ```bap.sequence()``` returns a new [sequence](#sequence)
-- ```bap.channel()``` returns a
-- ```bap.note()```
+- ```bap.channel()``` returns a new [channel](#channel)
+- ```bap.note()``` returns a new [note](#note)
 
 ### kit
 

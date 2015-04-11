@@ -25,6 +25,21 @@
     "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
     "mocha": "^2.2.1",
+    "rimraf": "^2.3.2",
     "watchify": "^3.1.0"
+  },
+  "config": {
+    "coveragelimit": 90
+  },
+  "scripts": {
+    "start": "",
+    "test": "mocha -s 10",
+    "pretest": "npm run lint",
+    "test:watch": "npm test -- -w",
+    "lint": "jshint lib/*.js",
+    "precoverage": "rimraf coverage",
+    "coverage": "istanbul cover _mocha -- test/*.test.js -R dot",
+    "precoverage:check": "npm run coverage",
+    "coverage:check": "istanbul check-coverage --statement $npm_package_config_coveragelimit --branch $npm_package_config_coveragelimit --function $npm_package_config_coveragelimit"
   }
 }

@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - 0.12
+
+env:
+  - TRAVIS=true
+
+git:
+  depth: 1
+  submodules: false
+
+install:
+  - npm install
+
+script:
+  - npm test && npm run coverage:check

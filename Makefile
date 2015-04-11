@@ -4,9 +4,6 @@ ISTANBUL = ./node_modules/istanbul/lib/cli.js
 JSHINT = ./node_modules/jshint/bin/jshint
 COVERAGE_LIMIT = 75
 
-setup:
-	@npm install
-
 start-example:
 	@make serve-example & make watch-example
 
@@ -19,22 +16,5 @@ watch-example:
 build-example:
 	@node_modules/browserify/bin/cmd.js examples/metronome/main.js -o example/bundle.js
 
-test:
-	@$(MOCHA) -s 10
-
-watch:
-	@$(MOCHA) -w -s 10
-
-coverage:
-	@$(ISTANBUL) cover $(_MOCHA) -- test/*.test.js -R dot
-
-check-coverage: coverage
-	@$(ISTANBUL) check-coverage --statement $(COVERAGE_LIMIT) --branch $(COVERAGE_LIMIT) --function $(COVERAGE_LIMIT)
-
 report-coverage:
 	@CODECLIMATE_REPO_TOKEN=$(CC_REPO_TOKEN) $(CC_REPORTER) < coverage/lcov.info
-
-lint:
-	@$(JSHINT) lib/*.js
-
-.PHONY: test coverage
