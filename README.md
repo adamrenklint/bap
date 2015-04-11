@@ -32,7 +32,7 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 ### kit
 
-- ```kit.slot()``` returns blank [slot](#slot) assigned to next index
+- ```kit.slot()``` returns blank slot assigned to next index
 - ```kit.slot(index)``` returns existing or blank slot with index
 - ```kit.slot(index, slot)``` set slot instance at index
 - ```kit.trigger(note)``` trigger note immediately
@@ -41,7 +41,7 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 ### slot
 
-- ```slot.layer()``` returns a blank [layer](#layer) assigned to next index
+- ```slot.layer()``` returns a blank layer assigned to next index
 - ```slot.layer(source)``` returns a new layer containing [source](#source), assigned to next index
 - ```slot.layer(sampleSrc)``` returns a new layer containing [sample](#sample) with src, assigned to next index
 - ```slot.layer(index)``` returns existing or blank layer with index
@@ -76,6 +76,13 @@ Made by [Adam Renklint](http://adamrenklint.com)
 ### note
 
 ### playable
+
+- ```start()``` start playback
+- ```pause()``` pause playback
+- ```stop()``` pause playback and set position to 1.1.01
+- ```restart()``` play from last start position
+- ```loop()```
+- ```unloop()```
 
 ## Develop
 
