@@ -35,8 +35,9 @@ Made by [Adam Renklint](http://adamrenklint.com)
 - ```kit.slot()``` returns blank [slot](#slot) assigned to next index
 - ```kit.slot(index)``` returns existing or blank slot with index
 - ```kit.slot(index, slot)``` set slot instance at index
-- ```kit.trigger(note)``` trigger note immediately with required note
-- ```kit.triggerAt(position, note)``` trigger note at position with required note
+- ```kit.trigger(note)``` trigger note immediately
+- ```kit.triggerAt(position, note)``` trigger note at position
+- ```kit.schedule(time, note)``` schedule future note
 
 ### slot
 
@@ -47,13 +48,16 @@ Made by [Adam Renklint](http://adamrenklint.com)
 - ```slot.layer(index, layer)``` set layer instance at index
 - ```slot.layer(index, source)``` creates a new layer containing [source](#source), assigns to index
 - ```slot.layer(index, sampleSrc)``` creates a new layer containing [sample](#sample), assigns to index
-- ```slot.schedule(event)```
-- ```slot.trigger(note)``` trigger slot immediately with optional note
-- ```slot.triggerAt(position, note)``` trigger slot at position with optional note
+- ```slot.trigger(note)``` trigger slot immediately with optional note params
+- ```slot.triggerAt(position, note)``` trigger slot at position with optional note params
+- ```slot.schedule(time, note)``` schedule trigger in future
 
 ### layer
 
 - ```layer.set(source)``` define layer [source](#source)
+- ```layer.trigger(note)``` trigger layer immediately with optional note params
+- ```layer.triggerAt(position, note)``` trigger layer at position with optional note params
+- ```layer.schedule(time, note)``` schedule trigger in future
 
 ### source
 
