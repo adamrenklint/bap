@@ -18,9 +18,16 @@
     "audio-context": "^0.1.0"
   },
   "devDependencies": {
+    "brfs": "^1.4.0",
     "chai": "^2.2.0",
     "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
+    "karma": "^0.12.31",
+    "karma-browserify": "^4.1.2",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-firefox-launcher": "^0.1.4",
+    "karma-mocha": "^0.1.10",
+    "karma-safari-launcher": "^0.1.1",
     "mocha": "^2.2.1",
     "rimraf": "^2.3.2"
   },
@@ -30,7 +37,7 @@
   },
   "scripts": {
     "start": "",
-    "test": "mocha -s 10",
+    "test": "node_modules/karma/bin/karma start karma.conf.js",
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",
     "lint": "jshint lib/*.js",
