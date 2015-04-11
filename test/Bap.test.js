@@ -4,8 +4,13 @@ var Bap = require('../lib/Bap');
 
 var bap;
 
-beforeEach(function () {
+before(function () {
   bap = new Bap();
 });
 
-// describe('lib/Bap', function () {});
+describe('lib/Bap', function () {
+
+  it('should expose audioContext', function () {
+    expect(bap.audioContext).to.be.a('object');
+  });
+});
