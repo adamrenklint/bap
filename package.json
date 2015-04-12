@@ -14,7 +14,9 @@
   },
   "homepage": "https://github.com/adamrenklint/bap",
   "dependencies": {
-    "audio-context": "^0.1.0"
+    "ampersand-state": "^4.5.3",
+    "audio-context": "^0.1.0",
+    "dilla": "^1.3.4"
   },
   "devDependencies": {
     "3w": "0.0.4",
@@ -37,9 +39,9 @@
     "test": "mocha -s 10 test/**/*.test.js",
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",
-    "lint": "jshint lib/*.js",
+    "lint": "jshint lib/**/*.js",
     "clean": "rimraf coverage node_modules",
-    "coverage": "istanbul cover _mocha -- test/*.test.js -R dot",
+    "coverage": "istanbul cover _mocha -- test/**/*.test.js -R dot",
     "precoverage:check": "npm run coverage",
     "coverage:check": "istanbul check-coverage --statement $npm_package_config_coverageLimit --branch $npm_package_config_coverageLimit --function $npm_package_config_coverageLimit",
     "precoverage:report": "npm run coverage",
