@@ -9,5 +9,4 @@ beforeEach(function () {
   pattern = new Pattern();
 });
 
-describe('Pattern', function () {
-});
+describe('Pattern', function () {});

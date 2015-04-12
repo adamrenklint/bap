@@ -2,6 +2,17 @@
 ['1.1.01', 'A01', null, 99, -50, -50, { other params} ]
 
 
+Kit         Collection of Slots
+Slot        Collection of Layers
+Layer       Instrument(State)
+
+Sequence    Collection of Patterns and Sequences
+Pattern     Collection of Channels
+Channel     Collection of Notes
+Note        PositionState
+
+
+
 
 the concept of Damu + Dilla, as Bap > bapjs.org
 but what is missing?

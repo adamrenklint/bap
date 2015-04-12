@@ -22,6 +22,7 @@ pattern.channel(1).add(
   // ['*.2+.01', 'A2', 10]
   // ['*.!1.01', 'A2']
 );
+console.log(pattern)
 
 // pattern are automatically looped, sequences are not
 // pattern.use('A', kit).start();
