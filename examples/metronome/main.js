@@ -3,7 +3,7 @@ var bap = require('../../index');
 var kit = bap.kit();
 console.log(kit)
 var basic = bap.oscillator({
-  'attack': 0.1,
+  'attack': 0.001,
   'release': 0.1,
   'length': 0.1
 });
