@@ -13,7 +13,15 @@ before(function () {
 
 describe('Bap', function () {
 
-  ['pattern', 'note'].forEach(function (name) {
+  [
+    'kit',
+    'slot',
+    'layer',
+    'oscillator',
+    'pattern',
+    'channel',
+    'note',
+  ].forEach(function (name) {
     it('should expose factory for "' + name + '"', function () {
       expect(bap[name]).to.be.a('function');
     });
