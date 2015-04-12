@@ -4,7 +4,7 @@ var Note = require('../../lib/Note');
 
 var note;
 
-before(function () {
+beforeEach(function () {
   note = new Note();
 });
 
@@ -12,6 +12,7 @@ describe('Note', function () {
 
   describe('fromRaw(raw)', function () {
     var tests = [
+      [[{ 'position': '1.2.04' }], { 'position': '1.2.04', 'bar': 1, 'beat': 2, 'tick': 4 }],
       [['1.2.04'], { 'position': '1.2.04', 'bar': 1, 'beat': 2, 'tick': 4 }],
       [['1.2.04', { 'duration': 10 }], { 'position': '1.2.04', 'duration': 10, 'bar': 1, 'beat': 2, 'tick': 4 }],
       [['1.2.04', 'A02', { 'duration': 10 }], { 'position': '1.2.04', 'key': 'A02', 'duration': 10 }],
