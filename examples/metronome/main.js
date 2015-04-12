@@ -26,6 +26,8 @@ pattern.channel(1).add(
 
 // pattern are automatically looped, sequences are not
 pattern.use('A', kit).start();
+window.pattern = pattern;
+window.bap = bap;
 
 var positionEl = document.getElementById('position');
 function draw () {
