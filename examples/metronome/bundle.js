@@ -2,11 +2,11 @@
 var bap = require('../../index');
 
 var kit = bap.kit();
-console.log(kit)
 var basic = bap.oscillator({
   'attack': 0.001,
   'release': 0.1,
-  'length': 0.1
+  'length': 0.1,
+  'pan': -50
 });
 // simple way
 var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
@@ -17,7 +17,7 @@ var plong = kit.slot(2, nextSlot);
 
 var pattern = bap.pattern(/*1 bar, 4 beats per bar*/);
 pattern.channel(1).add(
-  ['*.1.01', 'A1'],
+  ['*.1.01', 'A1', 10, 50, -50, -50],
   ['*.2.01', 'A2'],
   ['*.3.01', 'A2'],
   ['*.4.01', 'A2']
@@ -26,9 +26,12 @@ pattern.channel(1).add(
 );
 
 // pattern are automatically looped, sequences are not
-pattern.use('A', kit).start();
-window.pattern = pattern;
-window.bap = bap;
+setTimeout(function () {
+  pattern.use('A', kit).start();
+}, 500);
+
+// window.pattern = pattern;
+// window.bap = bap;
 
 var positionEl = document.getElementById('position');
 function draw () {
@@ -82,6 +85,11 @@ var Channel = Model.extend({
 
   type: 'channel',
 
+  props: {
+    volume: ['number', true, 100],
+    mute: ['boolean', true, false]
+  },
+
   collections: {
     notes: Collection.extend({
       model: Note
@@ -97,7 +105,9 @@ var Channel = Model.extend({
 
   start: function (time, note) {
     time = time || this.context.currentTime;
-    this.trigger('start', time, note, this);
+    if (!this.mute) {
+      this.trigger('start', time, note, this);
+    }
   },
 
   stop: function (time, note) {
@@ -148,7 +158,6 @@ var Clock = PositionModel.extend({
       this.schedule(sequence);
     }
     if (!this.playing) {
-      console.log('start');
       this.scheduler.start();
       this.playing = true;
     }
@@ -253,7 +262,7 @@ var KitsConnectionModel = Model.extend({
     var slotId = parseInt(note.key.slice(1), 10);
     var kit = this[kitId];
     if (kit) {
-      kit.slot(slotId)[event](time, note, channel);
+      kit.slot(slotId).runEvent(event, time, note, channel, kit);
     }
     else {
       console.warn('No kit found for ' + note.key, note);
@@ -282,12 +291,54 @@ var Layer = Model.extend({
     attack: 'number',
     release: 'number',
     length: 'number',
-    duration: 'number'
+    duration: 'number',
+    volume: 'number',
+    pitch: 'number',
+    pan: 'number'
   },
 
-  start: function (time, note, channel) {
+  runEvent: function (event, time, note, channel, slot, kit) {
+    console.log(event, note)
+    this[event](time, this.params(note, channel, this, slot, kit));
+  },
 
+  params: function () {
+    var sources = [].slice.call(arguments).reverse();
+    var params = {};
+    var modifiers = ['volume', 'pitch', 'pan'];
+    var negativeModifiers = ['pitch', 'pan'];
+
+    Object.keys(this._definition.__proto__).forEach(function (key) {
+      if (key === 'id') { return; }
+      // console.log(key)
+      sources.forEach(function (source) {
+        if (~modifiers.indexOf(key)) {
+          if (!source[key]) { return; }
+          var value = source[key];
+          if (~negativeModifiers.indexOf(key)) {
+            // value += 100;
+          }
+          else if (value < 0) {
+            return;
+          }
+          var modifier = value / 100;
+          params[key] = params[key] ? params[key] * modifier : value;
+        }
+        else {
+          params[key] = source[key] || params[key];
+        }
+      });
+    });
+
+    return params;
+  },
+
+  start: function (time, params) {
     console.warn('start should be implemented by Layer subclass: ' + this.type);
+  },
+
+  stop: function (time, params) {
+    console.warn('stop should be implemented by Layer subclass: ' + this.type);
   }
 });
 
@@ -378,33 +429,35 @@ var Oscillator = Layer.extend({
     frequency: 'number'
   },
 
-  start: function (time, note) {
-
-    var duration = note.duration;
-    var length = note.length || this.length || 0;
-    var attack = note.attack || this.attack || 0;
-    var release = note.release || this.release || 0;
-    var volume = (note.volume || this.volume || 100) / 100;
-    var frequency = note.frequency || this.frequency;
-
-    var oscillator = this.context.createOscillator();
-    var gainNode = this.context.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(this.context.destination);
-
-    oscillator.frequency.value = frequency;
-
-    gainNode.gain.setValueAtTime(0, time);
-    gainNode.gain.linearRampToValueAtTime(volume, time + attack);
-
-    oscillator.start(time);
-
-    if (!note.duration && length) {
-      oscillator.stop(time + length + release);
-      gainNode.gain.setValueAtTime(volume, time + length);
-      gainNode.gain.linearRampToValueAtTime(0, time + length + release);
-    }
+  start: function (time, params) {
+    time = time || this.context.currentTime;
+    console.log('osc', time, params);
+    // debugger;
+    // var duration = note.duration;
+    // var length = note.length || this.length || 0;
+    // var attack = note.attack || this.attack || 0;
+    // var release = note.release || this.release || 0;
+    // var volume = (note.volume || this.volume || 100) / 100;
+    // var frequency = note.frequency || this.frequency;
+    //
+    // var oscillator = this.context.createOscillator();
+    // var gainNode = this.context.createGain();
+    //
+    // oscillator.connect(gainNode);
+    // gainNode.connect(this.context.destination);
+    //
+    // oscillator.frequency.value = frequency;
+    //
+    // gainNode.gain.setValueAtTime(0, time);
+    // gainNode.gain.linearRampToValueAtTime(volume, time + attack);
+    //
+    // oscillator.start(time);
+    //
+    // if (!note.duration && length) {
+    //   oscillator.stop(time + length + release);
+    //   gainNode.gain.setValueAtTime(volume, time + length);
+    //   gainNode.gain.linearRampToValueAtTime(0, time + length + release);
+    // }
   }
 });
 
@@ -533,25 +586,18 @@ var Slot = Model.extend({
     })
   },
 
-  runEvent: function (event, time, note, channel) {
-    if (typeof time === 'number' && !note) {
-      note = {};
-    }
-    else if (!note) {
-      note = time;
-      time = this.context.currentTime;
-    }
+  runEvent: function (event, time, note, channel, kit) {
     this.layers.each(function (layer) {
-      layer[event](time, note, channel);
-    });
+      layer.runEvent(event, time, note, channel, this, kit);
+    }.bind(this));
   },
 
-  start: function (time, note, channel) {
-    this.runEvent('start', time, note, channel);
+  start: function (time, note) {
+    this.runEvent('start', time, note);
   },
 
-  stop: function (time, note, channel) {
-    this.runEvent('stop', time, note, channel);
+  stop: function (time, note) {
+    this.runEvent('stop', time, note);
   }
 
 }, OverloadedAccessor('layer', Layer));

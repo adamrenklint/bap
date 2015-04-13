@@ -1,11 +1,11 @@
 var bap = require('../../index');
 
 var kit = bap.kit();
-console.log(kit)
 var basic = bap.oscillator({
   'attack': 0.001,
   'release': 0.1,
-  'length': 0.1
+  'length': 0.1,
+  'pan': -50
 });
 // simple way
 var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
@@ -16,7 +16,7 @@ var plong = kit.slot(2, nextSlot);
 
 var pattern = bap.pattern(/*1 bar, 4 beats per bar*/);
 pattern.channel(1).add(
-  ['*.1.01', 'A1'],
+  ['*.1.01', 'A1', 10, 50, -50, -50],
   ['*.2.01', 'A2'],
   ['*.3.01', 'A2'],
   ['*.4.01', 'A2']
@@ -25,9 +25,12 @@ pattern.channel(1).add(
 );
 
 // pattern are automatically looped, sequences are not
-pattern.use('A', kit).start();
-window.pattern = pattern;
-window.bap = bap;
+setTimeout(function () {
+  pattern.use('A', kit).start();
+}, 500);
+
+// window.pattern = pattern;
+// window.bap = bap;
 
 var positionEl = document.getElementById('position');
 function draw () {
