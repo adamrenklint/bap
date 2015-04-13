@@ -15,7 +15,8 @@ var plong = kit.slot(2, nextSlot);
 
 var pattern = bap.pattern(/*1 bar, 4 beats per bar*/);
 pattern.channel(1).add(
-  ['*.1.01', 'A1', 10, 50, -50, -50],
+  // ['*.1.01', 'A1', 10, 50, -50, -50],
+  ['*.1.01', 'A1'],
   ['*.2.01', 'A2'],
   ['*.3.01', 'A2'],
   ['*.4.01', 'A2']
