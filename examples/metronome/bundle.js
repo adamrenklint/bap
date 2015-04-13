@@ -248,16 +248,25 @@ var KitsConnectionModel = Model.extend({
     }
   },
 
-  start: function (time, note, channel) {
+  runEvent: function (event, time, note, channel) {
     var kitId = note.key.slice(0, 1);
     var slotId = parseInt(note.key.slice(1), 10);
     var kit = this[kitId];
     if (kit) {
-      kit.slot(slotId).start(time, note, channel);
+      kit.slot(slotId)[event](time, note, channel);
+    }
+    else {
+      console.warn('No kit found for ' + note.key, note);
     }
   },
 
-  stop: function () {}
+  start: function (time, note, channel) {
+    this.runEvent('start', time, note, channel);
+  },
+
+  stop: function (time, note, channel) {
+    this.runEvent('stop', time, note, channel);
+  }
 });
 
 module.exports = KitsConnectionModel;
@@ -276,7 +285,7 @@ var Layer = Model.extend({
     duration: 'number'
   },
 
-  start: function (time, note) {
+  start: function (time, note, channel) {
 
     console.warn('start should be implemented by Layer subclass: ' + this.type);
   }
@@ -438,6 +447,10 @@ var Pattern = Model.extend({
     this.vent.trigger('clock:start', this);
   },
 
+  // stop: function () {
+  //   this.vent.trigger('clock:stop', this);
+  // },
+
   notes: function () {
     var notes = [];
     this.channels.each(function (channel) {
@@ -520,7 +533,7 @@ var Slot = Model.extend({
     })
   },
 
-  start: function (time, note) {
+  runEvent: function (event, time, note, channel) {
     if (typeof time === 'number' && !note) {
       note = {};
     }
@@ -529,8 +542,16 @@ var Slot = Model.extend({
       time = this.context.currentTime;
     }
     this.layers.each(function (layer) {
-      layer.start(time, note);
+      layer[event](time, note, channel);
     });
+  },
+
+  start: function (time, note, channel) {
+    this.runEvent('start', time, note, channel);
+  },
+
+  stop: function (time, note, channel) {
+    this.runEvent('stop', time, note, channel);
   }
 
 }, OverloadedAccessor('layer', Layer));
