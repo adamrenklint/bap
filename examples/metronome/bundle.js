@@ -91,11 +91,18 @@ var Channel = Model.extend({
   initialize: function () {
     Model.prototype.initialize.apply(this, arguments);
 
-    this.notes.on('start', this.onStartNote.bind(this));
+    this.notes.on('start', this.start.bind(this));
+    this.notes.on('stop', this.stop.bind(this));
   },
 
-  onStartNote: function (time, note) {
+  start: function (time, note) {
+    time = time || this.context.currentTime;
     this.trigger('start', time, note, this);
+  },
+
+  stop: function (time, note) {
+    time = time || this.context.currentTime;
+    this.trigger('stop', time, note, this);
   },
 
   add: function () {
@@ -239,7 +246,18 @@ var KitsConnectionModel = Model.extend({
         return currentVal === newVal;
       }
     }
-  }
+  },
+
+  start: function (time, note, channel) {
+    var kitId = note.key.slice(0, 1);
+    var slotId = parseInt(note.key.slice(1), 10);
+    var kit = this[kitId];
+    if (kit) {
+      kit.slot(slotId).start(time, note, channel);
+    }
+  },
+
+  stop: function () {}
 });
 
 module.exports = KitsConnectionModel;
@@ -258,9 +276,9 @@ var Layer = Model.extend({
     duration: 'number'
   },
 
-  triggerAt: function (time, note) {
+  start: function (time, note) {
 
-    console.warn('triggerAt should be implemented by Layer subclass: ' + this.type);
+    console.warn('start should be implemented by Layer subclass: ' + this.type);
   }
 });
 
@@ -314,7 +332,13 @@ var Note = PositionModel.extend({
   },
 
   start: function (time) {
+    time = time || this.context.currentTime;
     this.trigger('start', time, this);
+  },
+
+  stop: function (time) {
+    time = time || this.context.currentTime;
+    this.trigger('stop', time, this);
   }
 });
 
@@ -345,9 +369,9 @@ var Oscillator = Layer.extend({
     frequency: 'number'
   },
 
-  triggerAt: function (time, note) {
+  start: function (time, note) {
 
-    var duration = note.duration || this.duration;
+    var duration = note.duration;
     var length = note.length || this.length || 0;
     var attack = note.attack || this.attack || 0;
     var release = note.release || this.release || 0;
@@ -406,16 +430,8 @@ var Pattern = Model.extend({
   initialize: function () {
     Model.prototype.initialize.apply(this, arguments);
 
-    this.channels.on('start', this.onChannelStart.bind(this));
-  },
-
-  onChannelStart: function (time, note, channel) {
-    var kitId = note.key.slice(0, 1);
-    var slotId = parseInt(note.key.slice(1), 10);
-    var kit = this.kits[kitId];
-    if (kit) {
-      kit.slot(slotId).triggerAt(time, note);
-    }
+    this.channels.on('start', this.kits.start.bind(this.kits));
+    this.channels.on('stop', this.kits.stop.bind(this.kits));
   },
 
   start: function () {
@@ -504,9 +520,16 @@ var Slot = Model.extend({
     })
   },
 
-  triggerAt: function (time, note) {
+  start: function (time, note) {
+    if (typeof time === 'number' && !note) {
+      note = {};
+    }
+    else if (!note) {
+      note = time;
+      time = this.context.currentTime;
+    }
     this.layers.each(function (layer) {
-      layer.triggerAt(time, note);
+      layer.start(time, note);
     });
   }
 
