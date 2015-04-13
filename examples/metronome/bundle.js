@@ -5,8 +5,7 @@ var kit = bap.kit();
 var basic = bap.oscillator({
   'attack': 0.001,
   'release': 0.1,
-  'length': 0.1,
-  'pan': -50
+  'length': 0.1
 });
 // simple way
 var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
@@ -298,34 +297,30 @@ var Layer = Model.extend({
   },
 
   runEvent: function (event, time, note, channel, slot, kit) {
-    console.log(event, note)
     this[event](time, this.params(note, channel, this, slot, kit));
   },
 
   params: function () {
     var sources = [].slice.call(arguments).reverse();
     var params = {};
-    var modifiers = ['volume', 'pitch', 'pan'];
-    var negativeModifiers = ['pitch', 'pan'];
+    var multipliers = ['volume'];
+    var adders = ['pitch', 'pan'];
 
     Object.keys(this._definition.__proto__).forEach(function (key) {
       if (key === 'id') { return; }
-      // console.log(key)
       sources.forEach(function (source) {
-        if (~modifiers.indexOf(key)) {
-          if (!source[key]) { return; }
-          var value = source[key];
-          if (~negativeModifiers.indexOf(key)) {
-            // value += 100;
-          }
-          else if (value < 0) {
-            return;
-          }
-          var modifier = value / 100;
-          params[key] = params[key] ? params[key] * modifier : value;
+        var value = source[key];
+        if (~multipliers.indexOf(key)) {
+          if (!value || value < 0) { return; }
+          var multiplier = value / 100;
+          params[key] = params[key] ? params[key] * multiplier : value;
+        }
+        else if (~adders.indexOf(key)) {
+          value = value || 0;
+          params[key] = params[key] ? params[key] + value : value;
         }
         else {
-          params[key] = source[key] || params[key];
+          params[key] = value || params[key];
         }
       });
     });
@@ -432,7 +427,7 @@ var Oscillator = Layer.extend({
   start: function (time, params) {
     time = time || this.context.currentTime;
     console.log('osc', time, params);
-    // debugger;
+    debugger;
     // var duration = note.duration;
     // var length = note.length || this.length || 0;
     // var attack = note.attack || this.attack || 0;

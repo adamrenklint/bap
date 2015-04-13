@@ -26,21 +26,21 @@ describe('Layer', function () {
     });
     ['pan', 'pitch'].forEach(function (key) {
       describe(key + ' (0-based)', function () {
-        it('should multiply the values', function () {
+        it('should add the values', function () {
           var one = {}, two = {}, three = {};
           one[key] = 50;
           two[key] = 50;
-          three[key] = 10;
-          expect(layer.params(one, two)[key]).to.equal(75);
-          expect(layer.params(one, two, three)[key]).to.equal(7.5);
+          three[key] = -10;
+          expect(layer.params(one, two)[key]).to.equal(100);
+          expect(layer.params(one, two, three)[key]).to.equal(90);
         });
         it('should normalize for negative values', function () {
           var one = {}, two = {}, three = {};
           one[key] = -50;
           two[key] = -50;
           three[key] = 50;
-          expect(layer.params(one, two)[key]).to.equal(-75);
-          expect(layer.params(one, two, three)[key]).to.equal(-32.5);
+          expect(layer.params(one, two)[key]).to.equal(-100);
+          expect(layer.params(one, two, three)[key]).to.equal(-50);
         });
       });
     });
