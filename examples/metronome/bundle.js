@@ -5,7 +5,8 @@ var kit = bap.kit();
 var basic = bap.oscillator({
   'attack': 0.001,
   'release': 0.1,
-  'length': 0.1
+  'duration': 10,
+  'length': 0.5
 });
 // simple way
 var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
@@ -16,8 +17,8 @@ var plong = kit.slot(2, nextSlot);
 
 var pattern = bap.pattern(/*1 bar, 4 beats per bar*/);
 pattern.channel(1).add(
-  // ['*.1.01', 'A1', 10, 50, -50, -50],
-  ['*.1.01', 'A1'],
+  ['*.1.01', 'A1', 40, 50, -50, -50],
+  // ['*.1.01', 'A1'],
   ['*.2.01', 'A2'],
   ['*.3.01', 'A2'],
   ['*.4.01', 'A2']
@@ -172,7 +173,9 @@ var Clock = PositionModel.extend({
   },
 
   onSchedulerStep: function (step) {
-    step.args[step.event](step.time);
+    if (step.event === 'start') {
+      step.args[step.event](step.time);
+    }
   }
 });
 
@@ -273,8 +276,26 @@ var Layer = Model.extend(triggerParams, volumeParams, {
 
   runEvent: function (event, time, note, channel, slot, kit) {
     var params = Params.fromSources(note, channel, this, slot, kit);
-    // TODO: if length (or duration), but no note.duration, need to schedule the stop event ourselves
+    // if (!note.duration && params.duration) {
+    if (!params.length && params.duration) {
+      // this.vent.trigger('transform:durationToLength', params);
+      params.length = this.lengthFromDuration(params.duration);
+    }
+    if (params.length) {
+      setTimeout(function () {
+        var stopTime = time + params.length;
+        this.stop(stopTime, params);
+      }.bind(this));
+    }
     this[event](time, params);
+  },
+
+  lengthFromDuration: function (duration) {
+    // TODO: shouldn't be hardcoded :)
+    var bpm = 120;
+    var secondsPerBeat = 60 / bpm;
+    var secondsPerTick = secondsPerBeat / 96;
+    return duration * secondsPerTick;
   },
 
   start: function (time, params) {
@@ -378,27 +399,31 @@ var Oscillator = Layer.extend(oscillatorParams, {
   start: function (time, params) {
     time = time || this.context.currentTime;
 
-    var volume = params.volume / 100;
+    var gain = this.context.createGain();
+    var volume = (params.volume || 100) / 100;
+    gain.connect(this.context.destination);
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(volume, time + params.attack);
 
-    var oscillator = this.context.createOscillator();
+    // TODO: need a better transport system for the source, if the sounds triggers again before the prev stop event, one node is left hanging
+    var oscillator = this.s = this.context.createOscillator();
 
-    // gain could be done in layer.setGain, handled from layer.runEvent
-    var gainNode = this.context.createGain();
-    oscillator.connect(gainNode);
-    gainNode.connect(this.context.destination);
-
+    oscillator.connect(gain);
+    oscillator.gain = gain;
     oscillator.frequency.value = params.frequency;
 
-    gainNode.gain.setValueAtTime(0, time);
-    gainNode.gain.linearRampToValueAtTime(volume, time + params.attack);
-
     oscillator.start(time);
+  },
 
-    if (!params.duration && params.length) {
-      oscillator.stop(time + params.length + params.release);
-      gainNode.gain.setValueAtTime(volume, time + params.length);
-      gainNode.gain.linearRampToValueAtTime(0, time + params.length + params.release);
-    }
+
+  stop: function (time, params) {
+    time = time || this.context.currentTime;
+    var oscillator = this.s;
+    var volume = (params.volume || 100) / 100;
+    var gain = oscillator.gain;
+    gain.gain.setValueAtTime(volume, time);
+    gain.gain.linearRampToValueAtTime(0, time + params.release);
+    oscillator.stop(time + params.release);
   }
 });
 
@@ -699,8 +724,8 @@ module.exports = {
   props: {
     duration: 'positiveNumber',
     length: 'inclusivePositiveNumber',
-    attack: 'inclusivePositiveNumber',
-    release: 'inclusivePositiveNumber',
+    attack: ['inclusivePositiveNumber', true, 0],
+    release: ['inclusivePositiveNumber', true, 0],
     pitch: 'number'
   },
 
