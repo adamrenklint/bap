@@ -2,13 +2,13 @@ var chai = require('chai');
 var expect = chai.expect;
 var Model = require('../../lib/Model');
 var Collection = require('../../lib/Collection');
-var OverloadedAccessor = require('../../lib/mixins/OverloadedAccessor');
+var overloadedAccessor = require('../../lib/mixins/overloadedAccessor');
 
 OverloadedModel = Model.extend({
   collections: {
     foos: Collection
   }
-}, OverloadedAccessor('foo', Model))
+}, overloadedAccessor('foo', Model))
 
 var instance;
 
@@ -16,7 +16,7 @@ beforeEach(function () {
   instance = new OverloadedModel();
 });
 
-describe('mixins/OverloadedAccessor', function () {
+describe('mixins/overloadedAccessor', function () {
   describe('access(id, model)', function () {
     describe('when id is not a positive number', function () {
       describe('when model is not a Model instance', function () {

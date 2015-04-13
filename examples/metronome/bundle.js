@@ -210,7 +210,7 @@ module.exports = Collection.extend({
 var Model = require('./Model');
 var Slot = require('./Slot');
 var Collection = require('./Collection');
-var OverloadedAccessor = require('./mixins/OverloadedAccessor');
+var overloadedAccessor = require('./mixins/overloadedAccessor');
 
 var Kit = Model.extend({
 
@@ -222,11 +222,11 @@ var Kit = Model.extend({
     })
   }
 
-}, OverloadedAccessor('slot', Slot));
+}, overloadedAccessor('slot', Slot));
 
 module.exports = Kit;
 
-},{"./Collection":6,"./Model":10,"./Slot":15,"./mixins/OverloadedAccessor":16}],8:[function(require,module,exports){
+},{"./Collection":6,"./Model":10,"./Slot":15,"./mixins/overloadedAccessor":16}],8:[function(require,module,exports){
 var Model = require('./Model');
 var Kit = require('./Kit');
 var instanceOfType = require('./types/instanceOf');
@@ -339,6 +339,7 @@ var Model = State.extend({
   type: 'model',
 
   props: {
+    // TODO: type uniqueInCollection
     id: ['number']
   },
 
@@ -368,12 +369,12 @@ var Note = PositionModel.extend({
   type: 'note',
 
   props: {
-    key: 'key',
-    duration: 'positiveNumber',
+    key: ['key', false],
+    duration: ['positiveNumber', false],
     volume: ['positiveNumber', true, 100],
     pitch: ['number', true, 0],
     pan: ['number', true, 0],
-    frequency: 'positiveNumber'
+    frequency: ['positiveNumber', false]
   },
 
   dataTypes: {
@@ -458,7 +459,7 @@ module.exports = Oscillator;
 var Model = require('./Model');
 var Channel = require('./Channel');
 var Collection = require('./Collection');
-var OverloadedAccessor = require('./mixins/OverloadedAccessor');
+var overloadedAccessor = require('./mixins/overloadedAccessor');
 var KitsConnectionModel = require('./KitsConnectionModel');
 var numberInRangeType = require('./types/numberInRange');
 
@@ -513,7 +514,7 @@ var Pattern = Model.extend({
     return this;
   }
 
-}, OverloadedAccessor('channel', Channel));
+}, overloadedAccessor('channel', Channel));
 
 module.exports = Pattern;
 
@@ -522,7 +523,7 @@ module.exports = Pattern;
 //   this.params.bars = this.params.bars || 1;
 //   this.params.beatsPerBar = this.params.beatsPerBar || 4;
 
-},{"./Channel":4,"./Collection":6,"./KitsConnectionModel":8,"./Model":10,"./mixins/OverloadedAccessor":16,"./types/numberInRange":18}],14:[function(require,module,exports){
+},{"./Channel":4,"./Collection":6,"./KitsConnectionModel":8,"./Model":10,"./mixins/overloadedAccessor":16,"./types/numberInRange":18}],14:[function(require,module,exports){
 var Model = require('./Model');
 var numberInRangeType = require('./types/numberInRange');
 var regexpType = require('./types/regexp');
@@ -578,7 +579,7 @@ module.exports = PositionModel;
 var Model = require('./Model');
 var Layer = require('./Layer');
 var Collection = require('./Collection');
-var OverloadedAccessor = require('./mixins/OverloadedAccessor');
+var overloadedAccessor = require('./mixins/overloadedAccessor');
 
 var Slot = Model.extend({
 
@@ -604,7 +605,7 @@ var Slot = Model.extend({
     this.runEvent('stop', time, note);
   }
 
-}, OverloadedAccessor('layer', Layer));
+}, overloadedAccessor('layer', Layer));
 
 module.exports = Slot;
 
@@ -633,8 +634,8 @@ module.exports = Slot;
 //
 // module.exports = Slot;
 
-},{"./Collection":6,"./Layer":9,"./Model":10,"./mixins/OverloadedAccessor":16}],16:[function(require,module,exports){
-function OverloadedAccessor (name, Ctor) {
+},{"./Collection":6,"./Layer":9,"./Model":10,"./mixins/overloadedAccessor":16}],16:[function(require,module,exports){
+function overloadedAccessor (name, Ctor) {
 
   var mixin = {};
 
@@ -666,7 +667,7 @@ function OverloadedAccessor (name, Ctor) {
   return mixin;
 }
 
-module.exports = OverloadedAccessor;
+module.exports = overloadedAccessor;
 
 },{}],17:[function(require,module,exports){
 function instanceOf (type, Constructor) {
