@@ -265,15 +265,16 @@ module.exports = KitsConnectionModel;
 var Model = require('./Model');
 var triggerParams = require('./mixins/triggerParams');
 var volumeParams = require('./mixins/volumeParams');
-var oscillatorParams = require('./mixins/oscillatorParams');
 var Params = require('./Params');
 
-var Layer = Model.extend(triggerParams, volumeParams, oscillatorParams, {
+var Layer = Model.extend(triggerParams, volumeParams, {
 
   type: 'layer',
 
   runEvent: function (event, time, note, channel, slot, kit) {
-    this[event](time, Params.fromSources(note, channel, this, slot, kit));
+    var params = Params.fromSources(note, channel, this, slot, kit);
+    // TODO: if length (or duration), but no note.duration, need to schedule the stop event ourselves
+    this[event](time, params);
   },
 
   start: function (time, params) {
@@ -287,7 +288,7 @@ var Layer = Model.extend(triggerParams, volumeParams, oscillatorParams, {
 
 module.exports = Layer;
 
-},{"./Model":10,"./Params":13,"./mixins/oscillatorParams":17,"./mixins/triggerParams":19,"./mixins/volumeParams":20}],10:[function(require,module,exports){
+},{"./Model":10,"./Params":13,"./mixins/triggerParams":19,"./mixins/volumeParams":20}],10:[function(require,module,exports){
 var context = require('./utils/context');
 var vent = require('./utils/vent');
 var State = require('ampersand-state');
@@ -368,30 +369,21 @@ module.exports = Note;
 
 },{"./PositionModel":15,"./mixins/oscillatorParams":17,"./mixins/triggerParams":19,"./mixins/volumeParams":20,"./types/numberInRange":22,"./types/regexp":23}],12:[function(require,module,exports){
 var Layer = require('./Layer');
+var oscillatorParams = require('./mixins/oscillatorParams');
 
-var Oscillator = Layer.extend({
+var Oscillator = Layer.extend(oscillatorParams, {
 
   type: 'oscillator',
 
-  props: {
-    frequency: 'number'
-  },
-
   start: function (time, params) {
     time = time || this.context.currentTime;
-    // console.log('osc', time, params);
-    // debugger;
 
-    // var duration = note.duration;
-    // var length = note.length || this.length || 0;
-    // var attack = note.attack || this.attack || 0;
-    // var release = note.release || this.release || 0;
     var volume = params.volume / 100;
-    // var frequency = note.frequency || this.frequency;
-    //
+
     var oscillator = this.context.createOscillator();
+
+    // gain could be done in layer.setGain, handled from layer.runEvent
     var gainNode = this.context.createGain();
-    //
     oscillator.connect(gainNode);
     gainNode.connect(this.context.destination);
 
@@ -412,7 +404,7 @@ var Oscillator = Layer.extend({
 
 module.exports = Oscillator;
 
-},{"./Layer":9}],13:[function(require,module,exports){
+},{"./Layer":9,"./mixins/oscillatorParams":17}],13:[function(require,module,exports){
 var Model = require('./Model');
 var triggerParams = require('./mixins/triggerParams');
 var volumeParams = require('./mixins/volumeParams');
