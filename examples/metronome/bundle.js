@@ -79,14 +79,19 @@ module.exports = Bap;
 var Model = require('./Model');
 var Note = require('./Note');
 var Collection = require('./Collection');
+var numberInRangeType = require('./types/numberInRange');
 
 var Channel = Model.extend({
 
   type: 'channel',
 
   props: {
-    volume: ['number', true, 100],
+    volume: ['positiveNumber', true, 100],
     mute: ['boolean', true, false]
+  },
+
+  dataTypes: {
+    positiveNumber: numberInRangeType('positiveNumber', 1, Infinity)
   },
 
   collections: {
@@ -124,7 +129,7 @@ var Channel = Model.extend({
 
 module.exports = Channel;
 
-},{"./Collection":6,"./Model":10,"./Note":11}],5:[function(require,module,exports){
+},{"./Collection":6,"./Model":10,"./Note":11,"./types/numberInRange":18}],5:[function(require,module,exports){
 var PositionModel = require('./PositionModel');
 var Dilla = require('dilla');
 
@@ -365,9 +370,9 @@ var Note = PositionModel.extend({
   props: {
     key: 'key',
     duration: 'positiveNumber',
-    volume: 'positiveNumber',
-    pitch: 'number',
-    pan: 'number',
+    volume: ['positiveNumber', true, 100],
+    pitch: ['number', true, 0],
+    pan: ['number', true, 0],
     frequency: 'positiveNumber'
   },
 
@@ -417,7 +422,7 @@ var Oscillator = Layer.extend({
   start: function (time, params) {
     time = time || this.context.currentTime;
     console.log('osc', time, params);
-    // debugger;
+    debugger;
 
     // var duration = note.duration;
     // var length = note.length || this.length || 0;
@@ -455,14 +460,19 @@ var Channel = require('./Channel');
 var Collection = require('./Collection');
 var OverloadedAccessor = require('./mixins/OverloadedAccessor');
 var KitsConnectionModel = require('./KitsConnectionModel');
+var numberInRangeType = require('./types/numberInRange');
 
 var Pattern = Model.extend({
 
   type: 'pattern',
 
   props: {
-    bars: ['number', true, 1],
-    beatsPerBar: ['number', true, 4]
+    bars: ['positiveNumber', true, 1],
+    beatsPerBar: ['positiveNumber', true, 4]
+  },
+
+  dataTypes: {
+    positiveNumber: numberInRangeType('positiveNumber', 1, Infinity)
   },
 
   collections: {
@@ -512,7 +522,7 @@ module.exports = Pattern;
 //   this.params.bars = this.params.bars || 1;
 //   this.params.beatsPerBar = this.params.beatsPerBar || 4;
 
-},{"./Channel":4,"./Collection":6,"./KitsConnectionModel":8,"./Model":10,"./mixins/OverloadedAccessor":16}],14:[function(require,module,exports){
+},{"./Channel":4,"./Collection":6,"./KitsConnectionModel":8,"./Model":10,"./mixins/OverloadedAccessor":16,"./types/numberInRange":18}],14:[function(require,module,exports){
 var Model = require('./Model');
 var numberInRangeType = require('./types/numberInRange');
 var regexpType = require('./types/regexp');
