@@ -159,7 +159,6 @@ module.exports = Channel;
 var PositionModel = require('./PositionModel');
 var Dilla = require('dilla');
 var instanceOfType = require('./types/instanceOfType');
-var debounce = require('lodash.debounce');
 
 var Clock = PositionModel.extend({
 
@@ -290,7 +289,7 @@ var Clock = PositionModel.extend({
 
 module.exports = Clock;
 
-},{"./PositionModel":15,"./types/instanceOfType":22,"dilla":172,"lodash.debounce":180}],6:[function(require,module,exports){
+},{"./PositionModel":15,"./types/instanceOfType":22,"dilla":172}],6:[function(require,module,exports){
 var context = require('./utils/context');
 var Collection = require('ampersand-collection');
 
@@ -513,7 +512,7 @@ var Model = State.extend({
 
 module.exports = Model;
 
-},{"./utils/context":25,"./utils/uniqueId":26,"./utils/vent":27,"ampersand-state":62,"lodash.merge":182}],11:[function(require,module,exports){
+},{"./utils/context":25,"./utils/uniqueId":26,"./utils/vent":27,"ampersand-state":62,"lodash.merge":180}],11:[function(require,module,exports){
 var PositionModel = require('./PositionModel');
 var rawKeys = ['position', 'key', 'duration', 'volume', 'pitch', 'pan'];
 var numberInRangeType = require('./types/numberInRange');
@@ -13065,249 +13064,6 @@ function shouldSendImmediately(message, loop){
 }
 },{"stream":168,"util":171}],180:[function(require,module,exports){
 /**
- * lodash 3.0.3 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var isNative = require('lodash.isnative');
-
-/** Used as the `TypeError` message for "Functions" methods. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max,
-    nativeNow = isNative(nativeNow = Date.now) && nativeNow;
-
-/**
- * Gets the number of milliseconds that have elapsed since the Unix epoch
- * (1 January 1970 00:00:00 UTC).
- *
- * @static
- * @memberOf _
- * @category Date
- * @example
- *
- * _.defer(function(stamp) {
- *   console.log(_.now() - stamp);
- * }, _.now());
- * // => logs the number of milliseconds it took for the deferred function to be invoked
- */
-var now = nativeNow || function() {
-  return new Date().getTime();
-};
-
-/**
- * Creates a function that delays invoking `func` until after `wait` milliseconds
- * have elapsed since the last time it was invoked. The created function comes
- * with a `cancel` method to cancel delayed invocations. Provide an options
- * object to indicate that `func` should be invoked on the leading and/or
- * trailing edge of the `wait` timeout. Subsequent calls to the debounced
- * function return the result of the last `func` invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
- * on the trailing edge of the timeout only if the the debounced function is
- * invoked more than once during the `wait` timeout.
- *
- * See [David Corbacho's article](http://drupalmotion.com/article/debounce-and-throttle-visual-explanation)
- * for details over the differences between `_.debounce` and `_.throttle`.
- *
- * @static
- * @memberOf _
- * @category Function
- * @param {Function} func The function to debounce.
- * @param {number} [wait=0] The number of milliseconds to delay.
- * @param {Object} [options] The options object.
- * @param {boolean} [options.leading=false] Specify invoking on the leading
- *  edge of the timeout.
- * @param {number} [options.maxWait] The maximum time `func` is allowed to be
- *  delayed before it is invoked.
- * @param {boolean} [options.trailing=true] Specify invoking on the trailing
- *  edge of the timeout.
- * @returns {Function} Returns the new debounced function.
- * @example
- *
- * // avoid costly calculations while the window size is in flux
- * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
- *
- * // invoke `sendMail` when the click event is fired, debouncing subsequent calls
- * jQuery('#postbox').on('click', _.debounce(sendMail, 300, {
- *   'leading': true,
- *   'trailing': false
- * }));
- *
- * // ensure `batchLog` is invoked once after 1 second of debounced calls
- * var source = new EventSource('/stream');
- * jQuery(source).on('message', _.debounce(batchLog, 250, {
- *   'maxWait': 1000
- * }));
- *
- * // cancel a debounced call
- * var todoChanges = _.debounce(batchLog, 1000);
- * Object.observe(models.todo, todoChanges);
- *
- * Object.observe(models, function(changes) {
- *   if (_.find(changes, { 'user': 'todo', 'type': 'delete'})) {
- *     todoChanges.cancel();
- *   }
- * }, ['delete']);
- *
- * // ...at some point `models.todo` is changed
- * models.todo.completed = true;
- *
- * // ...before 1 second has passed `models.todo` is deleted
- * // which cancels the debounced `todoChanges` call
- * delete models.todo;
- */
-function debounce(func, wait, options) {
-  var args,
-      maxTimeoutId,
-      result,
-      stamp,
-      thisArg,
-      timeoutId,
-      trailingCall,
-      lastCalled = 0,
-      maxWait = false,
-      trailing = true;
-
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  wait = wait < 0 ? 0 : (+wait || 0);
-  if (options === true) {
-    var leading = true;
-    trailing = false;
-  } else if (isObject(options)) {
-    leading = options.leading;
-    maxWait = 'maxWait' in options && nativeMax(+options.maxWait || 0, wait);
-    trailing = 'trailing' in options ? options.trailing : trailing;
-  }
-
-  function cancel() {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    if (maxTimeoutId) {
-      clearTimeout(maxTimeoutId);
-    }
-    maxTimeoutId = timeoutId = trailingCall = undefined;
-  }
-
-  function delayed() {
-    var remaining = wait - (now() - stamp);
-    if (remaining <= 0 || remaining > wait) {
-      if (maxTimeoutId) {
-        clearTimeout(maxTimeoutId);
-      }
-      var isCalled = trailingCall;
-      maxTimeoutId = timeoutId = trailingCall = undefined;
-      if (isCalled) {
-        lastCalled = now();
-        result = func.apply(thisArg, args);
-        if (!timeoutId && !maxTimeoutId) {
-          args = thisArg = null;
-        }
-      }
-    } else {
-      timeoutId = setTimeout(delayed, remaining);
-    }
-  }
-
-  function maxDelayed() {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    maxTimeoutId = timeoutId = trailingCall = undefined;
-    if (trailing || (maxWait !== wait)) {
-      lastCalled = now();
-      result = func.apply(thisArg, args);
-      if (!timeoutId && !maxTimeoutId) {
-        args = thisArg = null;
-      }
-    }
-  }
-
-  function debounced() {
-    args = arguments;
-    stamp = now();
-    thisArg = this;
-    trailingCall = trailing && (timeoutId || !leading);
-
-    if (maxWait === false) {
-      var leadingCall = leading && !timeoutId;
-    } else {
-      if (!maxTimeoutId && !leading) {
-        lastCalled = stamp;
-      }
-      var remaining = maxWait - (stamp - lastCalled),
-          isCalled = remaining <= 0 || remaining > maxWait;
-
-      if (isCalled) {
-        if (maxTimeoutId) {
-          maxTimeoutId = clearTimeout(maxTimeoutId);
-        }
-        lastCalled = stamp;
-        result = func.apply(thisArg, args);
-      }
-      else if (!maxTimeoutId) {
-        maxTimeoutId = setTimeout(maxDelayed, remaining);
-      }
-    }
-    if (isCalled && timeoutId) {
-      timeoutId = clearTimeout(timeoutId);
-    }
-    else if (!timeoutId && wait !== maxWait) {
-      timeoutId = setTimeout(delayed, wait);
-    }
-    if (leadingCall) {
-      isCalled = true;
-      result = func.apply(thisArg, args);
-    }
-    if (isCalled && !timeoutId && !maxTimeoutId) {
-      args = thisArg = null;
-    }
-    return result;
-  }
-  debounced.cancel = cancel;
-  return debounced;
-}
-
-/**
- * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
- * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(1);
- * // => false
- */
-function isObject(value) {
-  // Avoid a V8 JIT bug in Chrome 19-20.
-  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-  var type = typeof value;
-  return type == 'function' || (!!value && type == 'object');
-}
-
-module.exports = debounce;
-
-},{"lodash.isnative":181}],181:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"dup":41}],182:[function(require,module,exports){
-/**
  * lodash 3.1.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
@@ -13546,25 +13302,25 @@ var merge = createAssigner(baseMerge);
 
 module.exports = merge;
 
-},{"lodash._arraycopy":183,"lodash._arrayeach":184,"lodash._basefor":185,"lodash._createassigner":186,"lodash.isarguments":189,"lodash.isarray":190,"lodash.isnative":191,"lodash.isplainobject":192,"lodash.istypedarray":193,"lodash.keys":194,"lodash.keysin":195,"lodash.toplainobject":196}],183:[function(require,module,exports){
+},{"lodash._arraycopy":181,"lodash._arrayeach":182,"lodash._basefor":183,"lodash._createassigner":184,"lodash.isarguments":187,"lodash.isarray":188,"lodash.isnative":189,"lodash.isplainobject":190,"lodash.istypedarray":191,"lodash.keys":192,"lodash.keysin":193,"lodash.toplainobject":194}],181:[function(require,module,exports){
 arguments[4][57][0].apply(exports,arguments)
-},{"dup":57}],184:[function(require,module,exports){
+},{"dup":57}],182:[function(require,module,exports){
 arguments[4][32][0].apply(exports,arguments)
-},{"dup":32}],185:[function(require,module,exports){
+},{"dup":32}],183:[function(require,module,exports){
 arguments[4][85][0].apply(exports,arguments)
-},{"dup":85}],186:[function(require,module,exports){
+},{"dup":85}],184:[function(require,module,exports){
 arguments[4][52][0].apply(exports,arguments)
-},{"dup":52,"lodash._bindcallback":187,"lodash._isiterateecall":188}],187:[function(require,module,exports){
+},{"dup":52,"lodash._bindcallback":185,"lodash._isiterateecall":186}],185:[function(require,module,exports){
 arguments[4][34][0].apply(exports,arguments)
-},{"dup":34}],188:[function(require,module,exports){
+},{"dup":34}],186:[function(require,module,exports){
 arguments[4][54][0].apply(exports,arguments)
-},{"dup":54}],189:[function(require,module,exports){
+},{"dup":54}],187:[function(require,module,exports){
 arguments[4][36][0].apply(exports,arguments)
-},{"dup":36}],190:[function(require,module,exports){
+},{"dup":36}],188:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"dup":61}],191:[function(require,module,exports){
+},{"dup":61}],189:[function(require,module,exports){
 arguments[4][41][0].apply(exports,arguments)
-},{"dup":41}],192:[function(require,module,exports){
+},{"dup":41}],190:[function(require,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -13694,13 +13450,13 @@ var isPlainObject = !getPrototypeOf ? shimIsPlainObject : function(value) {
 
 module.exports = isPlainObject;
 
-},{"lodash._basefor":185,"lodash.isnative":191,"lodash.keysin":195}],193:[function(require,module,exports){
+},{"lodash._basefor":183,"lodash.isnative":189,"lodash.keysin":193}],191:[function(require,module,exports){
 arguments[4][108][0].apply(exports,arguments)
-},{"dup":108}],194:[function(require,module,exports){
+},{"dup":108}],192:[function(require,module,exports){
 arguments[4][39][0].apply(exports,arguments)
-},{"dup":39,"lodash.isarguments":189,"lodash.isarray":190,"lodash.isnative":191}],195:[function(require,module,exports){
+},{"dup":39,"lodash.isarguments":187,"lodash.isarray":188,"lodash.isnative":189}],193:[function(require,module,exports){
 arguments[4][131][0].apply(exports,arguments)
-},{"dup":131,"lodash.isarguments":189,"lodash.isarray":190}],196:[function(require,module,exports){
+},{"dup":131,"lodash.isarguments":187,"lodash.isarray":188}],194:[function(require,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -13741,6 +13497,6 @@ function toPlainObject(value) {
 
 module.exports = toPlainObject;
 
-},{"lodash._basecopy":197,"lodash.keysin":195}],197:[function(require,module,exports){
+},{"lodash._basecopy":195,"lodash.keysin":193}],195:[function(require,module,exports){
 arguments[4][48][0].apply(exports,arguments)
 },{"dup":48}]},{},[1]);
