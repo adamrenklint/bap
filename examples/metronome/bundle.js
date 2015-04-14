@@ -283,7 +283,7 @@ var Layer = Model.extend(triggerParams, volumeParams, {
       params.length = this.lengthFromDuration(params.duration);
     }
 
-    var source = this[event](time, params);
+    var source = this[event](time, params, this.context.destination);
     if (params.length) {
       setTimeout(function () {
         var stopTime = time + params.length;
@@ -396,12 +396,12 @@ var Oscillator = Layer.extend(oscillatorParams, {
 
   type: 'oscillator',
 
-  start: function (time, params) {
+  start: function (time, params, out) {
     time = time || this.context.currentTime;
 
     var gain = this.context.createGain();
     var volume = (params.volume || 100) / 100;
-    gain.connect(this.context.destination);
+    gain.connect(out);
     gain.gain.setValueAtTime(0, time);
     gain.gain.linearRampToValueAtTime(volume, time + params.attack);
 
