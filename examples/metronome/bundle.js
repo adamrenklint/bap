@@ -246,7 +246,7 @@ var KitsConnectionModel = Model.extend({
     var kitId = note.key.slice(0, 1);
     var slotId = parseInt(note.key.slice(1), 10);
     var kit = this[kitId];
-    if (kit) {
+    if (kit && !kit.mute) {
       kit.slot(slotId).runEvent(event, time, note, channel, kit);
     }
     else {
@@ -283,8 +283,8 @@ var Layer = Model.extend(triggerParams, volumeParams, {
       params.length = this.lengthFromDuration(params.duration);
     }
 
-    var source = this[event](time, params, this.context.destination);
-    if (params.length) {
+    var source = this[event](time, params);
+    if (source && params.length) {
       setTimeout(function () {
         var stopTime = time + params.length;
         this.stop(stopTime, params, source);
@@ -300,12 +300,45 @@ var Layer = Model.extend(triggerParams, volumeParams, {
     return duration * secondsPerTick;
   },
 
-  start: function (time, params) {
-    console.warn('start should be implemented by Layer subclass: ' + this.type);
+  source: function (params) {},
+
+  output: function () {
+    return this.context.destination;
   },
 
-  stop: function (time, params) {
-    console.warn('stop should be implemented by Layer subclass: ' + this.type);
+  configureAttack: function (time, params, gain) {
+    var volume = (params.volume || 100) / 100;
+    gain.connect(this.output());
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(volume, time + params.attack);
+    return gain;
+  },
+
+  configureRelease: function (time, params, gain) {
+    var volume = (params.volume || 100) / 100;
+    gain.gain.setValueAtTime(volume, time);
+    gain.gain.linearRampToValueAtTime(0, time + params.release);
+  },
+
+  start: function (time, params) {
+    if (this.mute) { return; }
+    
+    time = time || this.context.currentTime;
+    var source = this.source(params);
+
+    if (source) {
+      var gain = source.gain = this.context.createGain();
+      this.configureAttack(time, params, gain);
+      source.connect(gain);
+      source.start(time);
+      return source;
+    }
+  },
+
+  stop: function (time, params, source) {
+    time = time || this.context.currentTime;
+    this.configureRelease(time, params, source.gain);
+    source.stop(time + params.release);
   }
 });
 
@@ -364,7 +397,9 @@ var Note = PositionModel.extend(triggerParams, volumeParams, oscillatorParams, {
   },
 
   start: function (time) {
-    this.trigger('start', time, this);
+    if (!this.mute) {
+      this.trigger('start', time, this);
+    }
   },
 
   stop: function (time) {
@@ -396,32 +431,10 @@ var Oscillator = Layer.extend(oscillatorParams, {
 
   type: 'oscillator',
 
-  start: function (time, params, out) {
-    time = time || this.context.currentTime;
-
-    var gain = this.context.createGain();
-    var volume = (params.volume || 100) / 100;
-    gain.connect(out);
-    gain.gain.setValueAtTime(0, time);
-    gain.gain.linearRampToValueAtTime(volume, time + params.attack);
-
+  source: function (params) {
     var oscillator = this.context.createOscillator();
-
-    oscillator.connect(gain);
-    oscillator.gain = gain;
     oscillator.frequency.value = params.frequency;
-    oscillator.start(time);
-
     return oscillator;
-  },
-
-  stop: function (time, params, oscillator) {
-    time = time || this.context.currentTime;
-    var gain = oscillator.gain;
-    var volume = (params.volume || 100) / 100;
-    gain.gain.setValueAtTime(volume, time);
-    gain.gain.linearRampToValueAtTime(0, time + params.release);
-    oscillator.stop(time + params.release);
   }
 });
 
@@ -618,6 +631,7 @@ var Slot = Model.extend(triggerParams, volumeParams, {
   },
 
   runEvent: function (event, time, note, channel, kit) {
+    if (this.mute && event === 'start') { return; }
     this.layers.each(function (layer) {
       layer.runEvent(event, time, note, channel, this, kit);
     }.bind(this));
