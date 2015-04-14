@@ -30,29 +30,33 @@ pattern2.channel(1).add(
   ['*.*.01', 'A1', 10]
 );
 
+pattern.use('A', kit).start();
 // pattern are automatically looped, sequences are not
-setTimeout(function () {
-  pattern.use('A', kit).start();
-
-  setTimeout(function () {
-    pattern2.use('A', kit).start();
-
-    setTimeout(function () {
-      pattern2.stop();
-      setTimeout(function () {
-        pattern2.playing = true;
-        return;
-        setTimeout(function () {
-          bap.clock.playing = false;
-          setTimeout(function () {
-            pattern2.playing = true;
-          }, 1000);
-        }, 1500);
-      }, 1000);
-    }, 1000);
-  }, 1500);
-
-}, 500);
+// setTimeout(function () {
+//   pattern.use('A', kit).start();
+//   // return;
+//
+//   setTimeout(function () {
+//     pattern2.use('A', kit).start();
+//
+//     setTimeout(function () {
+//       pattern2.stop();
+//       setTimeout(function () {
+//         pattern2.playing = true;
+//         setTimeout(function () {
+//           // bap.clock.position = '1.1.45';
+//           bap.clock.playing = false;
+//           // return;
+//
+//           setTimeout(function () {
+//             pattern.playing = true;
+//           }, 1000);
+//         }, 1500);
+//       }, 1000);
+//     }, 1000);
+//   }, 1500);
+//
+// }, 0);
 
 // window.pattern = pattern;
 // window.bap = bap;

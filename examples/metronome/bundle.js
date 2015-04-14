@@ -31,29 +31,33 @@ pattern2.channel(1).add(
   ['*.*.01', 'A1', 10]
 );
 
+pattern.use('A', kit).start();
 // pattern are automatically looped, sequences are not
-setTimeout(function () {
-  pattern.use('A', kit).start();
-
-  setTimeout(function () {
-    pattern2.use('A', kit).start();
-
-    setTimeout(function () {
-      pattern2.stop();
-      setTimeout(function () {
-        pattern2.playing = true;
-        return;
-        setTimeout(function () {
-          bap.clock.playing = false;
-          setTimeout(function () {
-            pattern2.playing = true;
-          }, 1000);
-        }, 1500);
-      }, 1000);
-    }, 1000);
-  }, 1500);
-
-}, 500);
+// setTimeout(function () {
+//   pattern.use('A', kit).start();
+//   // return;
+//
+//   setTimeout(function () {
+//     pattern2.use('A', kit).start();
+//
+//     setTimeout(function () {
+//       pattern2.stop();
+//       setTimeout(function () {
+//         pattern2.playing = true;
+//         setTimeout(function () {
+//           // bap.clock.position = '1.1.45';
+//           bap.clock.playing = false;
+//           // return;
+//
+//           setTimeout(function () {
+//             pattern.playing = true;
+//           }, 1000);
+//         }, 1500);
+//       }, 1000);
+//     }, 1000);
+//   }, 1500);
+//
+// }, 0);
 
 // window.pattern = pattern;
 // window.bap = bap;
@@ -167,6 +171,7 @@ var Clock = PositionModel.extend({
 
     this.on('change:playing', this.onChangePlaying.bind(this));
     this.on('change:sequence', this.onChangeSequence.bind(this));
+    this.on('change:position', this.onChangePosition.bind(this));
 
     this.scheduler = new Dilla(this.context);
     this.scheduler.on('tick', this.onSchedulerTick.bind(this));
@@ -187,7 +192,13 @@ var Clock = PositionModel.extend({
 
   onChangeSequence: function () {
     this.schedule(this.sequence, 'sequence');
-    this.scheduler.setPosition('1.1.01')
+    this.position = '1.1.01';
+  },
+
+  onChangePosition: function () {
+    if (this.position !== '0.0.00' && this.position !== this.scheduler._position) {
+      this.scheduler.setPosition(this.position);
+    }
   },
 
   start: function (sequence) {
@@ -200,6 +211,12 @@ var Clock = PositionModel.extend({
 
     this.scheduler.start();
     this.playing = true;
+
+    // hack to avoid dropped notes, i.e. notes that were already scheduled
+    // and played eagerly before a pause, and now needs to be scheduled again
+    if (!sequence && this.sequence) {
+      this.scheduler.setPosition(this.position)
+    }
   },
 
   pause: function (sequence) {
@@ -662,7 +679,7 @@ var PositionModel = Model.extend({
       var fragments = this.position.split('.');
       ['bar', 'beat', 'tick'].forEach(function (key, index) {
         var n = parseInt(fragments[index], 10);
-        this[key] = isNaN(n) || n < 1 ? undefined : n;
+        this.set(key, isNaN(n) || n < 1 ? undefined : n, { silent: true });
       }.bind(this));
     }
   },
@@ -853,7 +870,7 @@ function instanceOf (type, Constructor) {
         if (currentVal) {
           this.stopListening(currentVal);
         }
-        if (newVal != null) {
+        if (newVal !== null) {
           this.listenTo(newVal, 'all', this._getEventBubblingHandler(attributeName));
         }
       }
@@ -888,7 +905,7 @@ function instanceOfType (type, types) {
         if (currentVal) {
           this.stopListening(currentVal);
         }
-        if (newVal != null) {
+        if (newVal !== null) {
           this.listenTo(newVal, 'all', this._getEventBubblingHandler(attributeName));
         }
       }
