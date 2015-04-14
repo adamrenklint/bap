@@ -29,6 +29,18 @@ pattern2.channel(1).add(
 pattern.use('A', kit).start();
 // pattern are automatically looped, sequences are not
 // setTimeout(function () {
+//   // pattern.tempo = 160;
+//   pattern.pause();
+//
+//   setTimeout(function () {
+//     pattern.channel(2).add(
+//       ['*.*.40', 'A1', 20]
+//     );
+//     pattern.start();
+//   }, 1000)
+//
+//       // pattern2.use('A', kit).start();
+// }, 2000);
 //   pattern.use('A', kit).start();
 //   // return;
 //
@@ -42,10 +54,9 @@ pattern.use('A', kit).start();
 //         setTimeout(function () {
 //           // bap.clock.position = '1.1.45';
 //           bap.clock.playing = false;
-//           // return;
-//
 //           setTimeout(function () {
-//             pattern.playing = true;
+//             pattern.start();
+//             // pattern.playing = true;
 //           }, 1000);
 //         }, 1500);
 //       }, 1000);
