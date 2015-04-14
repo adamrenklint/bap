@@ -25,9 +25,33 @@ pattern.channel(1).add(
   // ['*.!1.01', 'A2']
 );
 
+var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
+pattern2.channel(1).add(
+  ['*.*.01', 'A1', 10]
+);
+
 // pattern are automatically looped, sequences are not
 setTimeout(function () {
   pattern.use('A', kit).start();
+
+  setTimeout(function () {
+    pattern2.use('A', kit).start();
+
+    setTimeout(function () {
+      pattern2.stop();
+      setTimeout(function () {
+        pattern2.playing = true;
+        return;
+        setTimeout(function () {
+          bap.clock.playing = false;
+          setTimeout(function () {
+            pattern2.playing = true;
+          }, 1000);
+        }, 1500);
+      }, 1000);
+    }, 1000);
+  }, 1500);
+
 }, 500);
 
 // window.pattern = pattern;
