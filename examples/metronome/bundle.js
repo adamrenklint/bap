@@ -285,10 +285,8 @@ var Layer = Model.extend(triggerParams, volumeParams, {
 
     var source = this[event](time, params);
     if (source && params.length) {
-      setTimeout(function () {
-        var stopTime = time + params.length;
-        this.stop(stopTime, params, source);
-      }.bind(this));
+      var stopTime = time + params.length;
+      this.stop(stopTime, params, source);
     }
   },
 
@@ -322,7 +320,7 @@ var Layer = Model.extend(triggerParams, volumeParams, {
 
   start: function (time, params) {
     if (this.mute) { return; }
-    
+
     time = time || this.context.currentTime;
     var source = this.source(params);
 
