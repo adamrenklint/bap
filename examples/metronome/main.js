@@ -5,7 +5,7 @@ var basic = bap.oscillator({
   'attack': 0.001,
   'release': 0.1,
   'duration': 10,
-  'length': 0.5
+  // 'length': 0.5
 });
 // simple way
 var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));

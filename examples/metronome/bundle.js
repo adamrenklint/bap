@@ -6,7 +6,7 @@ var basic = bap.oscillator({
   'attack': 0.001,
   'release': 0.1,
   'duration': 10,
-  'length': 0.5
+  // 'length': 0.5
 });
 // simple way
 var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
@@ -101,14 +101,12 @@ var Channel = Model.extend(volumeParams, {
   },
 
   start: function (time, note) {
-    time = time || this.context.currentTime;
     if (!this.mute) {
       this.trigger('start', time, note, this);
     }
   },
 
   stop: function (time, note) {
-    time = time || this.context.currentTime;
     this.trigger('stop', time, note, this);
   },
 
@@ -159,6 +157,9 @@ var Clock = PositionModel.extend({
       this.playing = true;
     }
   },
+
+  // TODO: implement this
+  stop: function () {},
 
   schedule: function (sequence) {
     this.scheduler.setBeatsPerBar(sequence.beatsPerBar);
@@ -281,13 +282,14 @@ var Layer = Model.extend(triggerParams, volumeParams, {
       // this.vent.trigger('transform:durationToLength', params);
       params.length = this.lengthFromDuration(params.duration);
     }
+
+    var source = this[event](time, params);
     if (params.length) {
       setTimeout(function () {
         var stopTime = time + params.length;
-        this.stop(stopTime, params);
+        this.stop(stopTime, params, source);
       }.bind(this));
     }
-    this[event](time, params);
   },
 
   lengthFromDuration: function (duration) {
@@ -362,12 +364,10 @@ var Note = PositionModel.extend(triggerParams, volumeParams, oscillatorParams, {
   },
 
   start: function (time) {
-    time = time || this.context.currentTime;
     this.trigger('start', time, this);
   },
 
   stop: function (time) {
-    time = time || this.context.currentTime;
     this.trigger('stop', time, this);
   }
 });
@@ -405,22 +405,20 @@ var Oscillator = Layer.extend(oscillatorParams, {
     gain.gain.setValueAtTime(0, time);
     gain.gain.linearRampToValueAtTime(volume, time + params.attack);
 
-    // TODO: need a better transport system for the source, if the sounds triggers again before the prev stop event, one node is left hanging
-    var oscillator = this.s = this.context.createOscillator();
+    var oscillator = this.context.createOscillator();
 
     oscillator.connect(gain);
     oscillator.gain = gain;
     oscillator.frequency.value = params.frequency;
-
     oscillator.start(time);
+
+    return oscillator;
   },
 
-
-  stop: function (time, params) {
+  stop: function (time, params, oscillator) {
     time = time || this.context.currentTime;
-    var oscillator = this.s;
-    var volume = (params.volume || 100) / 100;
     var gain = oscillator.gain;
+    var volume = (params.volume || 100) / 100;
     gain.gain.setValueAtTime(volume, time);
     gain.gain.linearRampToValueAtTime(0, time + params.release);
     oscillator.stop(time + params.release);
