@@ -14,15 +14,11 @@ var nextSlot = bap.slot();
 nextSlot.layer(basic.with({ 'frequency': 440 }));
 var plong = kit.slot(2, nextSlot);
 
-var pattern = bap.pattern(/*1 bar, 4 beats per bar*/);
+var pattern = bap.pattern({ 'bars': 2, 'tempo': 90 });
 pattern.channel(1).add(
-  ['*.1.01', 'A1', 40, 50, -50, -50],
-  // ['*.1.01', 'A1'],
-  ['*.2.01', 'A2'],
-  ['*.3.01', 'A2'],
-  ['*.4.01', 'A2']
-  // ['*.2+.01', 'A2', 10]
-  // ['*.!1.01', 'A2']
+  // ['*.1.01', 'A1', 40, 50, -50, -50],
+  ['*.1.01', 'A1'],
+  ['*.2%1.01', 'A2']
 );
 
 var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);

@@ -15,15 +15,11 @@ var nextSlot = bap.slot();
 nextSlot.layer(basic.with({ 'frequency': 440 }));
 var plong = kit.slot(2, nextSlot);
 
-var pattern = bap.pattern(/*1 bar, 4 beats per bar*/);
+var pattern = bap.pattern({ 'bars': 2, 'tempo': 90 });
 pattern.channel(1).add(
-  ['*.1.01', 'A1', 40, 50, -50, -50],
-  // ['*.1.01', 'A1'],
-  ['*.2.01', 'A2'],
-  ['*.3.01', 'A2'],
-  ['*.4.01', 'A2']
-  // ['*.2+.01', 'A2', 10]
-  // ['*.!1.01', 'A2']
+  // ['*.1.01', 'A1', 40, 50, -50, -50],
+  ['*.1.01', 'A1'],
+  ['*.2%1.01', 'A2']
 );
 
 var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
@@ -12725,18 +12721,20 @@ function makeExpressionFunction (expression) {
       if (exprFragment === 'odd' && positionFragments[index] % 2 === 1) return;
       if (exprFragment === '*') return;
 
-      // console.log('foo', exprFragment, typeof exprFragment);
       if (typeof exprFragment === 'string' && exprFragment.indexOf('%') >= 0) {
-        // console.log(exprFragment)
-
         var nums = exprFragment.split('%');
         var offset = parseInt(nums[0] || 1, 10);
         var mod = parseInt(nums[1], 10);
-        var res = (positionFragments[index] - offset) % mod;
-        if (!res) return;
+        var value = positionFragments[index] - offset;
+        if (mod === 1) {
+          if (value >= 0) return;
+        }
+        else {
+          var res = value % mod;
+          if (!res) return;
+        }
       }
       // position is invalid, break out early
-      // console.log('>', position, positionFragments);
       valid = false;
       return true;
     });
