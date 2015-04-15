@@ -160,6 +160,13 @@ var PositionModel = require('./PositionModel');
 var Dilla = require('dilla');
 var instanceOfType = require('./types/instanceOfType');
 
+var dillaOptions = {
+  expandNote: function (note) {
+    note[1] = note[1].ghost();
+    return note;
+  }
+};
+
 var Clock = PositionModel.extend({
 
   type: 'clock',
@@ -180,12 +187,7 @@ var Clock = PositionModel.extend({
     this.on('change:sequence', this.onChangeSequence.bind(this));
     this.on('change:position', this.onChangePosition.bind(this));
 
-    this.scheduler = new Dilla(this.context, {
-      expandNote: function (note) {
-        note[1] = note[1].ghost();
-        return note;
-      }
-    });
+    this.scheduler = new Dilla(this.context, dillaOptions);
     this.scheduler.on('tick', this.onSchedulerTick.bind(this));
     this.scheduler.on('step', this.onSchedulerStep.bind(this));
 
