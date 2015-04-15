@@ -28,55 +28,17 @@ pattern2.channel(1).add(
 
 pattern.use('A', kit).start();
 
-
-// function trigger () {
-//   nextSlot.start();
-//   setTimeout(trigger, 1000);
-// }
-// trigger();
-
-
-
-// pattern are automatically looped, sequences are not
 // setTimeout(function () {
-//   // pattern.tempo = 160;
 //   pattern.pause();
-//
 //   setTimeout(function () {
-//     pattern.channel(2).add(
-//       ['*.*.40', 'A1', 20]
+//     pattern.channel(1).add(
+//       ['*.1.49', 'A2']
 //     );
+//
 //     pattern.start();
-//   }, 1000)
-//
-//       // pattern2.use('A', kit).start();
-// }, 2000);
-//   pattern.use('A', kit).start();
-//   // return;
-//
-//   setTimeout(function () {
-//     pattern2.use('A', kit).start();
-//
-//     setTimeout(function () {
-//       pattern2.stop();
-//       setTimeout(function () {
-//         pattern2.playing = true;
-//         setTimeout(function () {
-//           // bap.clock.position = '1.1.45';
-//           bap.clock.playing = false;
-//           setTimeout(function () {
-//             pattern.start();
-//             // pattern.playing = true;
-//           }, 1000);
-//         }, 1500);
-//       }, 1000);
-//     }, 1000);
 //   }, 1500);
-//
-// }, 0);
+// }, 1500);
 
-// window.pattern = pattern;
-// window.bap = bap;
 
 var positionEl = document.getElementById('position');
 function draw () {
@@ -197,14 +159,14 @@ var Clock = PositionModel.extend({
     this.on('change:position', this.onChangePosition.bind(this));
 
     this.scheduler = new Dilla(this.context, dillaOptions);
-    this.listenTo(this.scheduler, 'tick', this.onSchedulerTick);
-    this.listenTo(this.scheduler, 'step', this.onSchedulerStep);
+    this.listenTo(this.scheduler, 'tick', this.onSchedulerTick.bind(this));
+    this.listenTo(this.scheduler, 'step', this.onSchedulerStep.bind(this));
 
-    this.listenTo(this.vent, 'clock:start', this.start);
-    this.listenTo(this.vent, 'clock:pause', this.pause);
-    this.listenTo(this.vent, 'clock:stop', this.stop);
+    this.listenTo(this.vent, 'clock:start', this.start.bind(this));
+    this.listenTo(this.vent, 'clock:pause', this.pause.bind(this));
+    this.listenTo(this.vent, 'clock:stop', this.stop.bind(this));
     // this feels like a dirty way of using a global event bus :/
-    this.listenTo(this.vent, 'clock:tempo', this.applySequenceTempo);
+    this.listenTo(this.vent, 'clock:tempo', this.applySequenceTempo.bind(this));
   },
 
   onChangePlaying: function () {
@@ -219,6 +181,7 @@ var Clock = PositionModel.extend({
     var old = this._previousAttributes.sequence;
     if (old) {
       this.stopListening(old);
+      // old.detachGhosts();
     }
     this.bindAndTriggerSequenceAttribute('tempo', 'setTempo');
     this.bindAndTriggerSequenceAttribute('bars', 'setLoopLength');
@@ -290,13 +253,16 @@ var Clock = PositionModel.extend({
     this.scheduler.setBeatsPerBar(sequence.beatsPerBar);
     this.scheduler.setLoopLength(sequence.bars);
     this.scheduler.setTempo(sequence.tempo);
+    // console.log('schedule');
     this.scheduler.set(name, sequence.notes().map(function (note) {
       return [note.position, note];
     }));
   },
 
   onSchedulerTick: function (tick) {
-    this.position = tick.position;
+    if (tick.position !== '0.0.00') {
+      this.position = tick.position;
+    }
   },
 
   onSchedulerStep: function (step) {
@@ -546,7 +512,8 @@ var Note = PositionModel.extend(triggerParams, volumeParams, oscillatorParams, {
   type: 'note',
 
   props: {
-    key: ['key', false]
+    key: ['key', false],
+    ghosts: ['array', true, function () { return []; }]
   },
 
   dataTypes: {
@@ -568,7 +535,15 @@ var Note = PositionModel.extend(triggerParams, volumeParams, oscillatorParams, {
     var newNote = this.with(state);
     this.listenTo(newNote, 'start', this.start);
     this.listenTo(newNote, 'stop', this.stop);
+    this.ghosts.push(newNote);
     return newNote;
+  },
+
+  detachGhosts: function () {
+    this.ghosts.forEach(function (ghost) {
+      this.stopListening(ghost);
+    }.bind(this));
+    this.ghosts = [];
   }
 });
 
