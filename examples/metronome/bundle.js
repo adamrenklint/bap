@@ -14,7 +14,7 @@ var nextSlot = bap.slot();
 nextSlot.layer(basic.with({ 'frequency': 440 }));
 kit.slot(2, nextSlot);
 
-var pattern = bap.pattern({ 'bars': 2, 'tempo': 90 });
+var pattern = bap.pattern({ 'bars': 2, 'tempo': 120 });
 pattern.channel(1).add(
   // ['*.1.01', 'A1', 40, 50, -50, -50],
   ['*.1.01', 'A1'],
@@ -197,12 +197,14 @@ var Clock = PositionModel.extend({
     this.on('change:position', this.onChangePosition.bind(this));
 
     this.scheduler = new Dilla(this.context, dillaOptions);
-    this.scheduler.on('tick', this.onSchedulerTick.bind(this));
-    this.scheduler.on('step', this.onSchedulerStep.bind(this));
+    this.listenTo(this.scheduler, 'tick', this.onSchedulerTick);
+    this.listenTo(this.scheduler, 'step', this.onSchedulerStep);
 
-    this.vent.on('clock:start', this.start.bind(this));
-    this.vent.on('clock:pause', this.pause.bind(this));
-    this.vent.on('clock:stop', this.stop.bind(this));
+    this.listenTo(this.vent, 'clock:start', this.start);
+    this.listenTo(this.vent, 'clock:pause', this.pause);
+    this.listenTo(this.vent, 'clock:stop', this.stop);
+    // this feels like a dirty way of using a global event bus :/
+    this.listenTo(this.vent, 'clock:tempo', this.applySequenceTempo);
   },
 
   onChangePlaying: function () {
@@ -236,6 +238,12 @@ var Clock = PositionModel.extend({
     }.bind(this);
     this.listenTo(this.sequence, 'change:' + key, handler);
     handler();
+  },
+
+  applySequenceTempo: function (target) {
+    if (this.sequence) {
+      target.tempo = this.sequence.tempo;
+    }
   },
 
   onChangePosition: function () {
@@ -393,14 +401,6 @@ var Layer = Model.extend(triggerParams, volumeParams, {
 
   type: 'layer',
 
-  lengthFromDuration: function (duration) {
-    // TODO: shouldn't be hardcoded :)
-    var bpm = 120;
-    var secondsPerBeat = 60 / bpm;
-    var secondsPerTick = secondsPerBeat / 96;
-    return duration * secondsPerTick;
-  },
-
   params: function (note, channel) {
     var slot = this.collection && this.collection.parent || {};
     var kit = slot && slot.collection && slot.collection.parent || {};
@@ -416,14 +416,8 @@ var Layer = Model.extend(triggerParams, volumeParams, {
       note = time;
       time = this.context.currentTime;
     }
+
     var params = this.params(note, channel);
-
-    // TODO: move this into params?
-    if (!params.length && params.duration) {
-      // this.vent.trigger('transform:durationToLength', params);
-      params.length = this.lengthFromDuration(params.duration);
-    }
-
     var source = this.source(params);
 
     if (source) {
@@ -432,10 +426,8 @@ var Layer = Model.extend(triggerParams, volumeParams, {
       source.connect(gain);
       source.start(time);
 
-      if (params.length) {
-        var stopTime = time + params.length;
-        this.stop(stopTime, params, source);
-      }
+      var stopTime = time + params.length;
+      this.stop(stopTime, params, source);
     }
   },
 
@@ -618,9 +610,30 @@ var Model = require('./Model');
 var triggerParams = require('./mixins/triggerParams');
 var volumeParams = require('./mixins/volumeParams');
 var oscillatorParams = require('./mixins/oscillatorParams');
+var numberInRangeType = require('./types/numberInRange');
 
 var Params = Model.extend(triggerParams, volumeParams, oscillatorParams, {
-  type: 'params'
+  type: 'params',
+
+  props: {
+    tempo: ['positiveNumber', true, 120]
+  },
+
+  dataTypes: {
+    positiveNumber: numberInRangeType('positiveNumber', 1, Infinity)
+  },
+
+  initialize: function () {
+    Model.prototype.initialize.apply(this, arguments);
+    this.vent.trigger('clock:tempo', this);
+    this.length = this.length || this.duration && this.lengthFromDuration(this.duration) || 1;
+  },
+
+  lengthFromDuration: function (duration) {
+    var secondsPerBeat = 60 / this.tempo;
+    var secondsPerTick = secondsPerBeat / 96;
+    return duration * secondsPerTick;
+  }
 });
 
 Params.fromSources = function () {
@@ -666,7 +679,7 @@ Params.fromSources = function () {
 
 module.exports = Params;
 
-},{"./Model":10,"./mixins/oscillatorParams":17,"./mixins/triggerParams":19,"./mixins/volumeParams":20}],14:[function(require,module,exports){
+},{"./Model":10,"./mixins/oscillatorParams":17,"./mixins/triggerParams":19,"./mixins/volumeParams":20,"./types/numberInRange":23}],14:[function(require,module,exports){
 var Model = require('./Model');
 var Channel = require('./Channel');
 var Collection = require('./Collection');
@@ -832,31 +845,6 @@ var Slot = Model.extend(triggerParams, volumeParams, {
 }, overloadedAccessor('layer', Layer));
 
 module.exports = Slot;
-
-
-
-
-// // layer (src) > create and return new layer with sample with src
-// // layer (sample) > create and return new layer with sample with src
-//
-// // layers() > array of layers
-//
-// // remove(layer)
-// // clear(index)
-// // clearAll > remove all layers on slot
-//
-// var Base = require('./Base');
-// var inherits = require('util').inherits;
-//
-// function Slot (options) {
-//
-//   options = options || {};
-//   Base.call(this, options);
-// }
-//
-// inherits(Slot, Base);
-//
-// module.exports = Slot;
 
 },{"./Collection":6,"./Layer":9,"./Model":10,"./mixins/overloadedAccessor":18,"./mixins/triggerParams":19,"./mixins/volumeParams":20}],17:[function(require,module,exports){
 var numberInRangeType = require('../types/numberInRange');

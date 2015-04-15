@@ -13,7 +13,7 @@ var nextSlot = bap.slot();
 nextSlot.layer(basic.with({ 'frequency': 440 }));
 kit.slot(2, nextSlot);
 
-var pattern = bap.pattern({ 'bars': 2, 'tempo': 90 });
+var pattern = bap.pattern({ 'bars': 2, 'tempo': 120 });
 pattern.channel(1).add(
   // ['*.1.01', 'A1', 40, 50, -50, -50],
   ['*.1.01', 'A1'],
