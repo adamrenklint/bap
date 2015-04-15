@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <title>Bap metronome example</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/monokai_sublime.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Source+Serif+Pro:400,700' rel='stylesheet' type='text/css'>
     <style>
       body {
@@ -25,7 +27,7 @@
       }
       .content {
         margin: 30px 40px;
-        max-width: 500px;
+        max-width: 700px;
       }
       .control {
         font-weight: bold;
@@ -33,27 +35,51 @@
       .control:hover {
         cursor: pointer;
       }
+      pre {
+        font-size: 80%;
+      }
       a {
         text-decoration: none;
         font-weight: bold;
         color: #444;
       }
+      #menu {
+        list-style: none;
+      }
+      #menu li {
+        display: inline-block;
+        padding-right: 15px;
+      }
+      #menu li a {
+        font-weight: normal;
+      }
+      #menu li:hover {
+        color: #3c7fc1;
+        cursor: pointer;
+      }
+      #menu li.active a {
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
+    <ul id="menu">
+      <li><a href="#metronome">metronome</a></li>
+      <li><a href="#boombap">boombap beat</a></li>
+    </ul>
     <div class="hero">
-      <h1>Bap metronome example</h1>
+      <h1>Example: <span id="example-name"></span></h1>
     </div>
     <div class="content">
-      <p>Just a simple metronome made with Bap to test playback, looping and note expressions.</p>
+      <p id="description"></p>
 
       <ul>
         <li>Position <strong id="position">0.0.00</strong></li>
-        <li>Clock position <strong id="clockPosition">0</strong></li>
-        <li>Clock time <strong id="clockTime">0</strong></li>
       </ul>
 
-      <p>Made by <a href="http://adamrenklint.com">Adam Renklint</a> in April 2015.</p>
+      <pre><code id="source" class="javascript"></code></pre>
+
+      <p>Made with <a href="">Bap</a> by <a href="http://adamrenklint.com">Adam Renklint</a> in April 2015.</p>
     </div>
     <script src="bundle.js"></script>
   </body>

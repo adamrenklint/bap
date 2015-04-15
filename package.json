@@ -35,9 +35,9 @@
     "codeclimateCoverageId": "2e7a3b0c2e5c9d2b9ae79b528f98a3adb26efe2539425721323129199815df04"
   },
   "scripts": {
-    "prestart": "watchify examples/metronome/main.js -o examples/metronome/bundle.js -v &",
+    "prestart": "watchify examples/main.js -o examples/bundle.js -v &",
     "start": "node node_modules/3w/3w.js examples --3000",
-    "build": "browserify examples/metronome/main.js -o example/bundle.js",
+    "build": "browserify examples/main.js -o examples/bundle.js",
     "test": "mocha -s 10 test/**/*.test.js",
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",
