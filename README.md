@@ -27,18 +27,22 @@ $ npm install --save bap
 ```js
 var bap = require('bap');
 
+// a kit is like an instrument, or program in mpc terms
 var kit = bap.kit();
 var oscillator = bap.oscillator({
   frequency: 440,
   duration: 48
 });
+// a kit connects infinite slots with infinite layers
 kit.slot(1).layer(oscillator);
 
+// a pattern is a loop made up of channels and notes
 var pattern = bap.pattern();
 pattern.channel(1).add(
   ['*.*.01', 'A1']
 );
 
+// connect the kit, and play
 pattern.use('A', kit).start();
 ```
 

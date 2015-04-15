@@ -1,6 +1,7 @@
 {
   "name": "bap",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "versionName": "damu",
   "description": "Beatmaking and sequence composition toolkit, using Javascript and Web Audio",
   "main": "index.js",
   "repository": {
