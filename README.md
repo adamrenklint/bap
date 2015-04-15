@@ -14,15 +14,37 @@ Made by [Adam Renklint](http://adamrenklint.com)
 
 > Public demos, examples
 
+inspired by mpc workflow/concepts
+
 ## Install
 
-## Usage
+```sh
+$ npm install --save bap
+```
 
-### Example: metronome
+## Usage
 
 ```js
 var bap = require('bap');
 
+var kit = bap.kit();
+var oscillator = bap.oscillator({
+  frequency: 440,
+  duration: 48
+});
+kit.slot(1).layer(oscillator);
+
+var pattern = bap.pattern();
+pattern.channel(1).add(
+  ['*.*.01', 'A1']
+);
+
+pattern.use('A', kit).start();
+```
+
+### Example: metronome
+
+```js
 var kit = bap.kit();
 var basic = bap.oscillator({
   attack: 0.001,
@@ -31,7 +53,7 @@ var basic = bap.oscillator({
 });
 
 // simple way
-var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
+kit.slot(1).layer(basic.with({ 'frequency': 330 }));
 
 // more verbose: create, build, then assign
 var nextSlot = bap.slot();
@@ -46,6 +68,10 @@ pattern.channel(1).add(
 
 pattern.use('A', kit).start();
 ```
+
+### Example: drums
+
+
 
 ## API
 
