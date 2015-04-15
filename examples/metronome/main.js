@@ -2,17 +2,16 @@ var bap = require('../../index');
 
 var kit = bap.kit();
 var basic = bap.oscillator({
-  'attack': 0.001,
-  'release': 0.1,
-  'duration': 10,
-  // 'length': 0.5
+  attack: 0.001,
+  release: 0.1,
+  duration: 10
 });
 // simple way
 var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
 // more verbose: create, build, then assign
 var nextSlot = bap.slot();
 nextSlot.layer(basic.with({ 'frequency': 440 }));
-var plong = kit.slot(2, nextSlot);
+kit.slot(2, nextSlot);
 
 var pattern = bap.pattern({ 'bars': 2, 'tempo': 90 });
 pattern.channel(1).add(
@@ -27,6 +26,16 @@ pattern2.channel(1).add(
 );
 
 pattern.use('A', kit).start();
+
+
+// function trigger () {
+//   nextSlot.start();
+//   setTimeout(trigger, 1000);
+// }
+// trigger();
+
+
+
 // pattern are automatically looped, sequences are not
 // setTimeout(function () {
 //   // pattern.tempo = 160;

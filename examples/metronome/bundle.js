@@ -3,17 +3,16 @@ var bap = require('../../index');
 
 var kit = bap.kit();
 var basic = bap.oscillator({
-  'attack': 0.001,
-  'release': 0.1,
-  'duration': 10,
-  // 'length': 0.5
+  attack: 0.001,
+  release: 0.1,
+  duration: 10
 });
 // simple way
 var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
 // more verbose: create, build, then assign
 var nextSlot = bap.slot();
 nextSlot.layer(basic.with({ 'frequency': 440 }));
-var plong = kit.slot(2, nextSlot);
+kit.slot(2, nextSlot);
 
 var pattern = bap.pattern({ 'bars': 2, 'tempo': 90 });
 pattern.channel(1).add(
@@ -28,6 +27,16 @@ pattern2.channel(1).add(
 );
 
 pattern.use('A', kit).start();
+
+
+// function trigger () {
+//   nextSlot.start();
+//   setTimeout(trigger, 1000);
+// }
+// trigger();
+
+
+
 // pattern are automatically looped, sequences are not
 // setTimeout(function () {
 //   // pattern.tempo = 160;
@@ -356,7 +365,7 @@ var KitsConnectionModel = Model.extend({
     var slotId = parseInt(note.key.slice(1), 10);
     var kit = this[kitId];
     if (kit && !kit.mute) {
-      kit.slot(slotId).runEvent(event, time, note, channel, kit);
+      kit.slot(slotId)[event](time, note, channel);
     }
     else {
       console.warn('No kit found for ' + note.key, note);
@@ -384,27 +393,65 @@ var Layer = Model.extend(triggerParams, volumeParams, {
 
   type: 'layer',
 
-  runEvent: function (event, time, note, channel, slot, kit) {
-    var params = Params.fromSources(note, channel, this, slot, kit);
-    // if (!note.duration && params.duration) {
-    if (!params.length && params.duration) {
-      // this.vent.trigger('transform:durationToLength', params);
-      params.length = this.lengthFromDuration(params.duration);
-    }
-
-    var source = this[event](time, params);
-    if (source && params.length) {
-      var stopTime = time + params.length;
-      this.stop(stopTime, params, source);
-    }
-  },
-
   lengthFromDuration: function (duration) {
     // TODO: shouldn't be hardcoded :)
     var bpm = 120;
     var secondsPerBeat = 60 / bpm;
     var secondsPerTick = secondsPerBeat / 96;
     return duration * secondsPerTick;
+  },
+
+  params: function (note, channel) {
+    var slot = this.collection && this.collection.parent || {};
+    var kit = slot && slot.collection && slot.collection.parent || {};
+    var sources = [note, channel, this, slot, kit];
+    return Params.fromSources.apply(null, sources);
+  },
+
+  start: function (time, note, channel) {
+    if (this.mute) { return; }
+
+    if (typeof time !== 'number') {
+      channel = note;
+      note = time;
+      time = this.context.currentTime;
+    }
+    var params = this.params(note, channel);
+
+    // TODO: move this into params?
+    if (!params.length && params.duration) {
+      // this.vent.trigger('transform:durationToLength', params);
+      params.length = this.lengthFromDuration(params.duration);
+    }
+
+    var source = this.source(params);
+
+    if (source) {
+      var gain = source.gain = this.context.createGain();
+      this.configureAttack(time, params, gain);
+      source.connect(gain);
+      source.start(time);
+
+      if (params.length) {
+        var stopTime = time + params.length;
+        this.stop(stopTime, params, source);
+      }
+    }
+  },
+
+  stop: function (time, params, source) {
+    if (typeof time !== 'number') {
+      params = time;
+      time = this.context.currentTime;
+    }
+    params = params || {};
+
+    if (source) {
+      if (source.gain) {
+        this.configureRelease(time, params, source.gain);
+      }
+      source.stop(time + params.release);
+    }
   },
 
   source: function (params) {},
@@ -425,27 +472,6 @@ var Layer = Model.extend(triggerParams, volumeParams, {
     var volume = (params.volume || 100) / 100;
     gain.gain.setValueAtTime(volume, time);
     gain.gain.linearRampToValueAtTime(0, time + params.release);
-  },
-
-  start: function (time, params) {
-    if (this.mute) { return; }
-
-    time = time || this.context.currentTime;
-    var source = this.source(params);
-
-    if (source) {
-      var gain = source.gain = this.context.createGain();
-      this.configureAttack(time, params, gain);
-      source.connect(gain);
-      source.start(time);
-      return source;
-    }
-  },
-
-  stop: function (time, params, source) {
-    time = time || this.context.currentTime;
-    this.configureRelease(time, params, source.gain);
-    source.stop(time + params.release);
   }
 });
 
@@ -608,6 +634,7 @@ Params.fromSources = function () {
   keys.forEach(function (key) {
     if (key === 'id') { return; }
     sources.forEach(function (source) {
+      if (!source) { return; }
       var value = source[key];
       if (~multipliers.indexOf(key)) {
         if (!value || value < 0) { return; }
@@ -622,7 +649,7 @@ Params.fromSources = function () {
         params[key] = value || params[key];
       }
     });
-    
+
     if (key === 'pan' && params[key] < -100) {
       params[key] = -100;
     }
@@ -788,19 +815,18 @@ var Slot = Model.extend(triggerParams, volumeParams, {
     })
   },
 
-  runEvent: function (event, time, note, channel, kit) {
-    if (this.mute && event === 'start') { return; }
+  start: function (time, note, channel) {
+    if (!this.mute) {
+      this.layers.each(function (layer) {
+        layer.start(event, time, note, channel);
+      }.bind(this));
+    }
+  },
+
+  stop: function (time, note, channel) {
     this.layers.each(function (layer) {
-      layer.runEvent(event, time, note, channel, this, kit);
+      layer.stop(event, time, note, channel);
     }.bind(this));
-  },
-
-  start: function (time, note) {
-    this.runEvent('start', time, note);
-  },
-
-  stop: function (time, note) {
-    this.runEvent('stop', time, note);
   }
 
 }, overloadedAccessor('layer', Layer));
@@ -838,7 +864,7 @@ var numberInRangeType = require('../types/numberInRange');
 module.exports = {
 
   props: {
-    frequency: 'positiveNumber',
+    frequency: ['inclusivePositiveNumber', true, 0],
     shape: {
       type: 'string',
       default: 'sine',
@@ -847,7 +873,7 @@ module.exports = {
   },
 
   dataTypes: {
-    positiveNumber: numberInRangeType('positiveNumber', 1, Infinity)
+    inclusivePositiveNumber: numberInRangeType('inclusivePositiveNumber', 0, Infinity)
   }
 };
 

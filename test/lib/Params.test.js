@@ -5,6 +5,11 @@ var Params = require('../../lib/Params');
 describe('Params', function () {
 
   describe('fromSources(sources...)', function () {
+    it('should ignore null sources', function () {
+      var one = new Params({ volume: 50 });
+      var two = new Params({ volume: 50 });
+      expect(Params.fromSources(one, null, two).volume).to.equal(25);
+    });
     describe('volume', function () {
       it('should multiply the values', function () {
         var one = new Params({ volume: 50 });
