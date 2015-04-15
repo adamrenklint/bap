@@ -16,9 +16,9 @@ kit.slot(2, nextSlot);
 
 var pattern = bap.pattern({ 'bars': 2, 'tempo': 120 });
 pattern.channel(1).add(
-  ['*.1.01', 'A1', 40, 50, -50, -50],
-  // ['*.1.01', 'A1'],
-  ['*.2%1.01', 'A2']
+  // ['*.1.01', 'A1', 40, 100, -50, -50],
+  ['*.1.01', 'A1', 60],
+  ['*.2%1.01', 'A2', 10, 100, -50, 100]
 );
 
 // var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
@@ -386,9 +386,10 @@ var Layer = Model.extend(triggerParams, volumeParams, {
     var source = this.source(params);
 
     if (source) {
-      var gain = source.gain = this.context.createGain();
-      this.configureAttack(time, params, gain);
-      source.connect(gain);
+      var out = source.gain = this.context.createGain();
+      this.configureAttack(time, params, out);
+      out = this.configurePan(params, out);
+      source.connect(out);
       source.start(time);
 
       var stopTime = time + params.length;
@@ -415,6 +416,19 @@ var Layer = Model.extend(triggerParams, volumeParams, {
 
   output: function () {
     return this.context.destination;
+  },
+
+  configurePan: function (params, out) {
+    if (params.pan !== 0) {
+      var panner = this.context.createPanner();
+      var x = params.pan / 100;
+      var z = 1 - Math.abs(x);
+      panner.setPosition(x, 0, z);
+      panner.panningModel = 'equalpower';
+      panner.connect(out);
+      return panner;
+    }
+    return out;
   },
 
   configureAttack: function (time, params, gain) {
@@ -812,14 +826,14 @@ var Slot = Model.extend(triggerParams, volumeParams, {
   start: function (time, note, channel) {
     if (!this.mute) {
       this.layers.each(function (layer) {
-        layer.start(event, time, note, channel);
+        layer.start(time, note, channel);
       }.bind(this));
     }
   },
 
   stop: function (time, note, channel) {
     this.layers.each(function (layer) {
-      layer.stop(event, time, note, channel);
+      layer.stop(time, note, channel);
     }.bind(this));
   }
 

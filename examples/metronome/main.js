@@ -15,9 +15,9 @@ kit.slot(2, nextSlot);
 
 var pattern = bap.pattern({ 'bars': 2, 'tempo': 120 });
 pattern.channel(1).add(
-  ['*.1.01', 'A1', 40, 50, -50, -50],
-  // ['*.1.01', 'A1'],
-  ['*.2%1.01', 'A2']
+  // ['*.1.01', 'A1', 40, 100, -50, -50],
+  ['*.1.01', 'A1', 60],
+  ['*.2%1.01', 'A2', 10, 100, -50, 100]
 );
 
 // var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
