@@ -18,6 +18,7 @@ describe('Bap', function () {
     'slot',
     'layer',
     'oscillator',
+    'sample',
     'pattern',
     'channel',
     'note',

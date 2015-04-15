@@ -46,6 +46,10 @@ pattern.channel(1).add(
 pattern.use('A', kit).start();
 ```
 
+### Positions
+
+The clock runs at 96 ticks per beat, and the time signature looks like on an MPC: ```bar.beat.tick```.
+
 ### Example: metronome
 
 ```js

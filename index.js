@@ -1,2 +1,2 @@
 var Bap = require('./lib/Bap');
-module.exports = new Bap();
+module.exports = global.bap = new Bap();
