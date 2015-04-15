@@ -6,18 +6,18 @@ var basic = bap.oscillator({
   release: 0.1,
   duration: 10
 });
+
 // simple way
-var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
+var pling = kit.slot(1).layer(basic.with({ 'frequency': 261.6 }));
 // more verbose: create, build, then assign
 var nextSlot = bap.slot();
-nextSlot.layer(basic.with({ 'frequency': 440 }));
+nextSlot.layer(basic.with({ 'frequency': 523.3 }));
 kit.slot(2, nextSlot);
 
 var pattern = bap.pattern({ 'bars': 2, 'tempo': 120 });
 pattern.channel(1).add(
-  // ['*.1.01', 'A1', 40, 100, -50, -50],
-  ['*.1.01', 'A1', 60],
-  ['*.2%1.01', 'A2', 10, 100, -50, 100]
+  ['*.1.01', 'A1'],
+  ['*.2%1.01', 'A2']
 );
 
 // var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);

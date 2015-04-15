@@ -7,18 +7,18 @@ var basic = bap.oscillator({
   release: 0.1,
   duration: 10
 });
+
 // simple way
-var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
+var pling = kit.slot(1).layer(basic.with({ 'frequency': 261.6 }));
 // more verbose: create, build, then assign
 var nextSlot = bap.slot();
-nextSlot.layer(basic.with({ 'frequency': 440 }));
+nextSlot.layer(basic.with({ 'frequency': 523.3 }));
 kit.slot(2, nextSlot);
 
 var pattern = bap.pattern({ 'bars': 2, 'tempo': 120 });
 pattern.channel(1).add(
-  // ['*.1.01', 'A1', 40, 100, -50, -50],
-  ['*.1.01', 'A1', 60],
-  ['*.2%1.01', 'A2', 10, 100, -50, 100]
+  ['*.1.01', 'A1'],
+  ['*.2%1.01', 'A2']
 );
 
 // var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
@@ -424,7 +424,6 @@ var Layer = Model.extend(triggerParams, volumeParams, {
       var x = params.pan / 100;
       var z = 1 - Math.abs(x);
       panner.setPosition(x, 0, z);
-      panner.panningModel = 'equalpower';
       panner.connect(out);
       return panner;
     }
@@ -562,7 +561,8 @@ var Note = PositionModel.extend(triggerParams, volumeParams, oscillatorParams, {
 
 Note.fromRaw = function (raw) {
   var attributes = {};
-  if (typeof raw[raw.length - 1] === 'object') {
+  var last = raw[raw.length - 1];
+  if (typeof last === 'object' && last !== null) {
     attributes = raw.pop();
   }
   raw.forEach(function (value, index) {
@@ -587,6 +587,10 @@ var Oscillator = Layer.extend(oscillatorParams, {
   source: function (params) {
     var oscillator = this.context.createOscillator();
     oscillator.frequency.value = params.frequency;
+
+    var detune = (1200 / 100) * params.pitch;
+    oscillator.detune.value = detune;
+
     oscillator.type = params.shape;
     return oscillator;
   }
