@@ -16,27 +16,24 @@ kit.slot(2, nextSlot);
 
 var pattern = bap.pattern({ 'bars': 2, 'tempo': 120 });
 pattern.channel(1).add(
-  // ['*.1.01', 'A1', 40, 50, -50, -50],
-  ['*.1.01', 'A1'],
+  ['*.1.01', 'A1', 40, 50, -50, -50],
+  // ['*.1.01', 'A1'],
   ['*.2%1.01', 'A2']
 );
 
-var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
-pattern2.channel(1).add(
-  ['*.*.01', 'A1', 10]
-);
+// var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
+// pattern2.channel(1).add(
+//   ['*.*.01', 'A1', 10]
+// );
 
 pattern.use('A', kit).start();
 
 // setTimeout(function () {
-//   pattern.pause();
-//   setTimeout(function () {
-//     pattern.channel(1).add(
-//       ['*.1.49', 'A2']
-//     );
-//
-//     pattern.start();
-//   }, 1500);
+//   // bap.clock.playing = false;
+// //   pattern2.use('A', kit).start();
+// //   setTimeout(function () {
+// //     pattern.start();
+// //   }, 1500);
 // }, 1500);
 
 
@@ -154,19 +151,21 @@ var Clock = PositionModel.extend({
   initialize: function (options) {
     PositionModel.prototype.initialize.call(this);
 
-    this.on('change:playing', this.onChangePlaying.bind(this));
-    this.on('change:sequence', this.onChangeSequence.bind(this));
-    this.on('change:position', this.onChangePosition.bind(this));
+    this.on('change:playing', this.onChangePlaying);
+    this.on('change:sequence', this.onChangeSequence);
+    this.on('change:position', this.onChangePosition);
 
     this.scheduler = new Dilla(this.context, dillaOptions);
+    // Dilla uses node/events on/addListener, which doesn't take context,
+    // so need to bind this
     this.listenTo(this.scheduler, 'tick', this.onSchedulerTick.bind(this));
     this.listenTo(this.scheduler, 'step', this.onSchedulerStep.bind(this));
 
-    this.listenTo(this.vent, 'clock:start', this.start.bind(this));
-    this.listenTo(this.vent, 'clock:pause', this.pause.bind(this));
-    this.listenTo(this.vent, 'clock:stop', this.stop.bind(this));
+    this.listenTo(this.vent, 'clock:start', this.start);
+    this.listenTo(this.vent, 'clock:pause', this.pause);
+    this.listenTo(this.vent, 'clock:stop', this.stop);
     // this feels like a dirty way of using a global event bus :/
-    this.listenTo(this.vent, 'clock:tempo', this.applySequenceTempo.bind(this));
+    this.listenTo(this.vent, 'clock:tempo', this.applySequenceTempo);
   },
 
   onChangePlaying: function () {
@@ -181,7 +180,7 @@ var Clock = PositionModel.extend({
     var old = this._previousAttributes.sequence;
     if (old) {
       this.stopListening(old);
-      // old.detachGhosts();
+      old.detachGhosts();
     }
     this.bindAndTriggerSequenceAttribute('tempo', 'setTempo');
     this.bindAndTriggerSequenceAttribute('bars', 'setLoopLength');
@@ -574,6 +573,7 @@ var Oscillator = Layer.extend(oscillatorParams, {
   source: function (params) {
     var oscillator = this.context.createOscillator();
     oscillator.frequency.value = params.frequency;
+    oscillator.type = params.shape;
     return oscillator;
   }
 });
@@ -692,8 +692,8 @@ var Pattern = Model.extend({
 
     this.on('change:playing', this.onChangePlaying.bind(this));
 
-    this.channels.on('start', this.kits.start.bind(this.kits));
-    this.channels.on('stop', this.kits.stop.bind(this.kits));
+    this.listenTo(this.channels, 'start', this.kits.start.bind(this.kits));
+    this.listenTo(this.channels, 'stop', this.kits.stop.bind(this.kits));
   },
 
   onChangePlaying: function () {
@@ -714,6 +714,12 @@ var Pattern = Model.extend({
   stop: function () {
     this.playing = false;
     this.vent.trigger('clock:stop', this);
+  },
+
+  detachGhosts: function () {
+    this.notes().forEach(function (note) {
+      note.detachGhosts();
+    });
   },
 
   notes: function () {

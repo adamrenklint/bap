@@ -15,27 +15,24 @@ kit.slot(2, nextSlot);
 
 var pattern = bap.pattern({ 'bars': 2, 'tempo': 120 });
 pattern.channel(1).add(
-  // ['*.1.01', 'A1', 40, 50, -50, -50],
-  ['*.1.01', 'A1'],
+  ['*.1.01', 'A1', 40, 50, -50, -50],
+  // ['*.1.01', 'A1'],
   ['*.2%1.01', 'A2']
 );
 
-var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
-pattern2.channel(1).add(
-  ['*.*.01', 'A1', 10]
-);
+// var pattern2 = bap.pattern(/*1 bar, 4 beats per bar*/);
+// pattern2.channel(1).add(
+//   ['*.*.01', 'A1', 10]
+// );
 
 pattern.use('A', kit).start();
 
 // setTimeout(function () {
-//   pattern.pause();
-//   setTimeout(function () {
-//     pattern.channel(1).add(
-//       ['*.1.49', 'A2']
-//     );
-//
-//     pattern.start();
-//   }, 1500);
+//   // bap.clock.playing = false;
+// //   pattern2.use('A', kit).start();
+// //   setTimeout(function () {
+// //     pattern.start();
+// //   }, 1500);
 // }, 1500);
 
 
