@@ -1,33 +1,6 @@
 var bap = require('../index');
-
-function metronome () {
-  var kit = bap.kit();
-  var basic = bap.oscillator({
-    attack: 0.001,
-    release: 0.1,
-    length: 0.08
-  });
-
-  // simple way
-  var pling = kit.slot(1).layer(basic.with({ 'frequency': 330 }));
-
-  // more verbose: create, build, then assign
-  var nextSlot = bap.slot();
-  nextSlot.layer(basic.with({ 'frequency': 440 }));
-  kit.slot(2, nextSlot);
-
-  var pattern = bap.pattern({ 'bars': 2, 'tempo': 140 });
-  pattern.channel(1).add(
-    ['*.1.01', 'A1'],
-    ['*.2%1.01', 'A2']
-  );
-
-  pattern.use('A', kit).start();
-}
-
-function boombap () {
-
-}
+var metronome = require('./metronome');
+var boombap = require('./boombap');
 
 var positionEl = document.getElementById('position');
 function draw () {
@@ -46,6 +19,13 @@ var sourceEl = document.getElementById('source');
 var exampleNameEl = document.getElementById('example-name');
 var descriptionEl = document.getElementById('description');
 
+function unwrap (source) {
+  var lines = source.split('\n');
+  return lines.slice(1, lines.length - 3).map(function (line) {
+    return line.substr(1);
+  }).join('\n');
+}
+
 function navigate () {
   var hash = location.hash.substr(1);
   var example = examples[hash];
@@ -54,8 +34,9 @@ function navigate () {
     var description = example[1];
     exampleNameEl.textContent = hash;
     descriptionEl.textContent = description;
-    sourceEl.textContent = fn.toString();
+    sourceEl.textContent = unwrap(fn.toString());
     hljs.highlightBlock(sourceEl);
+    bap.clock.position = '1.1.01';
     fn();
 
     [].forEach.call(document.getElementById('menu').children, function (child) {
