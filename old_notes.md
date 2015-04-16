@@ -1,5 +1,19 @@
+baplib.org
+baplets.io
+
 
 ['1.1.01', 'A01', null, 99, -50, -50, { other params} ]
+
+
+Kit         Collection of Slots
+Slot        Collection of Layers
+Layer       Instrument(State)
+
+Sequence    Collection of Patterns and Sequences
+Pattern     Collection of Channels
+Channel     Collection of Notes
+Note        PositionState
+
 
 
 
@@ -136,6 +150,10 @@ pattern.play() // start() || sequence.play() // > pattern.pause(), pattern.stop(
   StepEvent     Start or stop event to be distributed to kit, slot, layer
   ExpressionExpander    can reuse Dilla
 
+
+  Clock
+    "step"
+    setPosition()
 
 
 

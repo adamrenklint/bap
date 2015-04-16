@@ -1,8 +1,8 @@
 {
   "name": "bap",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "versionName": "damu",
   "description": "Beatmaking and sequence composition toolkit, using Javascript and Web Audio",
-  "private": true,
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -15,10 +15,16 @@
   },
   "homepage": "https://github.com/adamrenklint/bap",
   "dependencies": {
-    "audio-context": "^0.1.0"
+    "ampersand-collection": "^1.4.5",
+    "ampersand-state": "^4.5.3",
+    "audio-context": "^0.1.0",
+    "dilla": "^1.4.0-beta1",
+    "lodash.merge": "^3.1.0"
   },
   "devDependencies": {
     "brfs": "^1.4.0",
+    "3w": "0.0.4",
+    "browserify": "^9.0.8",
     "chai": "^2.2.0",
     "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
@@ -30,20 +36,28 @@
     "karma-safari-launcher": "^0.1.1",
     "karma-sauce-launcher": "^0.2.10",
     "mocha": "^2.2.1",
-    "rimraf": "^2.3.2"
+    "rimraf": "^2.3.2",
+    "watchify": "^3.1.0"
   },
   "config": {
-    "coverageLimit": 90,
+    "coverageLimit": 1,
     "codeclimateCoverageId": "2e7a3b0c2e5c9d2b9ae79b528f98a3adb26efe2539425721323129199815df04"
   },
   "scripts": {
+<<<<<<< HEAD
     "start": "",
     "test": "node_modules/karma/bin/karma start karma.conf.js",
+=======
+    "prestart": "watchify examples/main.js -o examples/bundle.js -v &",
+    "start": "node node_modules/3w/3w.js examples --3000",
+    "build": "browserify examples/main.js -o examples/bundle.js",
+    "test": "mocha -s 10 test/**/*.test.js",
+>>>>>>> dev
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",
-    "lint": "jshint lib/*.js",
+    "lint": "jshint lib/**/*.js",
     "clean": "rimraf coverage node_modules",
-    "coverage": "istanbul cover _mocha -- test/*.test.js -R dot",
+    "coverage": "istanbul cover _mocha -- test/**/*.test.js -R dot",
     "precoverage:check": "npm run coverage",
     "coverage:check": "istanbul check-coverage --statement $npm_package_config_coverageLimit --branch $npm_package_config_coverageLimit --function $npm_package_config_coverageLimit",
     "precoverage:report": "npm run coverage",
