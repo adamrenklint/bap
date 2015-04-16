@@ -4,22 +4,34 @@
 module.exports = function(config) {
 
   var customLaunchers = {
-    sl_chrome: {
+    sl_win_chrome: {
       base: 'SauceLabs',
       browserName: 'chrome',
       platform: 'Windows 7',
-      version: '35'
+      version: '41'
+    },
+    sl_osx_chrome: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'OS X 10.9',
+      version: '41'
     },
     sl_firefox: {
       base: 'SauceLabs',
       browserName: 'firefox',
-      version: '30'
+      version: '37'
+    },
+    sl_osx_safari: {
+      base: 'SauceLabs',
+      browserName: 'safari',
+      platform: 'OS X 10.9',
+      version: '7.0'
     },
     sl_ios_safari: {
       base: 'SauceLabs',
       browserName: 'iphone',
       platform: 'OS X 10.9',
-      version: '7.1'
+      version: '8.2'
     },
     sl_ie_11: {
       base: 'SauceLabs',
@@ -42,7 +54,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/*.test.js'
+      'test/**/*.test.js'
     ],
 
 
@@ -56,7 +68,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/*.js': [ 'browserify' ]
+      'test/**/*.js': [ 'browserify' ]
     },
 
     browserify: {
