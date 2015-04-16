@@ -19,7 +19,7 @@ draw();
 
 var examples = {
   'metronome': [metronome, 'A simple metronome made with <a href="">Bap</a> to test playback, and note expressions and scheduling.'],
-  'boombap': [boombap, 'The boombap demo beat from <a href=">Dilla</a>, reimplemented with <a href="">Bap</a>.']
+  'boombap': [boombap, 'The boombap demo beat from <a href="">Dilla</a>, reimplemented with <a href="">Bap</a>.']
 };
 var sourceEl = document.getElementById('source');
 var exampleNameEl = document.getElementById('example-name');
