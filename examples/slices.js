@@ -4,8 +4,9 @@ function slices () {
   var kit = bap.kit();
   var base = bap.sample({
     src: 'sounds/slices.wav',
-    attack: 0.005,
-    release: 0.005
+    attack: 0.01,
+    release: 0.01,
+    channel: 'left'
   });
   kit.slot(1).layer(base.with({
     offset: 0.072,
