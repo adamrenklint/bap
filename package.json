@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "versionName": "damu",
   "description": "Beatmaking and sequence composition toolkit, using Javascript and Web Audio",
+  "homepage": "http://bapjs.org",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -13,7 +14,6 @@
   "bugs": {
     "url": "https://github.com/adamrenklint/bap/issues"
   },
-  "homepage": "https://github.com/adamrenklint/bap",
   "dependencies": {
     "ampersand-collection": "^1.4.5",
     "ampersand-state": "^4.5.3",
