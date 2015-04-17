@@ -42,6 +42,7 @@
     "start": "node node_modules/3w/3w.js examples --3000",
     "build": "browserify examples/main.js -o examples/bundle.js",
     "test": "mocha -s 10 test/**/*.test.js",
+    "predeploy:examples": "npm run build",
     "deploy:examples": "buildbranch gh-pages examples examples.bapjs.org",
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",
