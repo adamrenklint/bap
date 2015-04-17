@@ -25,25 +25,32 @@ function slices () {
   }));
 
   var breakKit = bap.sample({
-    src: 'sounds/duralcha-funk.wav',
-    pitch: -50
+    src: 'sounds/esther.wav',
+    pitch: -26
   }).slice(16);
+  breakKit.slot(1).layer('sounds/kick.wav');
+  breakKit.slot(2).layer('sounds/snare.wav');
+  breakKit.slot(4).layer('sounds/snare.wav');
 
-  var pattern = bap.pattern({ bars: 2, tempo: 90 });
+  var pattern = bap.pattern({ bars: 2, tempo: 95 });
   pattern.channel(1).add(
     ['1.1.01', 'A1', 96],
     ['1.2.01', 'A1', 96],
     ['1.3.01', 'A2'],
     ['2.1.01', 'A3'],
-    ['2.3.01', 'A4', 96 * 2]
+    ['2.2.80', 'A4', (96 * 2) + 16 ]
   );
 
   pattern.channel(2).add(
-    ['*.odd.01', 'B1'],
-    ['*.*.52', 'B2'],
-    ['*.2.03', 'B3'],
-    ['*.4.03', 'B5'],
-    ['2.3.52', 'B4']
+    ['1.1.01', 'B1'],
+    ['1.2.01', 'B2'],
+    ['1.3.01', 'B3'],
+    ['1.4.01', 'B4'],
+    ['2.1.01', 'B1'],
+    ['2.2.01', 'B2'],
+    ['2.3.01', 'B8'],
+    ['2.4.01', 'B9'],
+    ['2.4.49', 'B5', 48]
   );
 
   pattern
