@@ -2,8 +2,10 @@ var bap = require('../index');
 
 function boombap () {
   var drumKit = bap.kit();
+  // three ways to add a sample layer to a slot
   drumKit.slot(1).layer('sounds/kick.wav');
-  drumKit.slot(2).layer(bap.sample('sounds/snare.wav'));
+  var snare = bap.sample('sounds/snare.wav');
+  drumKit.slot(2).layer(snare);
   drumKit.slot(3).layer(bap.sample({
     src: 'sounds/hihat.wav',
     volume: 50

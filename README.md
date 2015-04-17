@@ -52,6 +52,8 @@ The clock runs at 96 ticks per beat, and the time signature looks like on an MPC
 
 ### Example: metronome
 
+[Demo](http://adamrenklint.github.io/bap/#metronome)
+
 ```js
 var kit = bap.kit();
 var basic = bap.oscillator({
@@ -60,15 +62,16 @@ var basic = bap.oscillator({
   length: 0.08
 });
 
-// simple way
-kit.slot(1).layer(basic.with({ 'frequency': 330 }));
+// shorthand, add copy of oscillator as layer on first slot
+kit.slot(1).layer(basic.with({ frequency: 330 }));
 
-// more verbose: create, build, then assign
+// more verbose: create slot, append oscillator, then assign to kit
 var nextSlot = bap.slot();
-nextSlot.layer(basic.with({ 'frequency': 440 }));
+nextSlot.layer(basic.with({ frequency: 440 }));
 kit.slot(2, nextSlot);
 
-var pattern = bap.pattern({ 'bars': 2, 'tempo': 140 });
+// create the pattern and add notes using expressions
+var pattern = bap.pattern({ bars: 2, tempo: 140 });
 pattern.channel(1).add(
   ['*.1.01', 'A1'],
   ['*.2%1.01', 'A2']
@@ -77,9 +80,174 @@ pattern.channel(1).add(
 pattern.use('A', kit).start();
 ```
 
-### Example: drums
+### Example: samples
 
+[Demo](http://adamrenklint.github.io/bap/#dilla-boombap)
 
+```js
+var drumKit = bap.kit();
+// three ways to add a sample layer to a slot
+drumKit.slot(1).layer('sounds/kick.wav');
+var snare = bap.sample('sounds/snare.wav');
+drumKit.slot(2).layer(snare);
+drumKit.slot(3).layer(bap.sample({
+  src: 'sounds/hihat.wav',
+  volume: 50
+}));
+
+var plongKit = bap.kit();
+plongKit.slot(1).layer(bap.sample({
+  src: 'sounds/plong1.wav',
+  duration: 95
+}));
+plongKit.slot(2).layer(bap.sample({
+  src: 'sounds/plong2.wav',
+  duration: 60
+}));
+
+var stringKit = bap.kit();
+stringKit.slot(1).layer(bap.sample({
+  src: 'sounds/string1.wav',
+  duration: 90
+}));
+stringKit.slot(2).layer(bap.sample({
+  src: 'sounds/string2.wav',
+  duration: 70
+}));
+stringKit.slot(3).layer(bap.sample({
+  src: 'sounds/string3.wav',
+  duration: 45
+}));
+
+var bassKit = bap.kit();
+bassKit.slot(1).layer(bap.sample({
+  src: 'sounds/bass.wav',
+  attack: 0.01,
+  release: 0.01
+}));
+
+var boombapPattern = bap.pattern({ bars: 2, tempo: 90 });
+boombapPattern.channel(1).add(
+  ['1.1.01', 'A01'],
+  ['1.1.51', 'A01', null, 80],
+  ['1.1.91', 'A02'],
+  ['1.2.88', 'A01'],
+  ['1.3.75', 'A01'],
+  ['1.3.91', 'A02'],
+  ['1.4.72', 'A01', null, 80],
+  ['2.1.91', 'A02'],
+  ['2.1.51', 'A01', null, 70],
+  ['2.3.51', 'A01', null, 80],
+  ['2.3.88', 'A01'],
+  ['2.4.03', 'A02']
+);
+
+boombapPattern.channel(2).add(
+  ['*.odd.01', 'A03', null, 70],
+  ['*.even.01', 'A03', null, 80],
+  ['*.4.53', 'A03', null, 60]
+);
+
+boombapPattern.channel(3).add(
+  ['1.1.01', 'B01'],
+  ['1.4.90', 'B02', null, 40],
+  ['2.1.52', 'B02', null, 70]
+);
+
+boombapPattern.channel(4).add(
+  ['1.2.05', 'C03', null, 60],
+  ['1.2.51', 'C03', null, 40],
+  ['1.3.05', 'C03', null, 20],
+  ['1.3.51', 'C03', null, 5],
+  ['1.3.75', 'C01', null, 60],
+  ['1.4.52', 'C01', null, 20],
+  ['2.2.05', 'C03', null, 60],
+  ['2.2.50', 'C02', null, 60],
+  ['2.3.25', 'C01', 70, 60],
+  ['2.4.01', 'C01', 85, 30],
+  ['2.4.75', 'C01', 85, 10]
+);
+
+boombapPattern.channel(5).add(
+  ['1.1.01', 'D01', 60, 80, -90],
+  ['1.2.72', 'D01', 15, 50, -90],
+  ['1.3.02', 'D01', 40, 80, -90],
+  ['1.4.01', 'D01', 40, 60, -72],
+  ['1.4.51', 'D01', 100, 80, -52],
+  ['2.3.51', 'D01', 60, 80, -116],
+  ['2.4.51', 'D01', 40, 80, -96]
+);
+
+boombapPattern
+  .use('A', drumKit)
+  .use('B', plongKit)
+  .use('C', stringKit)
+  .use('D', bassKit)
+  .start();
+```
+
+### Example: slices
+
+[Demo](http://adamrenklint.github.io/bap/#slices)
+
+```js
+var sampleKit = bap.kit();
+var base = bap.sample({
+  src: 'sounds/slices.wav',
+  attack: 0.01,
+  release: 0.01
+});
+sampleKit.slot(1).layer(base.with({
+  offset: 0.072,
+  length: 0.719
+}));
+sampleKit.slot(2).layer(base.with({
+  offset: 0.9,
+  length: 0.750
+}));
+sampleKit.slot(3).layer(base.with({
+  offset: 1.68,
+  length: 0.690
+}));
+sampleKit.slot(4).layer(base.with({
+  offset: 9.49,
+  length: 2
+}));
+
+var breakKit = bap.sample({
+  src: 'sounds/esther.wav',
+  pitch: -26
+}).slice(16);
+breakKit.slot(1).layer('sounds/kick.wav');
+breakKit.slot(2).layer('sounds/snare.wav');
+breakKit.slot(4).layer('sounds/snare.wav');
+
+var pattern = bap.pattern({ bars: 2, tempo: 95 });
+pattern.channel(1).add(
+  ['1.1.01', 'A1', 96],
+  ['1.2.01', 'A1', 96],
+  ['1.3.01', 'A2'],
+  ['2.1.01', 'A3'],
+  ['2.2.80', 'A4', (96 * 2) + 16 ]
+);
+
+pattern.channel(2).add(
+  ['1.1.01', 'B1'],
+  ['1.2.01', 'B2'],
+  ['1.3.01', 'B3'],
+  ['1.4.01', 'B4'],
+  ['2.1.01', 'B1'],
+  ['2.2.01', 'B2'],
+  ['2.3.01', 'B8'],
+  ['2.4.01', 'B9'],
+  ['2.4.49', 'B5', 48]
+);
+
+pattern
+  .use('A', sampleKit)
+  .use('B', breakKit)
+  .start();
+```
 
 ## API
 
