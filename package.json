@@ -25,6 +25,7 @@
   "devDependencies": {
     "3w": "0.0.4",
     "browserify": "^9.0.8",
+    "buildbranch": "0.0.3",
     "chai": "^2.2.0",
     "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
@@ -41,6 +42,7 @@
     "start": "node node_modules/3w/3w.js examples --3000",
     "build": "browserify examples/main.js -o examples/bundle.js",
     "test": "mocha -s 10 test/**/*.test.js",
+    "deploy:examples": "buildbranch gh-pages examples examples.bapjs.org",
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",
     "lint": "jshint lib/**/*.js",
