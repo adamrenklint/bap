@@ -24,31 +24,10 @@ function slices () {
     length: 2
   }));
 
-  var breakKit = bap.kit({
+  var breakKit = bap.sample({
+    src: 'sounds/duralcha-funk.wav',
     pitch: -50
-  });
-  var breakBase = bap.sample('sounds/duralcha-funk.wav');
-
-  breakKit.slot(1).layer(breakBase.with({
-    offset: 0,
-    length: 0.33
-  }));
-  breakKit.slot(2).layer(breakBase.with({
-    offset: 0.33,
-    length: 0.33
-  }));
-  breakKit.slot(3).layer(breakBase.with({
-    offset: 0.68,
-    length: 0.33
-  }));
-  breakKit.slot(4).layer(breakBase.with({
-    offset: 1.17,
-    length: 0.80
-  }));
-  breakKit.slot(5).layer(breakBase.with({
-    offset: 3.38,
-    length: 0.7
-  }));
+  }).slice(16);
 
   var pattern = bap.pattern({ bars: 2, tempo: 90 });
   pattern.channel(1).add(
@@ -63,8 +42,8 @@ function slices () {
     ['*.odd.01', 'B1'],
     ['*.*.52', 'B2'],
     ['*.2.03', 'B3'],
-    ['*.4.03', 'B5', 96],
-    ['2.3.52', 'B4', 96-52]
+    ['*.4.03', 'B5'],
+    ['2.3.52', 'B4']
   );
 
   pattern
