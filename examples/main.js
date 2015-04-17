@@ -55,6 +55,34 @@ function navigate () {
 }
 window.onhashchange = navigate;
 
+var ids = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+var pressed = {};
+
+function onKeyDown (ev) {
+  var key = String.fromCharCode(ev.keyCode);
+  if (~ids.indexOf(key)) {
+    pressed[key] = true;
+  }
+  else {
+    var num = parseInt(key, 10);
+    if (!isNaN(num)) {
+      Object.keys(pressed).forEach(function (id) {
+        bap.clock.sequence.kits.start(null, { key: id + num });
+      });
+    }
+  }
+}
+
+function onKeyUp (ev) {
+  var key = String.fromCharCode(ev.keyCode);
+  if (~ids.indexOf(key)) {
+    delete pressed[key];
+  }
+}
+
+document.addEventListener('keydown', onKeyDown, false);
+document.addEventListener('keyup', onKeyUp, false);
+
 if (!location.hash) {
   location.hash = '#metronome';
 }
