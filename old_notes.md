@@ -30,6 +30,7 @@ but what is missing?
 - load module from remote url?
 - embed interactive on website? widget?
 - transpose notes, i.e. change pattern from A1 to B2 with a function
+  var newPattern = pattern.transpose('key', /A/)
 
 IT MUST BE EXTREMELY MODULAR AND COMPOSABLE
 perfect marriage between coding beats and MPC workflow in browser
@@ -180,6 +181,7 @@ pattern.play() // start() || sequence.play() // > pattern.pause(), pattern.stop(
 
 ## others
 
+- http://boombap.org/
 - http://taylorlivesthrough.bandcamp.com/album/the-weed-tape-reloaded
 
 
