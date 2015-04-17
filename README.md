@@ -31,20 +31,27 @@ var oscillator = bap.oscillator({
 });
 // a kit connects infinite slots with infinite layers
 kit.slot(1).layer(oscillator);
+kit.slot(2).layer(bap.sample('foo.wav'));
 
 // a pattern is a loop made up of channels and notes
 var pattern = bap.pattern();
 pattern.channel(1).add(
-  ['*.*.01', 'A1']
+  ['1.*.01', 'A1'],
+  ['1.2.01', 'A2']
 );
 
 // connect the kit, and play
 pattern.use('A', kit).start();
 ```
 
-### Positions
+### Time signature
 
-The clock runs at 96 ticks per beat, and the time signature looks like on an MPC: ```bar.beat.tick```.
+Bap runs at 96 ticks per beat, and the time signature looks like on an MPC: ```bar.beat.tick```.
+
+### Adding notes
+
+- six main attributes of a note: position, key, duration, volume, pitch, pan
+- use expressions
 
 ### Examples
 
@@ -56,11 +63,11 @@ The clock runs at 96 ticks per beat, and the time signature looks like on an MPC
 
 ## Develop
 
-- ```npm install```
-- ```npm start```
-- ```npm test```
-- ```npm run test:watch```
-- ```npm run coverage```
+- ```npm install``` install all dependencies
+- ```npm start``` run examples development server
+- ```npm test``` run unit tests
+- ```npm run test:watch``` run and watch unit tests
+- ```npm run coverage``` generate coverage report with Istanbul
 
 ## Contribute
 
