@@ -67,9 +67,12 @@ function slices () {
     ['2.3.52', 'B4', 96-52]
   );
 
+  var autoSliceKit = breakBase.slice(16);
+
   pattern
     .use('A', sampleKit)
-    .use('B', breakKit)
+    // .use('B', breakKit)
+    .use('B', autoSliceKit)
     .start();
 }
 
