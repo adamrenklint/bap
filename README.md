@@ -8,6 +8,8 @@ Beatmaking and sequence composition toolkit, using Javascript and Web Audio
 
 [Bap](http://bapjs.org) is a small Javascript library for making beats and composing sequences of Web Audio events for playback in modern browsers. It is heavily inspired by the classic "MPC workflow", has an internal clock based on 96 ticks per beat and is built to make all aspects of beatmaking completely modular and reusable.
 
+Made by [Adam Renklint](http://adamrenklint.com), Berlin april 2015
+
 ## Install
 
 ```sh
