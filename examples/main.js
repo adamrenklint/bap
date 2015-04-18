@@ -1,6 +1,6 @@
 var bap = require('../index');
 var metronome = require('./metronome');
-var dillaBoombap = require('./dilla-boombap');
+var boombap = require('./boombap');
 var slices = require('./slices');
 
 var positionEl = document.getElementById('position');
@@ -20,7 +20,7 @@ draw();
 
 var examples = {
   'metronome': [metronome, 'A simple metronome made with <a href="">Bap</a> to test playback, and note expressions and scheduling.'],
-  'dilla-boombap': [dillaBoombap, 'The boombap demo beat from <a href="">Dilla</a>, reimplemented with <a href="">Bap</a>.'],
+  'boombap': [boombap, 'The boombap demo beat from <a href="">Dilla</a>, reimplemented with <a href="">Bap</a>.'],
   'slices': [slices, 'Using different parts of same sample for different layers, either by manually defining sample offset and length, or "auto-slicing" sample to a kit.']
 };
 var sourceEl = document.getElementById('source');
