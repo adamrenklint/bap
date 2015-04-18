@@ -54,11 +54,14 @@ pattern.use('A', kit).start();
 - Positions containing [expressions](https://github.com/adamrenklint/dilla-expressions#operators) are automatically expanded
 - When a layer is played, it merges the params of the note, channel, layer, slot and kit
 
-## Examples
+## Resources
 
-- [Metronome](http://examples.bapjs.org/#metronome)
-- [Boombap beat](http://examples.bapjs.org/#dilla-boombap)
-- [Sample slices](http://examples.bapjs.org/#slices)
+- [Changelog](https://github.com/adamrenklint/bap/blob/master/changelog.md)
+- [Roadmap](https://github.com/adamrenklint/bap/blob/master/roadmap.md)
+- Examples
+  - [Metronome](http://examples.bapjs.org/#metronome)
+  - [Boombap beat](http://examples.bapjs.org/#dilla-boombap)
+  - [Sample slices](http://examples.bapjs.org/#slices)
 
 ## API
 
@@ -67,8 +70,8 @@ pattern.use('A', kit).start();
 - ```kit(params)``` returns a new [kit](#kit)
 - ```slot(params)``` returns a new [slot](#slot)
 - ```layer(params)``` returns a new [layer](#layer)
-- ```oscillator(params)``` returns a new [note](#oscillator)
-- ```sample(params)``` returns a new [note](#sample)
+- ```oscillator(params)``` returns a new [oscillator](#oscillator)
+- ```sample(params)``` returns a new [sample](#sample)
 - ```pattern(params)``` returns a new [pattern](#pattern)
 - ```channel(params)``` returns a new [channel](#channel)
 - ```note(params)``` returns a new [note](#note)
