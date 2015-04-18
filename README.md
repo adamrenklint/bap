@@ -158,6 +158,13 @@ pattern.kit('A', kit).start();
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
 
+## Feedback and issues
+
+- Report bugs with [Github issues](https://github.com/adamrenklint/bap/issues)
+- Ask questions on [Gitter](https://gitter.im/adamrenklint/bap)
+- Send shoutouts on [Twitter](http://twitter.com/adamrenklint)
+- Or just [email me](mailto:adam@renklint.com)
+
 ## Develop
 
 - ```npm install``` install all dependencies
@@ -165,12 +172,13 @@ pattern.kit('A', kit).start();
 - ```npm test``` run unit tests
 - ```npm run test:watch``` run and watch unit tests
 - ```npm run coverage``` generate coverage report with Istanbul
+- ```npm publish``` run tests, publish to npm, tag version and deploy examples
 
 ## Contribute
 
-- Check open issues
+- Check the [roadmap](https://github.com/adamrenklint/bap/blob/master/roadmap.md) and [open issues](https://github.com/adamrenklint/bap/issues)
 - Fork the repo
-- Add a test and/or example
+- Add tests and/or examples
 - Submit a pull request
 
 ## License
