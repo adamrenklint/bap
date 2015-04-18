@@ -127,6 +127,28 @@ pattern.use('A', kit).start();
 - ```offset``` number, starting point offset in seconds, defaults to ```0```
 - ```slice(pieces)``` returns a kit with the sample sliced into even-sized sections
 
+### pattern
+
+- ```channel()``` returns a blank channel assigned to next id
+- ```channel(id)``` returns existing or blank channel with id
+- ```channel(id, channel)``` assign channel instance to id
+- ```channel(channel)``` assign channel instance to next id
+- ```start()``` start playback of pattern
+- ```pause()``` stop playback
+- ```stop()``` stop playback and set position to ```1.1.01```
+- ```use(id, kit)``` connect kit to handle notes with id
+- ```kits``` model of connected kits
+- ```playing``` boolean, current state of playback, can be set to start or pause
+- ```tempo``` number, playback tempo in bpm, defaults to ```120```
+- ```bars``` number, length of pattern in bars, defaults to ```1```
+- ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
+
+### channel
+
+### note
+
+
+
 ## Develop
 
 - ```npm install``` install all dependencies
