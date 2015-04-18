@@ -112,6 +112,8 @@ pattern.use('A', kit).start();
 - ```layer(sampleSrc)``` returns a new [sample](#sample) layer, assigned to next id
 - ```start(time, [params])``` start playback of slot at (AudioContext) time
 - ```start([params])``` start playback of slot immediately
+- ```stop(time, [params])``` stop playback of slot at (AudioContext) time
+- ```stop([params])``` stop playback of slot immediately
 
 ### layer
 
