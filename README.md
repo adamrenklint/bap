@@ -179,6 +179,10 @@ pattern.kit('A', kit).start();
 - Add tests and/or examples
 - Submit a pull request
 
+## Props
+
+- [Matt McKegg](https://twitter.com/MattMcKegg) for building [Bopper](https://github.com/mmckegg/bopper) and [Ditty](https://github.com/mmckegg/ditty), which are used in this project since version 0.1
+
 ## License
 
 MIT © [Adam Renklint](http://adamrenklint.com)
