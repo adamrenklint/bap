@@ -86,17 +86,6 @@ pattern.use('A', kit).start();
 - ```release``` trigger release in seconds
 - ```pitch``` number between ```-999``` and ```999```, defaults to ```0```
 
-##### oscillator params
-
-- ```frequency``` number, frequency of oscillation in hertz, defaults to ```0```
-- ```note``` string, [note identifier](https://github.com/gre/audio-notes) like ```C3``` or ```a4``` - if set, overrides frequency
-- ```shape``` string, shape of waveform, defaults to ```sine```, other values are ```square```, ```sawtooth```, ```triangle``` and ```custom```
-
-##### sample params
-
-- ```src``` string, url used to load sample buffer
-- ```offset``` number, starting point offset in seconds, defaults to ```0```
-
 ### bap.clock
 
 - ```start()``` start playback, if current pattern is set
@@ -119,8 +108,25 @@ pattern.use('A', kit).start();
 - ```layer(id, layer)``` assign layer instance to id
 - ```layer(layer)``` assign layer instance to next id
 - ```layer(sampleSrc)``` returns a new [sample](#sample) layer, assigned to next id
-- ```start(time, note)``` start playback of slot at (AudioContext) time
-- ```start(note)``` start playback of slot immediately
+- ```start(time, [params])``` start playback of slot at (AudioContext) time
+- ```start([params])``` start playback of slot immediately
+
+### layer
+
+- ```start(time, [params])``` start playback of slot at (AudioContext) time
+- ```start([params])``` start playback of slot immediately
+
+#### oscillator
+
+- ```frequency``` number, frequency of oscillation in hertz, defaults to ```0```
+- ```note``` string, [note identifier](https://github.com/gre/audio-notes) like ```C3``` or ```a4``` - if set, overrides frequency
+- ```shape``` string, shape of waveform, defaults to ```sine```, other values are ```square```, ```sawtooth```, ```triangle``` and ```custom```
+
+#### sample
+
+- ```src``` string, url used to load sample buffer
+- ```offset``` number, starting point offset in seconds, defaults to ```0```
+- ```slice(pieces)``` returns a kit with the sample sliced into even-sized sections
 
 ## Develop
 
