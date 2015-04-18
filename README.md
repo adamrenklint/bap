@@ -47,7 +47,7 @@ pattern.kit('A', kit).start();
 
 - Bap runs at *96 ticks per beat*, with a position signature like MPC: ```bar.beat.tick```
 - Kit are like instruments (programs in MPC terms) and contains infinite slots, each with infinite layers of samples and oscillators
-- Patterns are collections of channels containing notes, and connect with kits
+- Patterns are playable collections of channels containing notes, and connect with kits
 - Notes are defined by six main parameters: position, key, duration, volume, pan and pitch
 - Only position and key params are required, all others can be null/falsy/undefined
 - Positions containing [expressions](https://github.com/adamrenklint/dilla-expressions#operators) are automatically expanded
@@ -63,6 +63,15 @@ pattern.kit('A', kit).start();
   - [Sample slices](http://examples.bapjs.org/#slices)
 
 ## API
+
+### *
+
+- All objects are based on [ampersand-state](https://github.com/AmpersandJS/ampersand-state)
+- ```on(name, callback)``` register event callback
+- ```off(name, [callback])``` unregister event callback
+- ```once(name, callback)``` register single-run event callback
+- ```with(params)``` return a clone of itself with params
+- ```toJSON()``` return current params as JSON
 
 ### bap
 
