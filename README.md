@@ -67,15 +67,14 @@ pattern.use('A', kit).start();
 - ```kit(params)``` returns a new [kit](#kit)
 - ```slot(params)``` returns a new [slot](#slot)
 - ```layer(params)``` returns a new [layer](#layer)
+- ```oscillator(params)``` returns a new [note](#oscillator)
+- ```sample(params)``` returns a new [note](#sample)
 - ```pattern(params)``` returns a new [pattern](#pattern)
 - ```channel(params)``` returns a new [channel](#channel)
 - ```note(params)``` returns a new [note](#note)
-- ```oscillator(params)``` returns a new [note](#oscillator)
-- ```sample(params)``` returns a new [note](#sample)
+- ```clock``` reference to [clock](#clock) instance
 
 #### params
-
-##### common
 
 - ```mute``` boolean, defaults to ```false```
 - ```pan``` number between ```-100``` and ```100```, defaults to ```0```
@@ -86,7 +85,7 @@ pattern.use('A', kit).start();
 - ```release``` trigger release in seconds
 - ```pitch``` number between ```-999``` and ```999```, defaults to ```0```
 
-### bap.clock
+### clock
 
 - ```start()``` start playback, if current pattern is set
 - ```start(pattern)``` set current pattern and start playback
