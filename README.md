@@ -64,8 +64,6 @@ pattern.kit('A', kit).start();
 
 ## API
 
-### *
-
 - All objects are based on [ampersand-state](https://github.com/AmpersandJS/ampersand-state)
 - ```on(name, callback)``` register event callback
 - ```off(name, [callback])``` unregister event callback
