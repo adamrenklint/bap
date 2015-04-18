@@ -148,11 +148,12 @@ pattern.use('A', kit).start();
 
 ### channel
 
-- ```add(note, note, ...)``` append notes to be played within context of channel
+- ```add(note, note, ...)``` schedule note(s) to be played within context of channel
 
 ### note
 
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
+- ```stop([time])``` stop playback of note at (AudioContext) time or immediately
 
 ## Develop
 

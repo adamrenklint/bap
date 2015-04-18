@@ -57,10 +57,6 @@ function slices () {
     .kit('A', sampleKit)
     .kit('B', breakKit)
     .start();
-
-    setTimeout(function () {
-      pattern.channel(2).notes.models[0].key = 'B2';
-    }, 1000);
 }
 
 module.exports = slices;
