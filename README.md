@@ -62,6 +62,34 @@ pattern.use('A', kit).start();
 
 ## API
 
+### bap
+
+- ```bap.kit(params)``` returns a new [kit](#kit)
+- ```bap.slot(params)``` returns a new [slot](#slot)
+- ```bap.layer(params)``` returns a new [layer](#layer)
+- ```bap.pattern(params)``` returns a new [pattern](#pattern)
+- ```bap.channel(params)``` returns a new [channel](#channel)
+- ```bap.note(params)``` returns a new [note](#note)
+- ```bap.oscillator(params)``` returns a new [note](#oscillator)
+- ```bap.sample(params)``` returns a new [note](#sample)
+
+### params
+
+- ```mute``` boolean, defaults to ```false```
+- ```pan``` number between ```-100``` and ```100```, defaults to ```0```
+- ```volume``` number between ```0``` and ```999```, defaults to ```100```
+- ```length``` trigger length in seconds
+- ```duration``` trigger length in ticks
+- ```attack``` trigger attack in seconds
+- ```release``` trigger release in seconds
+- ```pitch``` number between ```-999``` and ```999```, defaults to ```0```
+
+### kit
+
+- ```kit.slot()``` returns blank slot assigned to next id
+- ```kit.slot(index)``` returns existing or blank slot with id
+- ```kit.slot(index, slot)``` set slot instance at id
+
 ## Develop
 
 - ```npm install``` install all dependencies
