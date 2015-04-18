@@ -44,19 +44,17 @@ pattern.channel(1).add(
 pattern.use('A', kit).start();
 ```
 
-### Time signature and expressions
+## Basic concepts
 
-Bap runs at 96 ticks per beat, and the time signature looks like on an MPC: ```bar.beat.tick```.
+- Bap runs at 96 ticks per beat, and the position time signature looks like on an MPC: ```bar.beat.tick```
+- Kits are like instruments (program in MPC terms) and contains infinite slots, each with infinite layers of samples and oscillators
+- Patterns are collections of channels containing notes, and connect with kits
+- A note is defined by six main parameters: position, key, duration, volume, pan and pitch
+- Only position and key params are required, all others can be null/falsy/undefined
+- Positions containing [expressions](https://github.com/adamrenklint/dilla-expressions#operators) are automatically expanded
+- When a layer is played, it merges the params of the note, channel, layer, slot and kit
 
-- examplain expressions
-
-### Adding notes
-
-- six main attributes of a note: position, key, duration, volume, pitch, pan
-- also other params can be passed
-- explain how params gets inherited
-
-### Examples
+## Examples
 
 - [Metronome](http://examples.bapjs.org/#metronome)
 - [Boombap beat](http://examples.bapjs.org/#dilla-boombap)
