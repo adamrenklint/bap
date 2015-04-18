@@ -73,7 +73,7 @@ pattern.use('A', kit).start();
 - ```bap.oscillator(params)``` returns a new [note](#oscillator)
 - ```bap.sample(params)``` returns a new [note](#sample)
 
-### params
+#### params (common)
 
 - ```mute``` boolean, defaults to ```false```
 - ```pan``` number between ```-100``` and ```100```, defaults to ```0```
@@ -83,6 +83,11 @@ pattern.use('A', kit).start();
 - ```attack``` trigger attack in seconds
 - ```release``` trigger release in seconds
 - ```pitch``` number between ```-999``` and ```999```, defaults to ```0```
+
+#### params (sample)
+
+- ```src``` string, url used to load sample buffer
+- ```offset``` number, starting point offset in seconds, defaults to ```0```
 
 ### kit
 
