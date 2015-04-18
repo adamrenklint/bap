@@ -161,6 +161,11 @@ pattern.use('A', kit).start();
 
 ## Contribute
 
+- Check open issues
+- Fork the repo
+- Add a test and/or example
+- Submit a pull request
+
 ## License
 
 MIT © [Adam Renklint](http://adamrenklint.com)
