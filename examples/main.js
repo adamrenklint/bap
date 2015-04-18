@@ -29,7 +29,7 @@ var descriptionEl = document.getElementById('description');
 var loadingStateEl = document.getElementById('loading-state');
 
 function updateLoading () {
-  loadingStateEl.style.display = bap.loadingState.loading ? 'block' : 'none';
+  loadingStateEl.style.display = bap.loadingState.loading ? 'list-item' : 'none';
 }
 bap.loadingState.on('change:loading', updateLoading);
 updateLoading();
