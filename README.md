@@ -6,7 +6,7 @@ Beatmaking and sequence composition toolkit, using Javascript and Web Audio
 
 [![Travis branch](https://img.shields.io/travis/adamrenklint/bap/dev.svg?style=flat-square)](https://travis-ci.org/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![David dependencies](https://img.shields.io/david/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap) [![David devDependencies](https://img.shields.io/david/dev/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap#info=devDependencies)
 
-[Bap](http://bapjs.org) is a Javascript library for making beats and composing music for browsers with Web Audio. It is heavily inspired by the classic "MPC workflow", has an internal clock based on 96 ticks per beat and is built to make all aspects of beatmaking extremely modular and reusable.
+[Bap](http://bapjs.org) is a small Javascript library for making beats and composing sequences of Web Audio events for playback in modern browsers. It is heavily inspired by the classic "MPC workflow", has an internal clock based on 96 ticks per beat and is built to make all aspects of beatmaking completely modular and reusable.
 
 ## Install
 
