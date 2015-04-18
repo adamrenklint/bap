@@ -98,8 +98,19 @@ pattern.use('A', kit).start();
 ### kit
 
 - ```kit.slot()``` returns blank slot assigned to next id
-- ```kit.slot(index)``` returns existing or blank slot with id
-- ```kit.slot(index, slot)``` set slot instance at id
+- ```kit.slot(id)``` returns existing or blank slot with id
+- ```kit.slot(id, slot)``` assign slot instance to id
+- ```kit.slot(slot)``` assign slot instance to next id
+
+### slot
+
+- ```slot.layer()``` returns a blank layer assigned to next id
+- ```slot.layer(id)``` returns existing or blank layer with id
+- ```slot.layer(id, layer)``` assign layer instance to id
+- ```slot.layer(layer)``` assign layer instance to next id
+- ```slot.layer(sampleSrc)``` returns a new [sample](#sample) layer, assigned to next id
+- ```slot.start(time, note)``` start playback of slot at (AudioContext) time
+- ```slot.start(note)``` start playback of slot immediately
 
 ## Develop
 
