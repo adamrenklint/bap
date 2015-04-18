@@ -136,8 +136,8 @@ pattern.use('A', kit).start();
 - ```start()``` start playback of pattern
 - ```pause()``` stop playback
 - ```stop()``` stop playback and set position to ```1.1.01```
-- ```use(id, kit)``` connect kit to handle notes with id
-- ```kits``` model of connected kits
+- ```kit(id, kit)``` connect kit to id
+- ```kit(id)``` return kit connected to id
 - ```playing``` boolean, current state of playback, can be set to start or pause
 - ```tempo``` number, playback tempo in bpm, defaults to ```120```
 - ```bars``` number, length of pattern in bars, defaults to ```1```
@@ -145,9 +145,11 @@ pattern.use('A', kit).start();
 
 ### channel
 
+- ```add(note, note, ...)``` append notes to be played within context of channel
+
 ### note
 
-
+- ```start([time])``` start playback of note at (AudioContext) time or immediately
 
 ## Develop
 

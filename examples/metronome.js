@@ -23,7 +23,7 @@ function metronome () {
     ['*.2%1.01', 'A2']
   );
 
-  pattern.use('A', kit).start();
+  pattern.kit('A', kit).start();
 }
 
 module.exports = metronome;

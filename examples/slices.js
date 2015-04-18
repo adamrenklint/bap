@@ -54,8 +54,8 @@ function slices () {
   );
 
   pattern
-    .use('A', sampleKit)
-    .use('B', breakKit)
+    .kit('A', sampleKit)
+    .kit('B', breakKit)
     .start();
 }
 

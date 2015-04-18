@@ -95,10 +95,10 @@ function boombap () {
   );
 
   boombapPattern
-    .use('A', drumKit)
-    .use('B', plongKit)
-    .use('C', stringKit)
-    .use('D', bassKit)
+    .kit('A', drumKit)
+    .kit('B', plongKit)
+    .kit('C', stringKit)
+    .kit('D', bassKit)
     .start();
 }
 
