@@ -44,20 +44,23 @@ pattern.channel(1).add(
 pattern.use('A', kit).start();
 ```
 
-### Time signature
+### Time signature and expressions
 
 Bap runs at 96 ticks per beat, and the time signature looks like on an MPC: ```bar.beat.tick```.
+
+- examplain expressions
 
 ### Adding notes
 
 - six main attributes of a note: position, key, duration, volume, pitch, pan
-- use expressions
+- also other params can be passed
+- explain how params gets inherited
 
 ### Examples
 
-- [Metronome](http://adamrenklint.github.io/bap/#metronome)
-- [Boombap beat](http://adamrenklint.github.io/bap/#dilla-boombap)
-- [Sample slices](http://adamrenklint.github.io/bap/#slices)
+- [Metronome](http://examples.bapjs.org/#metronome)
+- [Boombap beat](http://examples.bapjs.org/#dilla-boombap)
+- [Sample slices](http://examples.bapjs.org/#slices)
 
 ## API
 

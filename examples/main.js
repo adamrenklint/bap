@@ -26,6 +26,13 @@ var examples = {
 var sourceEl = document.getElementById('source');
 var exampleNameEl = document.getElementById('example-name');
 var descriptionEl = document.getElementById('description');
+var loadingStateEl = document.getElementById('loading-state');
+
+function updateLoading () {
+  loadingStateEl.style.display = bap.loadingState.loading ? 'block' : 'none';
+}
+bap.loadingState.on('change:loading', updateLoading);
+updateLoading();
 
 function unwrap (source) {
   var lines = source.split('\n');
@@ -44,7 +51,8 @@ function navigate () {
     descriptionEl.innerHTML = description;
     sourceEl.textContent = unwrap(fn.toString());
     hljs.highlightBlock(sourceEl);
-    bap.clock.position = '1.1.01';
+    bap.clock.stop();
+    // bap.clock.position = '1.1.01';
     fn();
 
     [].forEach.call(document.getElementById('menu').children, function (child) {
