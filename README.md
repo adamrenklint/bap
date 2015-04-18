@@ -75,8 +75,6 @@ pattern.use('A', kit).start();
 
 #### params
 
-##### common
-
 - ```mute``` boolean, defaults to ```false```
 - ```pan``` number between ```-100``` and ```100```, defaults to ```0```
 - ```volume``` number between ```0``` and ```999```, defaults to ```100```
@@ -85,6 +83,12 @@ pattern.use('A', kit).start();
 - ```attack``` trigger attack in seconds
 - ```release``` trigger release in seconds
 - ```pitch``` number between ```-999``` and ```999```, defaults to ```0```
+
+##### oscillator
+
+- ```frequency``` number, frequency of oscillation in hertz, defaults to ```0```
+- ```note``` string, [note identifier](https://github.com/gre/audio-notes) like ```C3``` or ```a4``` - if set, overrides frequency
+- ```shape``` string, shape of waveform, defaults to ```sine```, other values are ```square```, ```sawtooth```, ```triangle``` and ```custom```
 
 ##### sample
 
