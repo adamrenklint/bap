@@ -64,16 +64,18 @@ pattern.use('A', kit).start();
 
 ### bap
 
-- ```bap.kit(params)``` returns a new [kit](#kit)
-- ```bap.slot(params)``` returns a new [slot](#slot)
-- ```bap.layer(params)``` returns a new [layer](#layer)
-- ```bap.pattern(params)``` returns a new [pattern](#pattern)
-- ```bap.channel(params)``` returns a new [channel](#channel)
-- ```bap.note(params)``` returns a new [note](#note)
-- ```bap.oscillator(params)``` returns a new [note](#oscillator)
-- ```bap.sample(params)``` returns a new [note](#sample)
+- ```kit(params)``` returns a new [kit](#kit)
+- ```slot(params)``` returns a new [slot](#slot)
+- ```layer(params)``` returns a new [layer](#layer)
+- ```pattern(params)``` returns a new [pattern](#pattern)
+- ```channel(params)``` returns a new [channel](#channel)
+- ```note(params)``` returns a new [note](#note)
+- ```oscillator(params)``` returns a new [note](#oscillator)
+- ```sample(params)``` returns a new [note](#sample)
 
 #### params
+
+##### common
 
 - ```mute``` boolean, defaults to ```false```
 - ```pan``` number between ```-100``` and ```100```, defaults to ```0```
@@ -84,33 +86,41 @@ pattern.use('A', kit).start();
 - ```release``` trigger release in seconds
 - ```pitch``` number between ```-999``` and ```999```, defaults to ```0```
 
-##### oscillator
+##### oscillator params
 
 - ```frequency``` number, frequency of oscillation in hertz, defaults to ```0```
 - ```note``` string, [note identifier](https://github.com/gre/audio-notes) like ```C3``` or ```a4``` - if set, overrides frequency
 - ```shape``` string, shape of waveform, defaults to ```sine```, other values are ```square```, ```sawtooth```, ```triangle``` and ```custom```
 
-##### sample
+##### sample params
 
 - ```src``` string, url used to load sample buffer
 - ```offset``` number, starting point offset in seconds, defaults to ```0```
 
+### bap.clock
+
+- ```start()``` start playback, if current pattern is set
+- ```start(pattern)``` set current pattern and start playback
+- ```pause()``` stop playback
+- ```stop()``` stop playback and set position to ```1.1.01```
+- ```playing``` boolean, current state of playback, can be set to start or pause
+
 ### kit
 
-- ```kit.slot()``` returns blank slot assigned to next id
-- ```kit.slot(id)``` returns existing or blank slot with id
-- ```kit.slot(id, slot)``` assign slot instance to id
-- ```kit.slot(slot)``` assign slot instance to next id
+- ```slot()``` returns blank slot assigned to next id
+- ```slot(id)``` returns existing or blank slot with id
+- ```slot(id, slot)``` assign slot instance to id
+- ```slot(slot)``` assign slot instance to next id
 
 ### slot
 
-- ```slot.layer()``` returns a blank layer assigned to next id
-- ```slot.layer(id)``` returns existing or blank layer with id
-- ```slot.layer(id, layer)``` assign layer instance to id
-- ```slot.layer(layer)``` assign layer instance to next id
-- ```slot.layer(sampleSrc)``` returns a new [sample](#sample) layer, assigned to next id
-- ```slot.start(time, note)``` start playback of slot at (AudioContext) time
-- ```slot.start(note)``` start playback of slot immediately
+- ```layer()``` returns a blank layer assigned to next id
+- ```layer(id)``` returns existing or blank layer with id
+- ```layer(id, layer)``` assign layer instance to id
+- ```layer(layer)``` assign layer instance to next id
+- ```layer(sampleSrc)``` returns a new [sample](#sample) layer, assigned to next id
+- ```start(time, note)``` start playback of slot at (AudioContext) time
+- ```start(note)``` start playback of slot immediately
 
 ## Develop
 
