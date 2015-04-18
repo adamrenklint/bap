@@ -1,6 +1,6 @@
 {
   "name": "bap",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "versionName": "damu",
   "description": "Beatmaking and sequence composition toolkit, using Javascript and Web Audio",
   "homepage": "http://bapjs.org",
@@ -56,6 +56,7 @@
     "coverage:report": "CODECLIMATE_REPO_TOKEN=$npm_package_config_codeclimateCoverageId codeclimate < coverage/lcov.info",
     "prepublish": "npm test && npm run coverage:check",
     "postpublish": "npm run tag && npm run deploy:examples && npm run coverage:report",
-    "tag": "git tag 'v'$npm_package_version && git push --tags"
+    "tag": "git tag 'v'$npm_package_version && git push --tags",
+    "check-changelog": "node scripts/check-changelog.js"
   }
 }
