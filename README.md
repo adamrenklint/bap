@@ -191,7 +191,7 @@ pattern.kit('A', kit).start();
 
 - [Roger Linn](http://en.wikipedia.org/wiki/Roger_Linn) for making [MPC60](http://en.wikipedia.org/wiki/Akai_MPC60)
 - [Marley Marl](http://en.wikipedia.org/wiki/Marley_Marl) for innovating the art of sampling
-- [DJ Premier](http://en.wikipedia.org/wiki/DJ_Premier), [Dilla](http://en.wikipedia.org/wiki/J_Dilla), [Pete Rock](http://en.wikipedia.org/wiki/Pete_Rock), [Damu the Fudgemunk](http://en.wikipedia.org/wiki/Damu_the_Fudgemunk), [Black Milk](http://en.wikipedia.org/wiki/Black_Milk) and [Apollo Brown](https://apollobrown.bandcamp.com) for beats with boom and bap
+- [DJ Premier](http://en.wikipedia.org/wiki/DJ_Premier), [J Dilla](http://en.wikipedia.org/wiki/J_Dilla), [Pete Rock](http://en.wikipedia.org/wiki/Pete_Rock), [Damu the Fudgemunk](http://en.wikipedia.org/wiki/Damu_the_Fudgemunk), [Black Milk](http://en.wikipedia.org/wiki/Black_Milk), [Large Professor](http://en.wikipedia.org/wiki/Large_Professor) and [Apollo Brown](https://apollobrown.bandcamp.com) for making dope beats to be inspired by
 - [Matt McKegg](https://twitter.com/MattMcKegg) for building [Bopper](https://github.com/mmckegg/bopper) and [Ditty](https://github.com/mmckegg/ditty), which are used in this project since version 0.1
 
 ## License
