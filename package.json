@@ -28,6 +28,7 @@
     "browserify": "^9.0.8",
     "buildbranch": "0.0.3",
     "chai": "^2.2.0",
+    "codeclimate-test-reporter": "0.0.4",
     "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
     "mocha": "^2.2.1",
