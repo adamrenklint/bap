@@ -5,6 +5,10 @@
 - [Website](http://bapjs.org)
 - [Examples](http://examples.bapjs.org)
 
+### Credits
+
+- [Adam Renklint](http://adamrenklint.com)
+
 ### Dependencies
 
 - [Dilla](https://www.npmjs.com/package/dilla)
