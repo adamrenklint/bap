@@ -59,7 +59,7 @@ pattern.kit('A', kit).start();
 - [Roadmap](https://github.com/adamrenklint/bap/blob/master/roadmap.md)
 - Examples
   - [Metronome](http://examples.bapjs.org/#metronome)
-  - [Boombap beat](http://examples.bapjs.org/#dilla-boombap)
+  - [Boombap beat](http://examples.bapjs.org/#boombap)
   - [Sample slices](http://examples.bapjs.org/#slices)
 - [Related links](https://github.com/adamrenklint/bap/blob/master/links.md)
 
