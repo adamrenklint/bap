@@ -37,7 +37,7 @@
   },
   "config": {
     "coverageLimit": 1,
-    "codeclimateCoverageId": "2e7a3b0c2e5c9d2b9ae79b528f98a3adb26efe2539425721323129199815df04"
+    "codeclimateCoverageId": "0959870e0a36bca751d63c1e3bf90fea270b45819b14674be83428c23ffe47ea"
   },
   "scripts": {
     "prestart": "watchify examples/main.js -o examples/bundle.js -v &",
