@@ -61,6 +61,7 @@ pattern.kit('A', kit).start();
   - [Metronome](http://examples.bapjs.org/#metronome)
   - [Boombap beat](http://examples.bapjs.org/#dilla-boombap)
   - [Sample slices](http://examples.bapjs.org/#slices)
+- [Related links](https://github.com/adamrenklint/bap/blob/master/links.md)
 
 ## API
 
