@@ -196,4 +196,4 @@ pattern.kit('A', kit).start();
 
 ## License
 
-MIT © [Adam Renklint](http://adamrenklint.com)
+MIT © 2015 [Adam Renklint](http://adamrenklint.com)
