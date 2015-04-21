@@ -24,7 +24,6 @@ function metronome () {
   );
 
   pattern.kit('A', kit).start();
-  console.log(pattern);
 }
 
 module.exports = metronome;
