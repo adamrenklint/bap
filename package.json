@@ -29,6 +29,7 @@
     "audio-notes": "^0.1.0",
     "dilla": "^1.4.0-beta2",
     "lodash.debounce": "^3.0.3",
+    "lodash.memoize": "^3.0.3",
     "lodash.merge": "^3.1.0"
   },
   "devDependencies": {
