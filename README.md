@@ -87,13 +87,13 @@ pattern.kit('A', kit).start();
 #### params
 
 - ```mute``` boolean, defaults to ```false```
-- ```pan``` number between ```-100``` and ```100```, defaults to ```0```
 - ```volume``` number between ```0``` and ```999```, defaults to ```100```
-- ```length``` trigger length in seconds
-- ```duration``` trigger length in ticks
-- ```attack``` trigger attack in seconds
-- ```release``` trigger release in seconds
-- ```pitch``` number between ```-999``` and ```999```, defaults to ```0```
+- ```length``` number, length in seconds, overriden by duration if shorter
+- ```duration``` number, duration in ticks, overriden by length if shorter
+- ```attack``` number, attack in seconds
+- ```release``` number, release in seconds
+- ```pitch``` number between ```-999``` and ```999``` representing the pitch shift in percent, defaults to ```0```
+- ```pan``` number between ```-100``` and ```100```, defaults to ```0```
 
 ### clock
 
