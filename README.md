@@ -183,7 +183,7 @@ pattern.kit('A', kit).start();
 - ```npm test``` run unit tests
 - ```npm run test:watch``` run and watch unit tests
 - ```npm run coverage``` generate coverage report with Istanbul
-- ```npm publish``` run tests, publish to npm, build minified version, tag version and deploy examples
+- ```npm release``` run tests, publish to npm, build minified version, tag and deploy examples
 
 ## Contribute
 
