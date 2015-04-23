@@ -2,7 +2,7 @@
   "name": "bap",
   "version": "0.2.0",
   "versionName": "marl",
-  "description": "Beatmaking and sequence composition toolkit, using Javascript and Web Audio",
+  "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
   "homepage": "http://bapjs.org",
   "main": "index.js",
   "repository": {

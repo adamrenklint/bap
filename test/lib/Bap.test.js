@@ -20,6 +20,7 @@ describe('Bap', function () {
     'oscillator',
     'sample',
     'pattern',
+    'sequence',
     'channel',
     'note',
   ].forEach(function (name) {
