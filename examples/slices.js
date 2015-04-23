@@ -6,7 +6,8 @@ function slices () {
     src: 'sounds/slices.wav',
     attack: 0.01,
     release: 0.01,
-    channel: 'right'
+    channel: 'right',
+    reverse: true
   });
   sampleKit.slot(1).layer(base.with({
     offset: 0.072,
@@ -27,7 +28,8 @@ function slices () {
 
   var breakKit = bap.sample({
     src: 'sounds/esther.wav',
-    pitch: -26
+    pitch: -26,
+    reverse: true
   }).slice(16);
   breakKit.slot(1).layer('sounds/kick.wav');
   breakKit.slot(2).layer('sounds/snare.wav');
