@@ -55,7 +55,7 @@
     "start": "node node_modules/3w/3w.js examples --3000",
     "build:examples": "browserify examples/main.js -o examples/bundle.js",
     "build:minified": "browserify index.js -o bap.min.js",
-    "postbuild:minified": "uglifyjs bap.min.js --screw-ie8 --compress --mangle --o bap.min.js",
+    "postbuild:minified": "uglifyjs bap.min.js --preamble 'Bap v'$npm_package_version' (http://bapjs.org)\nLicense: MIT © 2015 Adam Renklint (http://adamrenklint.com)\n' --screw-ie8 --compress --mangle --o bap.min.js",
     "prerelease:minified": "npm run build:minified",
     "release:minified": "git add bap.min.js && git commit -m 'Build minified version '$npm_package_version",
     "test": "mocha -s 10 test/**/*.test.js",
