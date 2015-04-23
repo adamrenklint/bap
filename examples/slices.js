@@ -22,7 +22,8 @@ function slices () {
   }));
   sampleKit.slot(4).layer(base.with({
     offset: 9.49,
-    length: 2
+    length: 2,
+    reverse: true
   }));
 
   var breakKit = bap.sample({
