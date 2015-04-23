@@ -43,6 +43,7 @@
     "jshint": "^2.6.3",
     "mocha": "^2.2.1",
     "rimraf": "^2.3.2",
+    "uglifyjs": "^2.4.10",
     "watchify": "^3.1.0"
   },
   "config": {
@@ -52,9 +53,11 @@
   "scripts": {
     "prestart": "watchify examples/main.js -o examples/bundle.js -v &",
     "start": "node node_modules/3w/3w.js examples --3000",
-    "build": "browserify examples/main.js -o examples/bundle.js",
+    "build:examples": "browserify examples/main.js -o examples/bundle.js",
+    "build:minified": "browserify index.js -o bap.min.js",
+    "postbuild:minified": "uglifyjs bap.min.js --screw-ie8 --compress --mangle --o bap.min.js",
     "test": "mocha -s 10 test/**/*.test.js",
-    "predeploy:examples": "npm run build",
+    "predeploy:examples": "npm run build:examples",
     "deploy:examples": "buildbranch gh-pages examples examples.bapjs.org",
     "pretest": "npm run lint",
     "test:watch": "npm test -- -w",
