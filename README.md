@@ -138,6 +138,8 @@ pattern.kit('A', kit).start();
 - ```src``` string, url used to load sample buffer
 - ```offset``` number, starting point offset in seconds, defaults to ```0```
 - ```channel``` string, defines how to handle stereo buffers: ```left``` or ```right``` uses a single channel, ```merge``` and ```diff``` combines or differentates between channels, default is ```null``` and does nothing
+- ```reverse``` boolean, reverse buffer or slice of buffer
+- ```loop``` number, loop length in seconds, defaults to ```0``` i.e. not looping
 - ```slice(pieces)``` returns a kit with the sample sliced into even-sized sections
 
 ### pattern
