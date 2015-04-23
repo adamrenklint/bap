@@ -10,16 +10,24 @@
 
 Made by [Adam Renklint](http://adamrenklint.com), Berlin april 2015
 
-## Install
+## Install and import
+
+### From npm
 
 ```sh
 $ npm install --save bap
 ```
 
+### From rawgit CDN
+
+```
+<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.2.0/bap.min.js"></script>
+```
+
 ## Usage
 
 ```js
-var bap = require('bap');
+var bap = require('bap'); // or window.bap
 
 // a kit is like an instrument, or program in mpc terms
 var kit = bap.kit();
