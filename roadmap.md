@@ -21,14 +21,6 @@ bap.sequence(
   - Rename sample.sliceExpression to sample.section
   - Allow sample.section to represent ranges, like ```1-4/9```
   - Allow passing an array of slice points to ```slice()```
-- Callback to edit note while expanding expression
-```js
-['1.*.01', 'B1', ..., function (note) {
-  // note.position === expanded position
-  // can be used to make variations of expanded notes...
-  note.volume = 100 - note.tick;
-}]
-```
 - Cleaner solution than ```this.vent.bap```
 - Effects and chains
 ```js

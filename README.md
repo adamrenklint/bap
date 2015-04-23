@@ -161,11 +161,13 @@ pattern.kit('A', kit).start();
 ### channel
 
 - ```add(note, note, ...)``` schedule note(s) to be played within context of channel
+- ```transform``` function to be called after expanding position expressions into notes, called after ``note.transform```
 
 ### note
 
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
+- ```transform``` function to be called after expanding position expressions into notes, called before ```channel.transform```, can return ```false``` to not execute ```channel.transform```
 
 ## Feedback and issues
 
