@@ -56,6 +56,8 @@
     "build:examples": "browserify examples/main.js -o examples/bundle.js",
     "build:minified": "browserify index.js -o bap.min.js",
     "postbuild:minified": "uglifyjs bap.min.js --screw-ie8 --compress --mangle --o bap.min.js",
+    "prerelease:minified": "npm run build:minified",
+    "release:minified": "git add bap.min.js && git commit -m 'Build minified version '$npm_package_version",
     "test": "mocha -s 10 test/**/*.test.js",
     "predeploy:examples": "npm run build:examples",
     "deploy:examples": "buildbranch gh-pages examples examples.bapjs.org",
@@ -68,7 +70,7 @@
     "coverage:check": "istanbul check-coverage --statement $npm_package_config_coverageLimit --branch $npm_package_config_coverageLimit --function $npm_package_config_coverageLimit",
     "precoverage:report": "npm run coverage",
     "coverage:report": "CODECLIMATE_REPO_TOKEN=$npm_package_config_codeclimateCoverageId codeclimate < coverage/lcov.info",
-    "prepublish": "npm test && npm run coverage:check",
+    "prepublish": "npm test && npm run coverage:check && npm run release:minified",
     "postpublish": "npm run tag && npm run deploy:examples && npm run coverage:report",
     "tag": "git tag 'v'$npm_package_version && git push --tags"
   }
