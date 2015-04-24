@@ -41,11 +41,11 @@ function sequences () {
     ['1.2.01', 'A1', 96],
     ['1.3.01', 'A1', 96],
     ['1.4.01', 'A1', 96],
-    ['1.4.01', 'A2'],
-    ['2.1.01', 'A2'],
-    ['2.2.01', 'A3'],
-    ['2.3.01', 'A3'],
-    ['2.4.01', 'A3']
+    ['1.4.01', 'A2', 96],
+    ['2.1.01', 'A2', 96],
+    ['2.2.01', 'A3', 96],
+    ['2.3.01', 'A3', 96],
+    ['2.4.01', 'A3', 96]
   );
 
   var mainSamplePattern = bap.pattern({ bars: 2, tempo: 95 });
@@ -60,13 +60,13 @@ function sequences () {
   var drumPattern = bap.pattern({ bars: 2, tempo: 95 });
   drumPattern.channel(2).add(
     ['1.1.01', 'B1'],
-    ['1.2.01', 'B2'],
+    ['*.even.01', 'B2'],
     ['1.3.01', 'B3'],
-    ['1.4.01', 'B4'],
+    // ['1.4.01', 'B4'],
     ['2.1.01', 'B1'],
-    ['2.2.01', 'B2'],
+    // ['2.2.01', 'B2'],
     ['2.3.01', 'B8'],
-    ['2.4.01', 'B9'],
+    // ['2.4.01', 'B9'],
     ['2.4.49', 'B5', 48]
   );
 
@@ -109,9 +109,9 @@ function sequences () {
   ], {loop:true});
   s.start();
 
-  setTimeout(function () {
-    drumPattern.channel(2).notes.models[3].position = '1.3.49';
-  }, 3000);
+  // setTimeout(function () {
+  //   drumPattern.channel(2).notes.models[3].position = '1.3.49';
+  // }, 3000);
 }
 
 module.exports = sequences;

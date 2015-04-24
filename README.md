@@ -174,6 +174,7 @@ pattern.kit('A', kit).start();
 - ```playing``` boolean, current state of playback, can be set to start or pause
 - ```loop``` boolean, define if sequence should loop, defaults to false
 - ```sequences``` an array of sequences, patterns or arrays of sequences and patterns
+- ```bars``` number, length in bars, read-only
 
 ### channel
 
