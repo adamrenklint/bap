@@ -88,6 +88,7 @@ pattern.kit('A', kit).start();
 - ```oscillator(params)``` returns a new [oscillator](#oscillator)
 - ```sample(params)``` returns a new [sample](#sample)
 - ```pattern(params)``` returns a new [pattern](#pattern)
+- ```sequence(sequences, params)``` returns a new [sequence](#sequence)
 - ```channel(params)``` returns a new [channel](#channel)
 - ```note(params)``` returns a new [note](#note)
 - ```clock``` reference to [clock](#clock) instance
@@ -110,6 +111,7 @@ pattern.kit('A', kit).start();
 - ```pause()``` stop playback
 - ```stop()``` stop playback and set position to ```1.1.01```
 - ```playing``` boolean, current state of playback, can be set to start or pause
+- ```tempo``` number, current tempo of playback, can be used to set tempo but would be overriden by any future tempo changes scheduled in sequence
 
 ### kit
 
@@ -152,6 +154,11 @@ pattern.kit('A', kit).start();
 
 ### pattern
 
+- ```playing``` boolean, current state of playback, can be set to start or pause
+- ```tempo``` number, playback tempo in bpm, defaults to ```120```
+- ```bars``` number, length of pattern in bars, defaults to ```1```
+- ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
+- ```loop``` boolean, define if pattern should loop, defaults to true
 - ```channel()``` returns a blank channel assigned to next id
 - ```channel(id)``` returns existing or blank channel with id
 - ```channel(id, channel)``` assign channel instance to id
@@ -161,10 +168,12 @@ pattern.kit('A', kit).start();
 - ```stop()``` stop playback and set position to ```1.1.01```
 - ```kit(id, kit)``` connect kit to id
 - ```kit(id)``` return kit connected to id
+
+### sequence
+
 - ```playing``` boolean, current state of playback, can be set to start or pause
-- ```tempo``` number, playback tempo in bpm, defaults to ```120```
-- ```bars``` number, length of pattern in bars, defaults to ```1```
-- ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
+- ```loop``` boolean, define if sequence should loop, defaults to false
+- ```sequences``` an array of sequences, patterns or arrays of sequences and patterns
 
 ### channel
 

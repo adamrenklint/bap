@@ -5,10 +5,12 @@ var slices = require('./slices');
 var sequences = require('./sequences');
 
 var positionEl = document.getElementById('position');
+var tempoEl = document.getElementById('tempo');
 var toggleEl = document.getElementById('toggle-playback');
 
 function draw () {
   positionEl.textContent = bap.clock.position;
+  tempoEl.textContent = bap.clock.tempo + ' bpm';
   toggleEl.textContent = bap.clock.playing ? 'Stop playback' : 'Start playback';
   window.requestAnimationFrame(draw);
 }
