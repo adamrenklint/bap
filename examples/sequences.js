@@ -75,8 +75,8 @@ function sequences () {
   drumPattern.kit('B', breakKit);
 
   var sequence = bap.sequence([
-    [mainSamplePattern, drumPattern],
-    [mainSamplePattern, drumPattern],
+    // [mainSamplePattern, drumPattern],
+    // [mainSamplePattern, drumPattern],
     [mainSamplePattern, drumPattern]
   ]);
 
@@ -101,7 +101,7 @@ function sequences () {
   var s = bap.sequence([
     introSamplePattern,
     sequence
-  ]);
+  ], { loop: true });
   s.start();
 }
 
