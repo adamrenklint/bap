@@ -8,6 +8,7 @@
 - Added ```sample.loop``` param to define looping behavior
 - Added ```note.transform``` and ```channel.transform``` to allow modification of notes after expanding position expressions
 - Added ```bap.clock.tempo``` attribute for getting and setting current tempo
+- Updated to [dilla v1.4](https://www.npmjs.com/package/dilla) and [dilla-expressions v1.2](https://www.npmjs.com/package/dilla-expressions) for support of *greater than* and *less than* position expression operators
 
 ## version 0.1 "damu" (2015-04-19)
 
