@@ -48,7 +48,7 @@ function sequences () {
     ['2.4.01', 'A3']
   );
 
-  var mainSamplePattern = bap.pattern({ beatsPerBar: 3, bars: 2, tempo: 95 });
+  var mainSamplePattern = bap.pattern({ bars: 2, tempo: 95 });
   mainSamplePattern.channel(1).add(
     ['1.1.01', 'A1', 96],
     ['1.2.01', 'A1', 96],
