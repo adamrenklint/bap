@@ -35,7 +35,7 @@ function sequences () {
   breakKit.slot(2).layer('sounds/snare.wav');
   breakKit.slot(4).layer('sounds/snare.wav');
 
-  var introSamplePattern = bap.pattern({ bars: 2, tempo: 95 });
+  var introSamplePattern = bap.pattern({ bars: 2, tempo: 120 });
   introSamplePattern.channel(1).add(
     ['1.1.01', 'A1', 96],
     ['1.2.01', 'A1', 96],
@@ -75,28 +75,33 @@ function sequences () {
   drumPattern.kit('B', breakKit);
 
   var sequence = bap.sequence([
-    introSamplePattern,
+    [mainSamplePattern, drumPattern],
+    [mainSamplePattern, drumPattern],
     [mainSamplePattern, drumPattern]
   ]);
 
-  var sequence2 = bap.sequence([
+  // var sequence2 = bap.sequence([
+  //   introSamplePattern,
+  //   sequence,
+  //   sequence,
+  //   sequence
+  // ]);
+  // var on = false;
+  // function next() {
+  //   if (on) {
+  //     drumPattern.start();
+  //   }
+  //   else {
+  //     sequence.start();
+  //   }
+  //   on = !on;
+  //   setTimeout(next, 3000);
+  // }
+  // next();
+  bap.sequence([
     introSamplePattern,
-    sequence,
-    sequence,
     sequence
-  ]);
-  var on = false;
-  function next() {
-    if (on) {
-      drumPattern.start();
-    }
-    else {
-      sequence2.start();
-    }
-    on = !on;
-    setTimeout(next, 3000);
-  }
-  next();
+  ]).start();
 }
 
 module.exports = sequences;
