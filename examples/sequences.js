@@ -108,15 +108,6 @@ function sequences () {
     sequence
   ], {loop:true});
   s.start();
-
-  setTimeout(function () {
-    s.pause();
-    bap.clock.position = '3.1.01';
-    setTimeout(function () {
-      console.log('tempo should be correct here, 95');
-      s.start();
-    }, 1000);
-  }, 1000);
 }
 
 module.exports = sequences;
