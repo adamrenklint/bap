@@ -109,9 +109,10 @@ function sequences () {
   ], {loop:true});
   s.start();
 
-  // setTimeout(function () {
-  //   drumPattern.channel(2).notes.models[3].position = '1.3.49';
-  // }, 3000);
+  setTimeout(function () {
+    s.sequences = s.sequences.concat(drumPattern);
+    // drumPattern.channel(2).notes.models[3].position = '1.3.49';
+  }, 3000);
 }
 
 module.exports = sequences;
