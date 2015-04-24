@@ -98,10 +98,11 @@ function sequences () {
   //   setTimeout(next, 3000);
   // }
   // next();
-  bap.sequence([
+  var s = bap.sequence([
     introSamplePattern,
     sequence
-  ]).start();
+  ]);
+  s.start();
 }
 
 module.exports = sequences;
