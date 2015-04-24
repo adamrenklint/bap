@@ -35,7 +35,7 @@ function sequences () {
   breakKit.slot(2).layer('sounds/snare.wav');
   breakKit.slot(4).layer('sounds/snare.wav');
 
-  var introSamplePattern = bap.pattern({ bars: 2, tempo: 120 });
+  var introSamplePattern = bap.pattern({ bars: 2, tempo: 200 });
   introSamplePattern.channel(1).add(
     ['1.1.01', 'A1', 96],
     ['1.2.01', 'A1', 96],
@@ -48,7 +48,7 @@ function sequences () {
     ['2.4.01', 'A3']
   );
 
-  var mainSamplePattern = bap.pattern({ bars: 2, tempo: 95 });
+  var mainSamplePattern = bap.pattern({ beatsPerBar: 3, bars: 2, tempo: 95 });
   mainSamplePattern.channel(1).add(
     ['1.1.01', 'A1', 96],
     ['1.2.01', 'A1', 96],
@@ -98,11 +98,25 @@ function sequences () {
   //   setTimeout(next, 3000);
   // }
   // next();
+  // var p = bap.pattern()
+  // p.channel(1).add(
+  //   ['*.*.*', 'C1']
+  // );
+  // p.start();
   var s = bap.sequence([
     introSamplePattern,
     sequence
-  ], { loop: true });
+  ], {loop:true});
   s.start();
+
+  setTimeout(function () {
+    s.pause();
+    bap.clock.position = '3.1.01';
+    setTimeout(function () {
+      console.log('tempo should be correct here, 95');
+      s.start();
+    }, 1000);
+  }, 1000);
 }
 
 module.exports = sequences;
