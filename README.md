@@ -187,10 +187,6 @@ pattern.kit('A', kit).start();
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
 - ```transform``` function to be called after expanding position expressions into notes, called before ```channel.transform```, can return ```false``` to not execute ```channel.transform```
 
-## Browser support
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/adamrenklint.svg)](https://saucelabs.com/u/adamrenklint)
-
 ## Feedback and issues
 
 - Report bugs with [Github issues](https://github.com/adamrenklint/bap/issues)

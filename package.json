@@ -50,7 +50,6 @@
     "karma-firefox-launcher": "^0.1.4",
     "karma-mocha": "^0.1.10",
     "karma-safari-launcher": "^0.1.1",
-    "karma-sauce-launcher": "^0.2.10",
     "mocha": "^2.2.1",
     "rimraf": "^2.3.2",
     "uglifyjs": "^2.4.10",
@@ -61,10 +60,10 @@
     "codeclimateCoverageId": "0959870e0a36bca751d63c1e3bf90fea270b45819b14674be83428c23ffe47ea"
   },
   "scripts": {
-    "xtest": "mocha -s 10 test/**/*.test.js",
-    "test": "node_modules/karma/bin/karma start karma.conf.js",
+    "test": "npm run test:watch -- --single-run",
+    "test:watch": "node_modules/karma/bin/karma start test/local.conf.js",
+    "test:ci": "node_modules/karma/bin/karma start test/ci.conf.js",
     "pretest": "npm run lint",
-    "test:watch": "npm test -- -w",
     "lint": "jshint lib/**/*.js",
     "prestart": "watchify examples/main.js -o examples/bundle.js -v &",
     "start": "node node_modules/3w/3w.js examples --3000",
