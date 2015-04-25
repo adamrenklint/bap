@@ -15,6 +15,7 @@ module.exports = function (config) {
       transform: [ 'brfs' ]
     },
     reportSlowerThan: 10,
+    reporters: ['mocha'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
