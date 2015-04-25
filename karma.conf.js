@@ -9,6 +9,18 @@ module.exports = function(config) {
       browserName: 'chrome',
       platform: 'Windows 7',
       version: '41'
+    },
+    sl_win_firefox: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      platform: 'Windows 7',
+      version: '37'
+    },
+    sl_win_ie: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 8.1',
+      version: '11.0'
     }
     // sl_osx_chrome: {
     //   base: 'SauceLabs',
@@ -21,12 +33,14 @@ module.exports = function(config) {
     //   browserName: 'firefox',
     //   version: '37'
     // }
+
     // sl_osx_safari: {
     //   base: 'SauceLabs',
-    //   browserName: 'safari',
-    //   platform: 'OS X 10.9',
-    //   version: '7.0'
-    // },
+    //   browserName: 'iphone',
+    //   platform: 'OS X 10.10',
+    //   version: '8.2'
+    // }
+
     // sl_ios_safari: {
     //   base: 'SauceLabs',
     //   browserName: 'iphone',
@@ -45,6 +59,7 @@ module.exports = function(config) {
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
+    testName: 'bap tests',
 
 
     // frameworks to use
@@ -78,11 +93,13 @@ module.exports = function(config) {
 
     reportSlowerThan: 10,
 
+
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     // reporters: ['saucelabs'],
-    reporters: ['dots', 'saucelabs'],
+    // reporters: ['dots', 'saucelabs'],
+    reporters: ['dots'],
 
 
     // web server port
@@ -106,8 +123,8 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     // browsers: ['Chrome', 'Safari', 'Firefox'],
-    // browsers: ['Chrome'],
-    browsers: Object.keys(customLaunchers),
+    browsers: ['Firefox'],
+    // browsers: Object.keys(customLaunchers),
 
 
     // Continuous Integration mode

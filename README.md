@@ -4,8 +4,6 @@
 
 [![Travis branch](https://img.shields.io/travis/adamrenklint/bap/dev.svg?style=flat-square)](https://travis-ci.org/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![David dependencies](https://img.shields.io/david/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap) [![David devDependencies](https://img.shields.io/david/dev/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap#info=devDependencies)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/adamrenklint.svg)](https://saucelabs.com/u/adamrenklint)
-
 [Bap](http://bapjs.org) is a toolkit for making beats and composing sequences with Javascript and Web Audio for playback in modern browsers. It is inspired by the classic "MPC workflow" and built to make all aspects of beatmaking completely modular and reusable.
 
 **The project is in an early stage, and things may change and break between minor versions.**
@@ -188,6 +186,10 @@ pattern.kit('A', kit).start();
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
 - ```transform``` function to be called after expanding position expressions into notes, called before ```channel.transform```, can return ```false``` to not execute ```channel.transform```
+
+## Browser support
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/adamrenklint.svg)](https://saucelabs.com/u/adamrenklint)
 
 ## Feedback and issues
 
