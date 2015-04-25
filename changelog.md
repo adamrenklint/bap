@@ -2,7 +2,7 @@
 
 ## version 0.2 "marl"
 
-- Added ```bap.sequence``` object for creating multi-layered sequences of patterns and other sequences
+- Added ```bap.sequence``` object for creating multi-layered sequences from patterns and other sequences
 - Added ```sample.channel``` param to define behavior for stereo buffers
 - Added ```sample.reverse``` param to reverse buffer or slice of buffer
 - Added ```sample.loop``` param to define looping behavior
