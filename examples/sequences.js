@@ -74,11 +74,11 @@ function sequences () {
   introSamplePattern.kit('A', sampleKit);
   drumPattern.kit('B', breakKit);
 
-  var sequence = bap.sequence([
+  var sequence = bap.sequence(
     // [mainSamplePattern, drumPattern],
     // [mainSamplePattern, drumPattern],
     [mainSamplePattern, drumPattern]
-  ]);
+  );
 
   // var sequence2 = bap.sequence([
   //   introSamplePattern,
@@ -103,10 +103,10 @@ function sequences () {
   //   ['*.*.*', 'C1']
   // );
   // p.start();
-  var s = bap.sequence([
+  var s = bap.sequence(
     introSamplePattern,
-    sequence
-  ], {loop:true});
+    sequence,
+    {loop:true});
   s.start();
   //
   // setTimeout(function () {
