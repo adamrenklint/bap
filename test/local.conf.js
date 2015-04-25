@@ -14,7 +14,7 @@ module.exports = function (config) {
       debug: true,
       transform: [ 'brfs' ]
     },
-    reportSlowerThan: 10,
+    reportSlowerThan: 50,
     reporters: ['mocha'],
     port: 9876,
     colors: true,
