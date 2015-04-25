@@ -10,35 +10,35 @@ module.exports = function(config) {
       platform: 'Windows 7',
       version: '41'
     },
-    sl_osx_chrome: {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      platform: 'OS X 10.9',
-      version: '41'
-    },
+    // sl_osx_chrome: {
+    //   base: 'SauceLabs',
+    //   browserName: 'chrome',
+    //   platform: 'OS X 10.9',
+    //   version: '41'
+    // },
     sl_firefox: {
       base: 'SauceLabs',
       browserName: 'firefox',
       version: '37'
-    },
-    sl_osx_safari: {
-      base: 'SauceLabs',
-      browserName: 'safari',
-      platform: 'OS X 10.9',
-      version: '7.0'
-    },
-    sl_ios_safari: {
-      base: 'SauceLabs',
-      browserName: 'iphone',
-      platform: 'OS X 10.9',
-      version: '8.2'
-    },
-    sl_ie_11: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      platform: 'Windows 8.1',
-      version: '11'
     }
+    // sl_osx_safari: {
+    //   base: 'SauceLabs',
+    //   browserName: 'safari',
+    //   platform: 'OS X 10.9',
+    //   version: '7.0'
+    // },
+    // sl_ios_safari: {
+    //   base: 'SauceLabs',
+    //   browserName: 'iphone',
+    //   platform: 'OS X 10.9',
+    //   version: '8.2'
+    // },
+    // sl_ie_11: {
+    //   base: 'SauceLabs',
+    //   browserName: 'internet explorer',
+    //   platform: 'Windows 8.1',
+    //   version: '11'
+    // }
   };
 
   config.set({
@@ -76,10 +76,13 @@ module.exports = function(config) {
       transform: [ 'brfs' ]
     },
 
+    reportSlowerThan: 10,
+
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['saucelabs'],
+    // reporters: ['saucelabs'],
+    reporters: ['dots'],
 
 
     // web server port
@@ -97,16 +100,19 @@ module.exports = function(config) {
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
+    // autoWatch: true,
 
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     // browsers: ['Chrome', 'Safari', 'Firefox'],
+    // browsers: ['Chrome'],
     browsers: Object.keys(customLaunchers),
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
+    // singleRun: false
   });
 };
