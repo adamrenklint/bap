@@ -32,8 +32,7 @@
     "lodash.debounce": "^3.0.3",
     "lodash.memoize": "^3.0.3",
     "lodash.merge": "^3.1.0",
-    "lodash.padleft": "^3.1.0",
-    "sinon": "^1.14.1"
+    "lodash.padleft": "^3.1.0"
   },
   "devDependencies": {
     "3w": "0.0.4",
@@ -56,7 +55,8 @@
     "rimraf": "^2.3.2",
     "sinon-chai": "^2.7.0",
     "uglifyjs": "^2.4.10",
-    "watchify": "^3.1.0"
+    "watchify": "^3.1.0",
+    "sinon": "^1.14.1"
   },
   "config": {
     "coverageLimit": 1,
