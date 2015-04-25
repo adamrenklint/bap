@@ -12,9 +12,5 @@ git:
 install:
   - npm install
 
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
 script:
-  - npm run test:ci && npm run coverage:check
+  - npm test && npm run coverage:check
