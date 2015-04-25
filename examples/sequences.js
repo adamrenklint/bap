@@ -108,11 +108,13 @@ function sequences () {
     sequence
   ], {loop:true});
   s.start();
-
-  setTimeout(function () {
-    s.sequences = s.sequences.concat(drumPattern);
-    // drumPattern.channel(2).notes.models[3].position = '1.3.49';
-  }, 3000);
+  //
+  // setTimeout(function () {
+  //   // s.sequences.push(drumPattern);
+  //   console.log('foo');
+  //   s.sequences = s.sequences.concat(drumPattern);
+  // // //   drumPattern.channel(2).notes.models[3].position = '1.3.49';
+  // }, 3000);
 }
 
 module.exports = sequences;
