@@ -7,27 +7,28 @@ module.exports = function(config) {
     sl_win_chrome: {
       base: 'SauceLabs',
       browserName: 'chrome',
-      platform: 'Windows 7',
-      version: '41'
-    },
-    sl_win_firefox: {
-      base: 'SauceLabs',
-      browserName: 'firefox',
-      platform: 'Windows 7',
-      version: '37'
-    },
-    sl_win_ie: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
       platform: 'Windows 8.1',
-      version: '11.0'
+      version: '41'
     }
+    // ,
+    // sl_win_firefox: {
+    //   base: 'SauceLabs',
+    //   browserName: 'firefox',
+    //   platform: 'Windows 7',
+    //   version: '37'
+    // },
+    // sl_win_ie: {
+    //   base: 'SauceLabs',
+    //   browserName: 'internet explorer',
+    //   platform: 'Windows 8.1',
+    //   version: '11.0'
+    // }
     // sl_osx_chrome: {
     //   base: 'SauceLabs',
     //   browserName: 'chrome',
-    //   platform: 'OS X 10.9',
+    //   platform: 'OS X 10.10',
     //   version: '41'
-    // },
+    // }
     // sl_firefox: {
     //   base: 'SauceLabs',
     //   browserName: 'firefox',
@@ -74,8 +75,8 @@ module.exports = function(config) {
 
 
     // list of files to exclude
-    exclude: [
-    ],
+    // exclude: [
+    // ],
 
     customLaunchers: customLaunchers,
 
@@ -98,9 +99,10 @@ module.exports = function(config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     // reporters: ['saucelabs'],
-    // reporters: ['dots', 'saucelabs'],
-    reporters: ['dots'],
+    reporters: ['dots', 'saucelabs'],
+    // reporters: ['dots'],
 
+    browserNoActivityTimeout: 60,
 
     // web server port
     port: 9876,
@@ -123,8 +125,8 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     // browsers: ['Chrome', 'Safari', 'Firefox'],
-    browsers: ['Firefox'],
-    // browsers: Object.keys(customLaunchers),
+    // browsers: ['Firefox'],
+    browsers: Object.keys(customLaunchers),
 
 
     // Continuous Integration mode
