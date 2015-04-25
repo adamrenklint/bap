@@ -63,8 +63,8 @@ pattern.kit('A', kit).start();
 
 ## Resources
 
-- [Changelog](https://github.com/adamrenklint/bap/blob/master/changelog.md)
-- [Roadmap](https://github.com/adamrenklint/bap/blob/master/roadmap.md)
+- [Changelog](https://github.com/adamrenklint/bap/blob/master/CHANGELOG.md)
+- [Roadmap](https://github.com/adamrenklint/bap/blob/master/ROADMAP.md)
 - Examples
   - [Metronome](http://examples.bapjs.org/#metronome)
   - [Boombap beat](http://examples.bapjs.org/#boombap)
