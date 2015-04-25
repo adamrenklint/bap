@@ -198,8 +198,8 @@ pattern.kit('A', kit).start();
 
 - ```npm install``` install all dependencies
 - ```npm start``` run examples development server
-- ```npm test``` run unit tests
-- ```npm run test:watch``` run and watch unit tests
+- ```npm test``` run tests
+- ```npm run test:watch``` run and watch tests
 - ```npm run coverage``` generate coverage report with Istanbul
 - ```npm publish``` run tests, publish to npm, build minified version, tag and deploy examples
 
