@@ -32,6 +32,36 @@ describe('Sequence', function () {
     });
   });
 
-  // describe('notes(returnOriginals)');
+  describe('notes(returnOriginals)', function () {
+    describe('when returnOriginals is true', function () {
+      it('should return the original notes', function () {
+        var pattern = new Pattern();
+        pattern.channel(1).add(['1.1.01', 'A1']);
+        var seq = new Sequence(pattern);
+        var notes = seq.notes(true);
+        expect(notes.length).to.equal(1);
+        expect(notes[0]).to.equal(pattern.channel(1).notes.models[0]);
+      });
+      it('should only return one instance of each note', function () {
+        var pattern = new Pattern();
+        pattern.channel(1).add(['1.1.01', 'A1']);
+        var seq = new Sequence(pattern, pattern, pattern);
+        var notes = seq.notes(true);
+        expect(notes.length).to.equal(1);
+      });
+    });
+    describe('when returnOriginals is not true', function () {
+      it('should return ghost notes', function () {
+        var pattern = new Pattern();
+        pattern.channel(1).add(['1.1.01', 'A1']);
+        var seq = new Sequence(pattern);
+        var notes = seq.notes();
+        expect(notes.length).to.equal(1);
+        expect(notes[0].cid).not.to.equal(pattern.channel(1).notes.models[0].cid);
+        expect(notes[0].original.cid).to.equal(pattern.channel(1).notes.models[0].cid);
+      });
+    });
+  });
+
   // describe('tempoChanges()');
 });

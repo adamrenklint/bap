@@ -77,7 +77,8 @@ function sequences () {
   var sequence = bap.sequence(
     // [mainSamplePattern, drumPattern],
     // [mainSamplePattern, drumPattern],
-    [mainSamplePattern, drumPattern]
+    [mainSamplePattern, drumPattern],
+    { loop: true }
   );
 
   // var sequence2 = bap.sequence([
@@ -86,6 +87,8 @@ function sequences () {
   //   sequence,
   //   sequence
   // ]);
+
+
   // var on = false;
   // function next() {
   //   if (on) {
@@ -98,16 +101,18 @@ function sequences () {
   //   setTimeout(next, 3000);
   // }
   // next();
+  // 
+
   // var p = bap.pattern()
   // p.channel(1).add(
   //   ['*.*.*', 'C1']
   // );
   // p.start();
-  var s = bap.sequence(
-    introSamplePattern,
-    sequence,
-    {loop:true});
-  s.start();
+  // var s = bap.sequence(
+  //   introSamplePattern,
+  //   sequence,
+  //   {loop:true});
+  // s.start();
   //
   // setTimeout(function () {
   //   // s.sequences.push(drumPattern);
