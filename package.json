@@ -2,7 +2,7 @@
   "name": "bap",
   "version": "0.2.0",
   "versionName": "marl",
-  "description": "Beatmaking and sequence composition toolkit, using Javascript and Web Audio",
+  "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
   "homepage": "http://bapjs.org",
   "main": "index.js",
   "repository": {
@@ -28,10 +28,11 @@
     "audio-buffer-utils": "^0.1.0",
     "audio-context": "^0.1.0",
     "audio-notes": "^0.1.0",
-    "dilla": "^1.4.0-beta2",
+    "dilla": "^1.4.0",
     "lodash.debounce": "^3.0.3",
     "lodash.memoize": "^3.0.3",
-    "lodash.merge": "^3.1.0"
+    "lodash.merge": "^3.1.0",
+    "lodash.padleft": "^3.1.0"
   },
   "devDependencies": {
     "3w": "0.0.4",

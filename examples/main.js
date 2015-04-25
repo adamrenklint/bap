@@ -2,12 +2,15 @@ var bap = require('../index');
 var metronome = require('./metronome');
 var boombap = require('./boombap');
 var slices = require('./slices');
+var sequences = require('./sequences');
 
 var positionEl = document.getElementById('position');
+var tempoEl = document.getElementById('tempo');
 var toggleEl = document.getElementById('toggle-playback');
 
 function draw () {
   positionEl.textContent = bap.clock.position;
+  tempoEl.textContent = bap.clock.tempo + ' bpm';
   toggleEl.textContent = bap.clock.playing ? 'Stop playback' : 'Start playback';
   window.requestAnimationFrame(draw);
 }
@@ -21,7 +24,8 @@ draw();
 var examples = {
   'metronome': [metronome, 'A simple metronome made with <a href="http://bapjs.org">Bap</a> to test playback, and note expressions and scheduling.'],
   'boombap': [boombap, 'The boombap demo beat from <a href="http://bapjs.org">Dilla</a>, reimplemented with <a href="">Bap</a>.'],
-  'slices': [slices, 'Using different parts of same sample for different layers, either by manually defining sample offset and length, or "auto-slicing" sample to a kit.']
+  'slices': [slices, 'Using different parts of same sample for different layers, either by manually defining sample offset and length, or "auto-slicing" sample to a kit.'],
+  'sequences': [sequences, 'Layering patterns and sequences into longer and bigger sequences']
 };
 var sourceEl = document.getElementById('source');
 var exampleNameEl = document.getElementById('example-name');
