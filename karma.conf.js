@@ -9,18 +9,18 @@ module.exports = function(config) {
       browserName: 'chrome',
       platform: 'Windows 7',
       version: '41'
-    },
+    }
     // sl_osx_chrome: {
     //   base: 'SauceLabs',
     //   browserName: 'chrome',
     //   platform: 'OS X 10.9',
     //   version: '41'
     // },
-    sl_firefox: {
-      base: 'SauceLabs',
-      browserName: 'firefox',
-      version: '37'
-    }
+    // sl_firefox: {
+    //   base: 'SauceLabs',
+    //   browserName: 'firefox',
+    //   version: '37'
+    // }
     // sl_osx_safari: {
     //   base: 'SauceLabs',
     //   browserName: 'safari',
