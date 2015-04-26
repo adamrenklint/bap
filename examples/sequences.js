@@ -135,6 +135,8 @@ function sequences () {
     {loop:true});
   s.start();
 
+  
+
 
   // var pattern1 = new bap.pattern();
   // var pattern2 = new bap.pattern();
