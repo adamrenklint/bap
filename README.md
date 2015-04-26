@@ -169,6 +169,9 @@ pattern.kit('A', kit).start();
 - ```stop()``` stop playback and set position to ```1.1.01```
 - ```kit(id, kit)``` connect kit to id
 - ```kit(id)``` return kit connected to id
+- ```then(sequence, ...)``` return new sequence with passed sequences and patterns after pattern
+- ```after(sequence, ...)``` return new sequence with passed sequences and patterns before pattern
+- ```and(sequence, ...)``` return new sequence with passed sequences and patterns layered with pattern
 
 ### sequence
 
@@ -177,9 +180,9 @@ pattern.kit('A', kit).start();
 - ```loop``` boolean, define if sequence should loop, defaults to false
 - ```sequences``` an array of sequences, patterns or arrays of sequences and patterns
 - ```bars``` number, length in bars, read-only
-- ```then(sequence, ...)``` return new sequence with passed sequences and patterns after current
-- ```after(sequence, ...)``` return new sequence with passed sequences and patterns before current
-- ```and(sequence, ...)``` return new sequence with passed sequences and patterns layered with current
+- ```then(sequence, ...)``` return new sequence with passed sequences and patterns after sequence
+- ```after(sequence, ...)``` return new sequence with passed sequences and patterns before sequence
+- ```and(sequence, ...)``` return new sequence with passed sequences and patterns layered with sequence
 
 ### channel
 
