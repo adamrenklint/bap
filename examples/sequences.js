@@ -101,25 +101,53 @@ function sequences () {
   //   setTimeout(next, 3000);
   // }
   // next();
-  // 
+  //
 
   // var p = bap.pattern()
   // p.channel(1).add(
   //   ['*.*.*', 'C1']
   // );
   // p.start();
-  // var s = bap.sequence(
-  //   introSamplePattern,
-  //   sequence,
-  //   {loop:true});
-  // s.start();
-  //
+
+
+
+
   // setTimeout(function () {
   //   // s.sequences.push(drumPattern);
   //   console.log('foo');
   //   s.sequences = s.sequences.concat(drumPattern);
   // // //   drumPattern.channel(2).notes.models[3].position = '1.3.49';
   // }, 3000);
+
+
+
+
+
+
+
+
+
+
+
+  var s = bap.sequence(
+    introSamplePattern,
+    sequence,
+    {loop:true});
+  s.start();
+
+
+  // var pattern1 = new bap.pattern();
+  // var pattern2 = new bap.pattern();
+  // pattern1.kit('A', sampleKit).kit('B', breakKit);
+  // pattern2.kit('A', sampleKit).kit('B', breakKit);
+  // pattern1.channel(1).add(['1.1.01', 'A1']);
+  // pattern2.channel(1).add(['*.1.05', 'B1']);
+  // var seq1 = new bap.sequence(pattern1, [pattern1, pattern2]);
+  // var seq2 = new bap.sequence(seq1, seq1);
+  // seq2.notes().forEach(function (n) {
+  //   console.log(n.position, n.key);
+  // });
+  // seq2.start();
 }
 
 module.exports = sequences;
