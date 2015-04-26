@@ -3,6 +3,7 @@ var expect = chai.expect;
 var Pattern = require('../../lib/Pattern');
 var Channel = require('../../lib/Channel');
 var Sequence = require('../../lib/Sequence');
+var Kit = require('../../lib/Kit');
 
 var pattern;
 
@@ -11,6 +12,47 @@ beforeEach(function () {
 });
 
 describe('Pattern', function () {
+
+  describe('kit(id, kit)', function () {
+    describe('when id is a letter from A to Z', function () {
+      describe('when kit is an instance of Kit', function () {
+        it('should connect the kit to id', function () {
+          var kit = new Kit();
+          pattern.kit('A', kit);
+          expect(pattern.kits.A).to.equal(kit);
+        });
+        it('should be chainable', function () {
+          var kit = new Kit();
+          var ret = pattern.kit('A', kit);
+          expect(ret).to.equal(pattern);
+        });
+      });
+      describe('when kit is not an instance of Kit', function () {
+        describe('when there is a kit connected to id', function () {
+          it('should return the connected kit', function () {
+            var kit = new Kit();
+            pattern.kit('A', kit);
+            var ret = pattern.kit('A');
+            expect(ret).to.equal(kit);
+          });
+        });
+        describe('when there is no kit connected to id', function () {
+          it('should return falsy', function () {
+            var ret = pattern.kit('A');
+            expect(ret).to.be.falsy;
+          });
+        });
+      });
+    });
+    describe('when id is not a letter from A to Z', function () {
+      it('should throw a meaningful error', function () {
+        expect(function () {
+          var kit = new Kit();
+          pattern.kit(99, kit);
+        }).to.throw(/kit id must be single letter from A to Z/i);
+      });
+    });
+  });
 
   describe('then(sequence...)', function () {
     it('should return a new sequence', function () {
