@@ -69,7 +69,7 @@
     "karma:watch": "node_modules/karma/bin/karma start test/local.conf.js",
     "karma:ci": "node_modules/karma/bin/karma start test/ci.conf.js",
     "pretest": "npm run lint",
-    "lint": "jshint lib/**/*.js",
+    "lint": "jshint lib",
     "prestart": "watchify examples/main.js -o examples/bundle.js -v &",
     "start": "node node_modules/3w/3w.js examples --3000",
     "build:examples": "browserify examples/main.js -o examples/bundle.js",
