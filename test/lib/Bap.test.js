@@ -26,6 +26,19 @@ describe('Bap', function () {
   ].forEach(function (name) {
     it('should expose factory for "' + name + '"', function () {
       expect(bap[name]).to.be.a('function');
+      expect(function () {
+        bap[name]();
+      }).not.to.throw(Error);
+    });
+  });
+
+  describe('loadingState', function () {
+    describe('when loadingState.loading changes', function () {
+      it('should reflect the value in vent.loading', function () {
+        expect(bap.vent.loading).to.be.falsy;
+        bap.vent.trigger('loadingState:add', {});
+        expect(bap.vent.loading).to.be.true;
+      });
     });
   });
 });
