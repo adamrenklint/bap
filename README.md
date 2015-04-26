@@ -89,7 +89,7 @@ pattern.kit('A', kit).start();
 - ```oscillator(params)``` returns a new [oscillator](#oscillator)
 - ```sample(params)``` returns a new [sample](#sample)
 - ```pattern(params)``` returns a new [pattern](#pattern)
-- ```sequence(sequences, params)``` returns a new [sequence](#sequence)
+- ```sequence(sequence..., params)``` returns a new [sequence](#sequence)
 - ```channel(params)``` returns a new [channel](#channel)
 - ```note(params)``` returns a new [note](#note)
 
@@ -172,10 +172,14 @@ pattern.kit('A', kit).start();
 
 ### sequence
 
+- ```constructor(sequence, ..., [params])``` the sequence constructor optionally takes any number of sequences and patterns as argument before the usual params
 - ```playing``` boolean, current state of playback, can be set to start or pause
 - ```loop``` boolean, define if sequence should loop, defaults to false
 - ```sequences``` an array of sequences, patterns or arrays of sequences and patterns
 - ```bars``` number, length in bars, read-only
+- ```then(sequence, ...)``` return new sequence with passed sequences and patterns after current
+- ```after(sequence, ...)``` return new sequence with passed sequences and patterns before current
+- ```and(sequence, ...)``` return new sequence with passed sequences and patterns layered with current
 
 ### channel
 
