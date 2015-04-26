@@ -63,7 +63,7 @@
     "codeclimateCoverageId": "0959870e0a36bca751d63c1e3bf90fea270b45819b14674be83428c23ffe47ea"
   },
   "scripts": {
-    "test": "mocha -s 10 test/**/*.test.js",
+    "test": "mocha -s 25 test/**/*.test.js",
     "test:watch": "npm test -- -w",
     "karma": "npm run test:watch -- --single-run",
     "karma:watch": "node_modules/karma/bin/karma start test/local.conf.js",
