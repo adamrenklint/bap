@@ -72,7 +72,7 @@ describe('Sequence', function () {
     });
   });
 
-  describe('notes(returnOriginals)', function () {
+  describe('notes(returnOriginals, includes)', function () {
     describe('when returnOriginals is true', function () {
       it('should return the original notes', function () {
         var pattern = new Pattern();
@@ -132,6 +132,20 @@ describe('Sequence', function () {
         expect(notes[4].position).to.equal('4.1.01');
         expect(notes[5].position).to.equal('*>3<5.1.05');
         expect(notes[5].key).to.equal('B1');
+      });
+    });
+    describe('when includes is defined', function () {
+      it('should only include notes that are in these bars', function () {
+        var pattern1 = new Pattern();
+        var pattern2 = new Pattern();
+        pattern1.channel(1).add(['1.1.01', 'A1']);
+        pattern2.channel(1).add(['*.1.05', 'B1']);
+        var seq1 = new Sequence(pattern1, pattern1, new Sequence([pattern1, pattern2]), pattern2, pattern1);
+        var notes = seq1.notes(false, [2, 3]);
+        expect(notes.length).to.equal(3);
+        expect(notes[0].position).to.equal('2.1.01');
+        expect(notes[1].position).to.equal('3.1.01');
+        expect(notes[2].position).to.equal('*>2<4.1.05');
       });
     });
   });
@@ -277,7 +291,7 @@ describe('Sequence', function () {
           [2, 2, '*>2<5'],
           [5, 3, '*>5<9']
         ].forEach(function (test) {
-          expect(Sequence.addOffsetToExpression('*', test[0], test[1])).to.equal(test[2]);
+          expect(Sequence.addOffsetToExpression('*', test[0], test[1]).value).to.equal(test[2]);
         });
       });
     });
@@ -287,7 +301,7 @@ describe('Sequence', function () {
           ['*>3<6', 2, 2, '*>5<8'],
           ['*>2<6', 5, 3, '*>7<11']
         ].forEach(function (test) {
-          expect(Sequence.addOffsetToExpression(test[0], test[1], test[2])).to.equal(test[3]);
+          expect(Sequence.addOffsetToExpression(test[0], test[1], test[2]).value).to.equal(test[3]);
         });
       });
     });
