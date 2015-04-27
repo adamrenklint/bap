@@ -270,6 +270,20 @@ describe('Sequence', function () {
     });
   });
 
+  // describe('_isOffsetWithinRange(offset, from, to)', function () {
+  //   [
+  //     [0, 1, 2, true],
+  //     [1, 1, 2, true],
+  //     [2, 1, 2, false],
+  //     [4, 2, 4, false],
+  //     [4, 2, 4, false]
+  //   ].forEach(function (test) {
+  //     it('should parse offset ' + test[0] + ' withing range ' + test[1] + '-' + test[2] + ' right (' + test[3] + ')', function () {
+  //       expect(sequence._isOffsetWithinRange(test[0], test[1], test[2])).to.equal(test[3]);
+  //     });
+  //   });
+  // });
+
   describe('addOffsetToExpression(value, offset, length)', function () {
     describe('when value does not include existing offsets', function () {
       it('should set the offsets', function () {
