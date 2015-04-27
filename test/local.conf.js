@@ -20,7 +20,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Firefox', 'Chrome', 'Safari'],
+    browsers: ['Chrome'],
     singleRun: false
   });
 };
