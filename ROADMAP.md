@@ -4,16 +4,6 @@
 
 - Add bap.volume, a global volume parameter
 - Cancel scheduled but not started events on pause/stop
-- Sequences, because patterns were only the beginning
-```js
-bap.sequence(
-  introPattern,
-  [2barDrumPattern, 2barSamplePattern],
-  [bap.sequence(1barDrumPattern, 1barDrumPattern), 2barSamplePattern],
-  [bap.sequence(1barDrumPattern).repeat(/*1*/), 2barSamplePattern],
-  [bap.sequence(1barDrumPattern).repeat(3), 4barSamplePattern]
-);
-```
 - Clock methods for transition to sequence/pattern
 - Allow trigger kit+slot from pattern
 - Mute group, mute target, mute self (monophonic/polyphonic)

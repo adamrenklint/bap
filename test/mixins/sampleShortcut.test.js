@@ -36,7 +36,7 @@ describe('mixins/sampleShortcut', function () {
   });
   describe('_overloadedLayerFn(src, params)', function () {
     describe('when src is a string', function () {
-      it('should return an instance of Sample (_sampleConstructor)', function () {
+      it('should call _sampleConstructor with src and params', function () {
         var spy = sinon.spy();
         var foo = {
           layers: new Collection,
@@ -61,10 +61,22 @@ describe('mixins/sampleShortcut', function () {
           layer: sampleShortcut._overloadedLayerFn
         };
         sinon.spy(foo.layers, 'add');
-        var result = foo.layer('foo/bar');
-        expect(result.foo).to.equal('bar');
+        foo.layer('foo/bar');
         expect(foo.layers.add).to.have.been.calledOnce;
         expect(foo.layers.length).to.equal(1);
+      });
+      it('should be chainable', function () {
+        var ctor = function () {
+          this.foo = 'bar';
+        };
+        var foo = {
+          layers: new Collection,
+          _sampleConstructor: ctor,
+          layer: sampleShortcut._overloadedLayerFn
+        };
+        sinon.spy(foo.layers, 'add');
+        var res = foo.layer('foo/bar');
+        expect(res).to.equal(foo);
       });
     });
     describe('when src is a params object', function () {
