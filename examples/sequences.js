@@ -99,14 +99,15 @@ function sequences () {
 
   var z = bap.sequence(
     [y,y],
-    [y,y]
+    [y,y],
+    { loop: true }
   )
 
   var x = bap.sequence(
     y,z,y,z,y,z,y,z,y,z,y,
     { loop: true }
   )
-  y.start();
+  x.start();
   // breakPattern.start();
 }
 

@@ -72,7 +72,7 @@ describe('Sequence', function () {
     });
   });
 
-  describe('notes(returnOriginals)', function () {
+  xdescribe('notes(returnOriginals)', function () {
     describe('when returnOriginals is true', function () {
       it('should return the original notes', function () {
         var pattern = new Pattern();
@@ -270,19 +270,21 @@ describe('Sequence', function () {
     });
   });
 
-  // describe('_isOffsetWithinRange(offset, from, to)', function () {
-  //   [
-  //     [0, 1, 2, true],
-  //     [1, 1, 2, true],
-  //     [2, 1, 2, false],
-  //     [4, 2, 4, false],
-  //     [4, 2, 4, false]
-  //   ].forEach(function (test) {
-  //     it('should parse offset ' + test[0] + ' withing range ' + test[1] + '-' + test[2] + ' right (' + test[3] + ')', function () {
-  //       expect(sequence._isOffsetWithinRange(test[0], test[1], test[2])).to.equal(test[3]);
-  //     });
-  //   });
-  // });
+  describe('_isOffsetWithinRange(offset, length, from, to)', function () {
+    [
+      [0, 2, 1, 2, true],
+      [1, 2, 1, 2, true],
+      [2, 2, 1, 2, false],
+      [4, 2, 2, 4, false],
+      [4, 2, 2, 4, false],
+      [4, 2, 6, 1, true],
+      [4, 2, 1, 2, false]
+    ].forEach(function (test) {
+      it('should parse offset ' + test[0] + ', length ' + test[1] + ' within range ' + test[2] + '-' + test[3] + ' right (' + test[4] + ')', function () {
+        expect(sequence._isOffsetWithinRange(test[0], test[1], test[2], test[3])).to.equal(test[4]);
+      });
+    });
+  });
 
   describe('addOffsetToExpression(value, offset, length)', function () {
     describe('when value does not include existing offsets', function () {

@@ -45,16 +45,16 @@ describe('Channel', function () {
     describe('when note is a raw object', function () {
       it('should create a note instance', function () {
         channel.add(['1.1.01', 'A1']);
-        expect(channel.notes.length).to.equal(1);
-        expect(channel.notes.models[0].type).to.equal('note');
+        expect(channel.rawNotes.length).to.equal(1);
+        expect(channel.rawNotes.models[0].type).to.equal('note');
       });
     });
     describe('when passing a note instance', function () {
       it('should just add the note', function () {
         var note = new Note({ position: '2.1.02', key: 'B5' });
         channel.add(note);
-        expect(channel.notes.length).to.equal(1);
-        expect(channel.notes.models[0]).to.equal(note);
+        expect(channel.rawNotes.length).to.equal(1);
+        expect(channel.rawNotes.models[0]).to.equal(note);
       });
     });
   });
