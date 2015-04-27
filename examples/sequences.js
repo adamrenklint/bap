@@ -58,12 +58,12 @@ function sequences () {
     volume: 20
   }));
 
-  var drumPattern = bap.pattern().kit('A', drumKit);
+  var drumPattern = bap.pattern({ bars: 2 }).kit('X', drumKit);
   drumPattern.channel(1).add(
-    ['*.1.01', 'A1'],
-    ['*.3.52', 'A1'],
-    ['*.odd.92', 'A2'],
-    ['*.*.%52', 'A3']
+    ['*.1.01', 'X1'],
+    ['*.3.52', 'X1'],
+    ['*.odd.92', 'X2'],
+    ['*.*.%52', 'X3']
   );
 
   var breakSample = bap.sample({
@@ -88,45 +88,26 @@ function sequences () {
     ['2.4.01', 'A4', 96]
   );
 
-  var x = bap.sequence(
-    piano1,
-    [piano1, otherPianoPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
+  var y = bap.sequence(
+    // [piano1, drumPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
     [piano1, otherPianoPattern, breakPattern],
     { loop: true }
+  );
+
+  var z = bap.sequence(
+    [y,y],
+    [y,y]
   )
-  x.start();
-  // debugger;
+
+  var x = bap.sequence(
+    y,z,y,z,y,z,y,z,y,z,y,
+    { loop: true }
+  )
+  y.start();
+  // breakPattern.start();
 }
 
 module.exports = sequences;
