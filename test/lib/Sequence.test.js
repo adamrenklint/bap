@@ -217,25 +217,23 @@ describe('Sequence', function () {
         });
         describe('when tick is defined', function () {
           it('should return all notes on that bar, beat and tick', function () {
-            it('should return all notes on that bar and beat', function () {
-              var pattern1 = new Pattern({ bars: 2 });
-              pattern1.channel(1).add(
-                ['*.1.01', 'A1'],
-                ['2.3.3', 'A2']
-              );
-              pattern2 = new Pattern();
-              pattern1.channel(1).add(
-                ['1.*.13', 'B1']
-              );
-              var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
-              var notes = seq.notes(2, 1, 13);
+          var pattern1 = new Pattern({ bars: 2 });
+            pattern1.channel(1).add(
+              ['*.1.01', 'A1'],
+              ['2.3.3', 'A2']
+            );
+            pattern2 = new Pattern();
+            pattern1.channel(1).add(
+              ['1.*.13', 'B1']
+            );
+            var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
+            var notes = seq.notes(2, 1, 13);
 
-              expect(notes).to.be.a('object');
-              expect(Object.keys(notes).length).to.equal(1);
+            expect(notes).to.be.a('object');
+            expect(Object.keys(notes).length).to.equal(1);
 
-              expect(notes[2].length).to.equal(1);
-              expect(notes[2][0].position).to.equal('1.1.13');
-            });
+            expect(notes[2].length).to.equal(1);
+            expect(notes[2][0].position).to.equal('1.1.13');
           });
           describe('when there are no notes on that bar, beat and tick', function () {
             it('should return an empty array', function () {
