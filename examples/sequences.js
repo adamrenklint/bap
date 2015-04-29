@@ -107,10 +107,10 @@ function sequences () {
     y,z,y,z,y,z,y,z,y,z,y,
     { loop: true }
   )
-  z.start();
-  setTimeout(function () {
-    bap.clock.bar = 8;
-  }, 1000);
+  x.start();
+  // setTimeout(function () {
+  //   bap.clock.bar = 8;
+  // }, 1000);
   // breakPattern.start();
 }
 

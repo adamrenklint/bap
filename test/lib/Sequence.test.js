@@ -12,7 +12,7 @@ beforeEach(function () {
   sequence = new Sequence();
 });
 
-describe('Sequence', function () {
+xdescribe('Sequence', function () {
 
   describe('constructor(sequences..., [params])', function () {
     describe('when an array of sequences is passed as arguments', function () {

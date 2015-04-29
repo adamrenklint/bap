@@ -13,7 +13,7 @@ beforeEach(function () {
   clock.set('sequence', new Sequence(), { silent: true });
 });
 
-describe('Clock', function () {
+xdescribe('Clock', function () {
 
   describe('step', function () {
     it('should execute the callback with the step note as argument', function () {

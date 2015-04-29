@@ -55,7 +55,7 @@ function navigate () {
     descriptionEl.innerHTML = description;
     sourceEl.textContent = unwrap(fn.toString());
     hljs.highlightBlock(sourceEl);
-    bap.clock.stop();
+    // bap.clock.stop();
     // bap.clock.position = '1.1.01';
     fn();
 

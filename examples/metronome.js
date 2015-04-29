@@ -24,6 +24,9 @@ function metronome () {
   );
 
   pattern.kit('A', kit).start();
+  var start = new Date();
+  console.log(pattern.notes('1.1.01'));
+  console.log(new Date() - start);
 }
 
 module.exports = metronome;

@@ -123,6 +123,73 @@ describe('Channel', function () {
     });
   });
 
+  describe('_onAddRawNote', function () {
+    it('should expand the expression and add ghost to expandedNotes', function () {
+      var note = new Note({ position: '1.*.02', key: 'B5' });
+      channel._onAddRawNote(note);
+      expect(channel.expandedNotes.models.length).to.equal(4);
+      expect(channel.expandedNotes.models[0].position).to.equal('1.1.02');
+      expect(channel.expandedNotes.models[1].position).to.equal('1.2.02');
+      expect(channel.expandedNotes.models[2].position).to.equal('1.3.02');
+      expect(channel.expandedNotes.models[3].position).to.equal('1.4.02');
+    });
+    describe('when channel is child of a pattern', function () {
+      it('should use the length properties of that pattern when expanding', function () {
+        var note = new Note({ position: '*.*.02', key: 'B5' });
+        channel.collection = {
+          parent: {
+            bars: 2,
+            beatsPerBar: 6
+          }
+        };
+        channel._onAddRawNote(note);
+        expect(channel.expandedNotes.models.length).to.equal(12);
+        expect(channel.expandedNotes.models[0].position).to.equal('1.1.02');
+        expect(channel.expandedNotes.models[1].position).to.equal('1.2.02');
+        expect(channel.expandedNotes.models[2].position).to.equal('1.3.02');
+        expect(channel.expandedNotes.models[3].position).to.equal('1.4.02');
+        expect(channel.expandedNotes.models[4].position).to.equal('1.5.02');
+        expect(channel.expandedNotes.models[5].position).to.equal('1.6.02');
+        expect(channel.expandedNotes.models[6].position).to.equal('2.1.02');
+        expect(channel.expandedNotes.models[7].position).to.equal('2.2.02');
+        expect(channel.expandedNotes.models[8].position).to.equal('2.3.02');
+        expect(channel.expandedNotes.models[9].position).to.equal('2.4.02');
+        expect(channel.expandedNotes.models[10].position).to.equal('2.5.02');
+        expect(channel.expandedNotes.models[11].position).to.equal('2.6.02');
+      });
+    });
+  });
+
+  describe('_onRemoveRawNote', function () {
+    it('should remove all ghost notes in expandedNotes', function () {
+      var note = new Note({ position: '1.*.05', key: 'B5' });
+      var note2 = new Note({ position: '1.*.02', key: 'C8' });
+      channel._onAddRawNote(note);
+      channel._onAddRawNote(note2);
+      expect(channel.expandedNotes.models.length).to.equal(8);
+      channel._onRemoveRawNote(note);
+      expect(channel.expandedNotes.models.length).to.equal(4);
+      expect(channel.expandedNotes.models[0].position).to.equal('1.1.02');
+      expect(channel.expandedNotes.models[1].position).to.equal('1.2.02');
+      expect(channel.expandedNotes.models[2].position).to.equal('1.3.02');
+      expect(channel.expandedNotes.models[3].position).to.equal('1.4.02');
+    });
+  });
+
+  describe('_onChangeRawNote', function () {
+    it('should remove ghost notes and expand again', function () {
+      var note = new Note({ position: '1.*.05', key: 'B5' });
+      channel._onAddRawNote(note);
+      note.position = '1.*.09';
+      channel._onChangeRawNote(note);
+      expect(channel.expandedNotes.models.length).to.equal(4);
+      expect(channel.expandedNotes.models[0].position).to.equal('1.1.09');
+      expect(channel.expandedNotes.models[1].position).to.equal('1.2.09');
+      expect(channel.expandedNotes.models[2].position).to.equal('1.3.09');
+      expect(channel.expandedNotes.models[3].position).to.equal('1.4.09');
+    });
+  });
+
   describe('_start(time, note)', function () {
     it('should trigger "start" event', function () {
       var spy = sinon.spy();
