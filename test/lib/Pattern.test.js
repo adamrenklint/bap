@@ -13,7 +13,7 @@ beforeEach(function () {
 
 describe('Pattern', function () {
 
-  xdescribe('notes(bar, beat, tick)', function () {
+  describe('notes(bar, beat, tick)', function () {
     describe('when bar is not defined', function () {
       it('should return all notes', function () {
         pattern.channel(1).add(['1.1.01', 'A1']);

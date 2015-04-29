@@ -55,6 +55,13 @@ describe('Channel', function () {
         expect(notes[0].position).to.equal('1.1.01');
         expect(notes[1].position).to.equal('2.3.01');
       });
+      describe('when there are no notes', function () {
+        it('should return an empty array', function () {
+          var notes = channel.notes();
+          expect(notes).to.be.a('array');
+          expect(notes.length).to.equal(0);
+        })
+      });
     });
     describe('when bar is defined', function () {
       describe('when beat is not defined', function () {
@@ -64,6 +71,14 @@ describe('Channel', function () {
           var notes = channel.notes(2);
           expect(notes.length).to.equal(1);
           expect(notes[0].position).to.equal('2.3.01');
+        });
+        describe('when there are no notes on that bar', function () {
+          it('should return an empty array', function () {
+            channel.add(['1.1.01', 'A1']);
+            var notes = channel.notes(2);
+            expect(notes).to.be.a('array');
+            expect(notes.length).to.equal(0);
+          })
         });
       });
       describe('when beat is defined', function () {
@@ -79,6 +94,16 @@ describe('Channel', function () {
             expect(notes[0].position).to.equal('2.3.01');
             expect(notes[1].position).to.equal('2.3.45');
           });
+          describe('when there are no notes on that bar and beat', function () {
+            it('should return an empty array', function () {
+              channel.add(['1.1.01', 'A1']);
+              channel.add(['2.2.01', 'A1']);
+              channel.add(['2.4.01', 'A1']);
+              var notes = channel.notes(2, 3);
+              expect(notes).to.be.a('array');
+              expect(notes.length).to.equal(0);
+            })
+          });
         });
         describe('when tick is defined', function () {
           it('should return all notes on that bar, beat and tick', function () {
@@ -90,6 +115,17 @@ describe('Channel', function () {
             var notes = channel.notes(2, 3, 1);
             expect(notes.length).to.equal(1);
             expect(notes[0].position).to.equal('2.3.01');
+          });
+          describe('when there are no notes on that bar, beat and tick', function () {
+            it('should return an empty array', function () {
+              channel.add(['1.1.01', 'A1']);
+              channel.add(['2.2.01', 'A1']);
+              channel.add(['2.3.45', 'A1']);
+              channel.add(['2.4.01', 'A1']);
+              var notes = channel.notes(2, 3, 1);
+              expect(notes).to.be.a('array');
+              expect(notes.length).to.equal(0);
+            })
           });
         });
       });
