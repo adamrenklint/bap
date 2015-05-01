@@ -191,7 +191,7 @@ describe('Sequence', function () {
               expect(Object.keys(notes).length).to.equal(1);
               expect(notes[2]).to.be.a('array');
               expect(notes[2].length).to.equal(0);
-            })
+            });
           });
         });
       });
