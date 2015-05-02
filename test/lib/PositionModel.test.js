@@ -37,5 +37,12 @@ describe('PositionModel', function () {
         expect(model.position).to.equal('1.3.12');
       });
     });
+    describe('when tick is null and position is 0.0.00', function () {
+      it('should not pad the tick more', function () {
+        model.position = '0.0.00';
+        model._updatePositionFromFragments();
+        expect(model.position).to.equal('0.0.00');
+      });
+    });
   });
 });
