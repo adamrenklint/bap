@@ -5,6 +5,7 @@ var sinonChai = require("sinon-chai");
 chai.use(sinonChai);
 
 var Channel = require('../../lib/Channel');
+var Pattern = require('../../lib/Pattern');
 var Note = require('../../lib/Note');
 var channel;
 
@@ -45,7 +46,161 @@ describe('Channel', function () {
     });
     it('should be chainable', function () {
       expect(channel.add()).to.equal(channel);
-    })
+    });
+  });
+
+  describe('transforms(note)', function () {
+    describe('when note is not a valid note', function () {
+      it('should throw a meaningful error', function () {
+        expect(function () {
+          channel.transforms();
+        }).to.throw('note is not an instance of bap.note');
+      });
+    });
+    describe('when note does not have a transform function', function () {
+      describe('when channel has a transform function', function () {
+        describe('when channel is not part of a pattern', function () {
+          it('should return a function that applies the channel transform', function () {
+            var note = new Note({ position: '1.1.02' });
+            channel.transform = function (n) {
+              n.tick += 10;
+            };
+            var fn = channel.transforms(note);
+            fn(note);
+            expect(note.position).to.equal('1.1.12');
+          });
+        });
+        describe('when channel is part of a pattern', function () {
+          describe('when pattern has a transform function', function () {
+            it('should return a function that applies the channel + pattern transform', function () {
+              var note = new Note({ position: '1.1.02' });
+              channel.transform = function (n) {
+                n.tick += 10;
+              };
+              var pattern = new Pattern();
+              pattern.transform = function (n) {
+                if (n.tick === 12) {
+                  n.tick = 18;
+                }
+              };
+              pattern.channel(channel);
+              var fn = channel.transforms(note);
+              fn(note);
+              expect(note.position).to.equal('1.1.18');
+            });
+          });
+          describe('when pattern does not have a transform function', function () {
+            it('should return a function that applies the channel transform', function () {
+              var note = new Note({ position: '1.1.02' });
+              channel.transform = function (n) {
+                n.tick += 10;
+              };
+              var pattern = new Pattern();
+              pattern.channel(channel);
+              var fn = channel.transforms(note);
+              fn(note);
+              expect(note.position).to.equal('1.1.12');
+            });
+          });
+        });
+      });
+      describe('when channel does not have a transform function', function () {
+        describe('when channel is not part of a pattern', function () {
+          it('should return false', function () {
+            var note = new Note({ position: '1.1.02' });
+            var fn = channel.transforms(note);
+            expect(fn).to.be.false;
+          });
+        });
+        describe('when channel is part of a pattern', function () {
+          describe('when pattern has a transform function', function () {
+            it('should return a function that applies the pattern transform', function () {
+              var note = new Note({ position: '1.1.02' });
+              var pattern = new Pattern();
+              pattern.transform = function (n) {
+                n.tick += 20;
+              };
+              pattern.channel(channel);
+              var fn = channel.transforms(note);
+              fn(note);
+              expect(note.position).to.equal('1.1.22');
+            });
+          });
+          describe('when pattern does not have a transform function', function () {
+            it('should return false', function () {
+              var note = new Note({ position: '1.1.02' });
+              var pattern = new Pattern();
+              pattern.channel(channel);
+              var fn = channel.transforms(note);
+              expect(fn).to.be.false;
+            });
+          });
+        });
+      });
+    });
+    describe('when note has a transform function', function () {
+      describe('when channel has a transform function', function () {
+        describe('when channel is not part of a pattern', function () {
+          it('should return a function that applies the note + channel transform', function () {
+            var note = new Note({ position: '1.1.02' });
+            note.transform = function (n) {
+              n.tick += 30;
+            };
+            channel.transform = function (n) {
+              if (n.tick === 32) {
+                n.tick = 45;
+              }
+            };
+            var fn = channel.transforms(note);
+            fn(note);
+            expect(note.position).to.equal('1.1.45');
+          });
+        });
+        describe('when channel is part of a pattern', function () {
+          describe('when pattern has a transform function', function () {
+            it('should return a function that applies the note + channel + pattern transform', function () {
+              var note = new Note({ position: '1.1.02' });
+              note.transform = function (n) {
+                n.tick += 30;
+              };
+              channel.transform = function (n) {
+                if (n.tick === 32) {
+                  n.tick = 45;
+                }
+              };
+              var pattern = new Pattern();
+              pattern.transform = function (n) {
+                if (n.tick === 45) {
+                  n.tick = 96;
+                }
+              };
+              pattern.channel(channel);
+              var fn = channel.transforms(note);
+              fn(note);
+              expect(note.position).to.equal('1.1.96');
+            });
+          });
+          describe('when pattern does not have a transform function', function () {
+            it('should return a function that applies the note + channel transform', function () {
+              var note = new Note({ position: '1.1.02' });
+              note.transform = function (n) {
+                n.tick += 30;
+              };
+              channel.transform = function (n) {
+                if (n.tick === 32) {
+                  n.tick = 45;
+                }
+              };
+              var pattern = new Pattern();
+              pattern.channel(channel);
+              var fn = channel.transforms(note);
+              fn(note);
+              expect(note.position).to.equal('1.1.45');
+            });
+          });
+        });
+      });
+    });
   });
 
   describe('notes(bar, beat, tick)', function () {
@@ -195,6 +350,15 @@ describe('Channel', function () {
         expect(channel.expandedNotes.models[9].position).to.equal('2.4.02');
         expect(channel.expandedNotes.models[10].position).to.equal('2.5.02');
         expect(channel.expandedNotes.models[11].position).to.equal('2.6.02');
+      });
+    });
+    describe('when note.position is a plain position', function () {
+      it('should use itself as its ghost', function () {
+        var note = new Note({ position: '1.1.02', key: 'B5' });
+        channel._onAddRawNote(note);
+        expect(channel.expandedNotes.models.length).to.equal(1);
+        expect(channel.expandedNotes.models[0].position).to.equal('1.1.02');
+        expect(channel.expandedNotes.models[0]).to.equal(note);
       });
     });
   });
