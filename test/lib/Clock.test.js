@@ -19,7 +19,7 @@ describe('Clock', function () {
   /*
 
     start(sequence) stop(sequence) pause(sequence)
-    _onSequenceChange: set engine beats, tempo > schedule heartbeat
+    _onSequenceChange: set engine beats, tempo
     _onChangeBeat: schedule heartbeat
 
   */
@@ -42,36 +42,36 @@ describe('Clock', function () {
     });
   });
 
-  xdescribe('step', function () {
-    it('should execute the callback with the step note as argument', function () {
-      var note = { foo: 'bar', start: function () {}, paddedPosition: function () {} };
-      var callback = sinon.spy();
-      clock.step = callback;
-      clock._onSchedulerStep({
-        id: 'current',
-        event: 'start',
-        args: note,
-        time: 1
-      });
-      expect(callback).to.have.been.calledOnce;
-      expect(callback).to.have.been.calledWith(1, note);
-    });
-    describe('when the callback returns false', function () {
-      it('should not execute note.start()', function () {
-        var start = sinon.spy();
-        var note = { foo: 'bar', start: start, paddedPosition: function () {} };
-        clock.step = function () {
-          return false;
-        };
-        clock._onSchedulerStep({
-          id: 'current',
-          event: 'start',
-          args: note
-        });
-        expect(start).not.to.have.been.called;
-      });
-    });
-  });
+  // xdescribe('step', function () {
+  //   it('should execute the callback with the step note as argument', function () {
+  //     var note = { foo: 'bar', start: function () {}, paddedPosition: function () {} };
+  //     var callback = sinon.spy();
+  //     clock.step = callback;
+  //     clock._onSchedulerStep({
+  //       id: 'current',
+  //       event: 'start',
+  //       args: note,
+  //       time: 1
+  //     });
+  //     expect(callback).to.have.been.calledOnce;
+  //     expect(callback).to.have.been.calledWith(1, note);
+  //   });
+  //   describe('when the callback returns false', function () {
+  //     it('should not execute note.start()', function () {
+  //       var start = sinon.spy();
+  //       var note = { foo: 'bar', start: start, paddedPosition: function () {} };
+  //       clock.step = function () {
+  //         return false;
+  //       };
+  //       clock._onSchedulerStep({
+  //         id: 'current',
+  //         event: 'start',
+  //         args: note
+  //       });
+  //       expect(start).not.to.have.been.called;
+  //     });
+  //   });
+  // });
 
   describe('playing', function () {
     describe('when setting to true', function () {
@@ -109,12 +109,98 @@ describe('Clock', function () {
     });
   });
 
+  describe('_onEngineTick(tick)', function () {
+    describe('when tick.position is not 0.0.00', function () {
+      it('should set clock.position', function () {
+        clock._onEngineTick({
+          position: '1.2.03'
+        });
+        expect(clock.position).to.equal('1.2.03');
+      });
+    });
+    describe('when tick.position is 0.0.00', function () {
+      it('should not change clock.position', function () {
+        clock.set('position', '1.1.01', { silent:true });
+        clock._onEngineTick({
+          position: '0.0.00'
+        });
+        expect(clock.position).to.equal('1.1.01');
+      });
+    });
+  });
+
+  describe('_lookaheadSteps()', function () {
+    describe('when position is 1.1.01', function () {
+      it('should return all ticks for 1.1 and 1.2', function () {
+        clock.position = '1.1.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps.length).to.equal(96 * 2);
+        expect(steps[0]).to.equal('1.1.01');
+        expect(steps[95]).to.equal('1.1.96');
+        expect(steps[96]).to.equal('1.2.01');
+        expect(steps[191]).to.equal('1.2.96');
+      });
+    });
+    describe('when position is 1.3.01', function () {
+      it('should return all ticks for 1.3 and 1.4', function () {
+        clock.position = '1.3.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps.length).to.equal(96 * 2);
+        expect(steps[0]).to.equal('1.3.01');
+        expect(steps[95]).to.equal('1.3.96');
+        expect(steps[96]).to.equal('1.4.01');
+        expect(steps[191]).to.equal('1.4.96');
+      });
+    });
+    describe('when position is 1.4.01', function () {
+      it('should return all ticks for 1.4 and 2.1', function () {
+        clock.position = '1.4.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps.length).to.equal(96 * 2);
+        expect(steps[0]).to.equal('1.4.01');
+        expect(steps[95]).to.equal('1.4.96');
+        expect(steps[96]).to.equal('2.1.01');
+        expect(steps[191]).to.equal('2.1.96');
+      });
+    });
+    describe('when position is 2.3.01', function () {
+      it('should return all ticks for 2.3 and 2.4', function () {
+        clock.position = '2.3.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps.length).to.equal(96 * 2);
+        expect(steps[0]).to.equal('2.3.01');
+        expect(steps[95]).to.equal('2.3.96');
+        expect(steps[96]).to.equal('2.4.01');
+        expect(steps[191]).to.equal('2.4.96');
+      });
+    });
+    describe('when position is 2.4.01', function () {
+      it('should return all ticks for 2.4 and 1.1', function () {
+        clock.position = '2.4.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps.length).to.equal(96 * 2);
+        expect(steps[0]).to.equal('2.4.01');
+        expect(steps[95]).to.equal('2.4.96');
+        expect(steps[96]).to.equal('1.1.01');
+        expect(steps[191]).to.equal('1.1.96');
+      });
+    });
+  });
+
+  describe('_scheduleSteps()', function () {
+
+  });
+
+  describe('_onChangeBeat()', function () {
+    // it should schedule heartbeat
+  });
+
   describe('_onChangePosition()', function () {
     describe('when position is not 0.0.00', function () {
-      describe('when position is not same as scheduler.position', function () {
-        it('should set the scheduler position', function () {
+      describe('when position is not same as engine.position', function () {
+        it('should set engine.position', function () {
           var spy = sinon.spy();
-          clock.scheduler = {
+          clock.engine = {
             setPosition: spy,
             _position: '1.1.01'
           };
@@ -126,9 +212,9 @@ describe('Clock', function () {
       });
     });
     describe('when position is 0.0.00', function () {
-      it('should not set scheduler position', function () {
+      it('should not set engine.position', function () {
         var spy = sinon.spy();
-        clock.scheduler = {
+        clock.engine = {
           setPosition: spy,
           _position: '1.1.01'
         };
@@ -137,10 +223,10 @@ describe('Clock', function () {
         expect(spy).not.to.have.been.called;
       });
     });
-    describe('when position is is same as scheduler.position', function () {
-      it('should not set scheduler position', function () {
+    describe('when position is is same as engine.position', function () {
+      it('should not engine.position', function () {
         var spy = sinon.spy();
-        clock.scheduler = {
+        clock.engine = {
           setPosition: spy,
           _position: '2.1.01'
         };
