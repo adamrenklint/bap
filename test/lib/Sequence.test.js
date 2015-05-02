@@ -96,7 +96,7 @@ describe('Sequence', function () {
             ['2.3.3', 'A2']
           );
           pattern2 = new Pattern();
-          pattern1.channel(1).add(
+          pattern2.channel(1).add(
             ['1.*.13', 'B1']
           );
           var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
@@ -134,7 +134,7 @@ describe('Sequence', function () {
               ['2.3.3', 'A2']
             );
             pattern2 = new Pattern();
-            pattern1.channel(1).add(
+            pattern2.channel(1).add(
               ['1.*.13', 'B1']
             );
             var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);

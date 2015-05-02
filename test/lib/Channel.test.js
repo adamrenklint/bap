@@ -43,6 +43,9 @@ describe('Channel', function () {
         }).length).to.equal(1);
       });
     });
+    it('should be chainable', function () {
+      expect(channel.add()).to.equal(channel);
+    })
   });
 
   describe('notes(bar, beat, tick)', function () {

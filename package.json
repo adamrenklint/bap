@@ -29,7 +29,7 @@
     "audio-context": "^0.1.0",
     "audio-notes": "^0.1.0",
     "dilla": "^1.4.0",
-    "dilla-expressions": "^1.2.0",
+    "dilla-expressions": "^2.0.0",
     "lodash.debounce": "^3.0.3",
     "lodash.memoize": "^3.0.3",
     "lodash.merge": "^3.1.0",
@@ -66,7 +66,7 @@
     "codeclimateCoverageId": "0959870e0a36bca751d63c1e3bf90fea270b45819b14674be83428c23ffe47ea"
   },
   "scripts": {
-    "test": "multi='mocha-osx-reporter=- spec=-' mocha -s 25 test/**/*.test.js --reporter mocha-multi",
+    "test": "multi='mocha-osx-reporter=- spec=-' mocha -s 10 test/**/*.test.js --reporter mocha-multi",
     "test:watch": "npm test -- -w",
     "karma": "npm run karma:watch -- --single-run",
     "karma:watch": "node_modules/karma/bin/karma start test/local.conf.js",
