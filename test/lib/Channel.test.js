@@ -360,6 +360,20 @@ describe('Channel', function () {
         expect(channel.expandedNotes.models[0].position).to.equal('1.1.02');
         expect(channel.expandedNotes.models[0]).to.equal(note);
       });
+      describe('when note, channel or pattern has a transform function', function () {
+        it('should not use itself as ghost', function () {
+          var note = new Note({ position: '1.1.02', key: 'B5' });
+          note.transform = function (n) {
+            n.tick += 50;
+          };
+          channel._onAddRawNote(note);
+          expect(channel.expandedNotes.models.length).to.equal(1);
+          expect(channel.expandedNotes.models[0].position).to.equal('1.1.52');
+          expect(channel.expandedNotes.models[0]).not.to.equal(note);
+          expect(note.position).to.equal('1.1.02');
+          expect(channel.expandedNotes.models[0].original).to.equal(note);
+        });
+      });
     });
   });
 
