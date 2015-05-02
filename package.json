@@ -28,7 +28,7 @@
     "audio-buffer-utils": "^0.1.0",
     "audio-context": "^0.1.0",
     "audio-notes": "^0.1.0",
-    "dilla": "^1.4.0",
+    "dilla": "^1.5.0-beta1",
     "dilla-expressions": "^2.0.0",
     "lodash.debounce": "^3.0.3",
     "lodash.memoize": "^3.0.3",
