@@ -209,7 +209,7 @@ describe('Sequence', function () {
         [drumPattern],
         [drumPattern]
       );
-      // debugger;
+
       var notes = seq.notes(1, 1, 1);
       expect(Object.keys(notes).length).to.equal(1);
       expect(notes[1].length).to.equal(2);
@@ -394,173 +394,57 @@ describe('Sequence', function () {
         }).to.throw('bar is not within sequence length');
       });
     });
+
     it('should return an object', function () {
       var pattern = new Pattern();
       sequence = new Sequence(pattern, pattern);
       var ret = sequence.patterns(1);
       expect(ret).to.be.a('object');
     });
-    xit('should find the right patterns', function () {
-      // var pattern = new Pattern();
-      // var pattern2 = new Pattern();
-      // sequence = new Sequence([pattern, pattern2], pattern);
-      //
-      // var ret = sequence.patterns(1);
-      // expect(ret).to.be.a('object');
-      // expect(Object.keys(ret).length).to.equal(1);
-      // expect(ret[0].length).to.equal(2);
-      // expect(ret[0][0]).to.equal(pattern);
-      // expect(ret[0][1]).to.equal(pattern2);
-      //
-      // ret = sequence.patterns(2);
-      // expect(ret).to.be.a('object');
-      // expect(Object.keys(ret).length).to.equal(1);
-      // expect(ret[0].length).to.equal(1);
-      // expect(ret[0][0]).to.equal(pattern);
-    });
-
-
-    // should they be grouped by their start offset to sequence start?
-    // what do I actually need in notes()?
-
 
     it('should group patterns by their offset to sequence start', function () {
-      var pattern = new Pattern({ bars: 2 });
-      sequence = new Sequence(pattern, pattern);
+      var pattern1 = new Pattern({ bars: 2 });
+      var pattern2 = new Pattern({ bars: 2 });
+      sequence = new Sequence(pattern1, pattern2);
 
-      var ret = sequence.patterns(1);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[0]).to.be.a('array');
-      expect(ret[0].length).to.equal(1);
-      expect(ret[0][0]).to.equal(pattern);
+      function test (bar, offset, pattern) {
+        var ret = sequence.patterns(bar);
+        expect(ret).to.be.a('object');
+        expect(Object.keys(ret).length).to.equal(1);
+        expect(ret[offset]).to.be.a('array');
+        expect(ret[offset].length).to.equal(1);
+        expect(ret[offset][0]).to.equal(pattern);
+      }
 
-      ret = sequence.patterns(2);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[0]).to.be.a('array');
-      expect(ret[0].length).to.equal(1);
-      expect(ret[0][0]).to.equal(pattern);
-
-      ret = sequence.patterns(3);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[2]).to.be.a('array');
-      expect(ret[2].length).to.equal(1);
-      expect(ret[2][0]).to.equal(pattern);
-
-      ret = sequence.patterns(4);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[2]).to.be.a('array');
-      expect(ret[2].length).to.equal(1);
-      expect(ret[2][0]).to.equal(pattern);
+      test(1, 0, pattern1);
+      test(2, 0, pattern1);
+      test(3, 2, pattern2);
+      test(4, 2, pattern2);
     });
 
     it('should group nested patterns by their offset to sequence start', function () {
-      var pattern = new Pattern({ bars: 2 });
-      var seq1 = new Sequence(pattern, pattern);
+      var pattern1 = new Pattern({ bars: 2 });
+      var pattern2 = new Pattern({ bars: 2 });
+      var seq1 = new Sequence(pattern1, pattern2);
       sequence = new Sequence(seq1, seq1);
 
-      var ret = sequence.patterns(1);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[0]).to.be.a('array');
-      expect(ret[0].length).to.equal(1);
-      expect(ret[0][0]).to.equal(pattern);
+      function test (bar, offset, pattern) {
+        var ret = sequence.patterns(bar);
+        expect(ret).to.be.a('object');
+        expect(Object.keys(ret).length).to.equal(1);
+        expect(ret[offset]).to.be.a('array');
+        expect(ret[offset].length).to.equal(1);
+        expect(ret[offset][0]).to.equal(pattern);
+      }
 
-      ret = sequence.patterns(2);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[0]).to.be.a('array');
-      expect(ret[0].length).to.equal(1);
-      expect(ret[0][0]).to.equal(pattern);
-
-      ret = sequence.patterns(3);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[2]).to.be.a('array');
-      expect(ret[2].length).to.equal(1);
-      expect(ret[2][0]).to.equal(pattern);
-
-      ret = sequence.patterns(4);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[2]).to.be.a('array');
-      expect(ret[2].length).to.equal(1);
-      expect(ret[2][0]).to.equal(pattern);
-
-
-      ret = sequence.patterns(5);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[4]).to.be.a('array');
-      expect(ret[4].length).to.equal(1);
-      expect(ret[4][0]).to.equal(pattern);
-
-      ret = sequence.patterns(6);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(1);
-      expect(ret[4]).to.be.a('array');
-      expect(ret[4].length).to.equal(1);
-      expect(ret[4][0]).to.equal(pattern);
-    });
-    // xit('should group patterns by their offset to bar', function () {
-    //   var pattern = new Pattern({ bars: 2 });
-    //   var pattern2 = new Pattern();
-    //   sequence = new Sequence(pattern, pattern);
-    //   var ret = sequence.patterns(1);
-    //   expect(ret).to.be.a('object');
-    //   expect(Object.keys(ret).length).to.equal(1);
-    //   expect(ret[0].length).to.equal(1);
-    //   expect(ret[0][0]).to.equal(pattern);
-    //
-    //   ret = sequence.patterns(2);
-    //   expect(ret).to.be.a('object');
-    //   expect(Object.keys(ret).length).to.equal(1);
-    //   expect(ret[1].length).to.equal(1);
-    //   expect(ret[1][0]).to.equal(pattern);
-    //
-    //   ret = sequence.patterns(3);
-    //   expect(ret).to.be.a('object');
-    //   expect(Object.keys(ret).length).to.equal(1);
-    //   expect(ret[0].length).to.equal(1);
-    //   expect(ret[0][0]).to.equal(pattern);
-    //
-    //   ret = sequence.patterns(4);
-    //   expect(ret).to.be.a('object');
-    //   expect(Object.keys(ret).length).to.equal(1);
-    //   expect(ret[1].length).to.equal(1);
-    //   expect(ret[1][0]).to.equal(pattern);
-    // });
-    xit('should group nested sequences and patterns by correct offset', function () {
-      var longPattern = new Pattern({ bars: 4 });
-      var middlePattern = new Pattern({ bars: 2 });
-      var shortPattern = new Pattern();
-      var seq1 = new Sequence(shortPattern, shortPattern);
-      var seq2 = new Sequence([seq1, middlePattern]);
-      var seq3 = new Sequence(seq2, seq2);
-      var seq4 = new Sequence([seq3, longPattern]);
-      sequence = new Sequence(seq4, seq4);
-
-      var ret = sequence.patterns(8);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(3);
-      expect(ret[3].length).to.equal(1);
-      expect(ret[3][0]).to.equal(longPattern);
-      expect(ret[1].length).to.equal(1);
-      expect(ret[1][0]).to.equal(middlePattern);
-      expect(ret[0].length).to.equal(1);
-      expect(ret[0][0]).to.equal(shortPattern);
-
-      ret = sequence.patterns(3);
-      expect(ret).to.be.a('object');
-      expect(Object.keys(ret).length).to.equal(2);
-      expect(ret[2].length).to.equal(1);
-      expect(ret[2][0]).to.equal(longPattern);
-      expect(ret[0].length).to.equal(2);
-      expect(ret[0][0]).to.equal(shortPattern);
-      expect(ret[0][1]).to.equal(middlePattern);
+      test(1, 0, pattern1);
+      test(2, 0, pattern1);
+      test(3, 2, pattern2);
+      test(4, 2, pattern2);
+      test(5, 4, pattern1);
+      test(6, 4, pattern1);
+      test(7, 6, pattern2);
+      test(8, 6, pattern2);
     });
   });
 });
