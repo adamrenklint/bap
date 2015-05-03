@@ -2,6 +2,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var Clock = require('../../lib/Clock');
 var Sequence = require('../../lib/Sequence');
+var Pattern = require('../../lib/Pattern');
 var sinon = require('sinon');
 var sinonChai = require("sinon-chai");
 chai.use(sinonChai);
@@ -153,36 +154,26 @@ describe('Clock', function () {
       });
     });
     describe('when position is 1.4.01', function () {
+      it('should return all ticks for 1.4 and 1.1', function () {
+        clock.position = '1.4.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps.length).to.equal(96 * 2);
+        expect(steps[0]).to.equal('1.4.01');
+        expect(steps[95]).to.equal('1.4.96');
+        expect(steps[96]).to.equal('1.1.01');
+        expect(steps[191]).to.equal('1.1.96');
+      });
+    });
+    describe('when position is 2.4.01', function () {
       it('should return all ticks for 1.4 and 2.1', function () {
         clock.position = '1.4.01';
+        clock.sequence = new Sequence(new Pattern(), new Pattern());
         var steps = clock._lookaheadSteps();
         expect(steps.length).to.equal(96 * 2);
         expect(steps[0]).to.equal('1.4.01');
         expect(steps[95]).to.equal('1.4.96');
         expect(steps[96]).to.equal('2.1.01');
         expect(steps[191]).to.equal('2.1.96');
-      });
-    });
-    describe('when position is 2.3.01', function () {
-      it('should return all ticks for 2.3 and 2.4', function () {
-        clock.position = '2.3.01';
-        var steps = clock._lookaheadSteps();
-        expect(steps.length).to.equal(96 * 2);
-        expect(steps[0]).to.equal('2.3.01');
-        expect(steps[95]).to.equal('2.3.96');
-        expect(steps[96]).to.equal('2.4.01');
-        expect(steps[191]).to.equal('2.4.96');
-      });
-    });
-    describe('when position is 2.4.01', function () {
-      it('should return all ticks for 2.4 and 1.1', function () {
-        clock.position = '2.4.01';
-        var steps = clock._lookaheadSteps();
-        expect(steps.length).to.equal(96 * 2);
-        expect(steps[0]).to.equal('2.4.01');
-        expect(steps[95]).to.equal('2.4.96');
-        expect(steps[96]).to.equal('1.1.01');
-        expect(steps[191]).to.equal('1.1.96');
       });
     });
   });

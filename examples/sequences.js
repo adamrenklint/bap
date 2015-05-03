@@ -62,6 +62,7 @@ function sequences () {
   drumPattern.channel(1).add(
     ['*.1.01', 'X1'],
     ['*.3.52', 'X1'],
+    ['2.*.25', 'X3'],
     ['*.odd.92', 'X2'],
     ['*.*.%52', 'X3']
   );
@@ -89,6 +90,8 @@ function sequences () {
   );
 
   var y = bap.sequence(
+    // [drumPattern],
+    // // [drumPattern],
     // [piano1, drumPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
@@ -98,20 +101,26 @@ function sequences () {
   );
 
   var z = bap.sequence(
+    // [y,y,y,y],
     [y,y],
-    [y,y],
+    // piano1,
+    // [piano1, otherPianoPattern],
+    // y,
+  //   [y,y],
+  //   [y,y],
     { loop: true }
-  )
+  );
+  //
+  // var x = bap.sequence(
+  //   y,z,y,z,y,z,y,z,y,z,y,
+  //   { loop: true }
+  // )
+  z.start();
+  window.z = z;
 
-  var x = bap.sequence(
-    y,z,y,z,y,z,y,z,y,z,y,
-    { loop: true }
-  )
-  x.start();
   // setTimeout(function () {
-  //   bap.clock.bar = 8;
-  // }, 1000);
-  // breakPattern.start();
+  //   bap.clock.position = '1.1.01';
+  // }, 3000);
 }
 
 module.exports = sequences;
