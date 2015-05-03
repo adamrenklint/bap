@@ -102,7 +102,9 @@ function sequences () {
 
   var z = bap.sequence(
     // [y,y,y,y],
-    [y,y],
+    y,
+    // y,
+    //
     // piano1,
     // [piano1, otherPianoPattern],
     // y,
@@ -116,7 +118,7 @@ function sequences () {
   //   { loop: true }
   // )
   z.start();
-  window.z = z;
+  // window.z = z;
 
   // setTimeout(function () {
   //   bap.clock.position = '1.1.01';
