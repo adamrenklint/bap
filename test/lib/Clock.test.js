@@ -83,6 +83,34 @@ describe('Clock', function () {
     describe('when canStartPlaying() returns true', function () {
       beforeEach(function () {
         clock.canStartPlaying = function () { return true; };
+        clock.engine = {
+          start: sinon.spy(),
+          set: sinon.spy(),
+          setBeatsPerBar: sinon.spy(),
+          setLoopLength: sinon.spy()
+        };
+      });
+      describe('when sequence is defined', function () {
+        it('should set it as clock.sequence', function () {
+          var sequence = new Sequence();
+          clock.start(sequence);
+          expect(clock.sequence).to.equal(sequence);
+        });
+      });
+      describe('when sequence is not defined', function () {
+        it('should not throw an error', function () {
+          expect(function () {
+            clock.start();
+          }).not.to.throw(Error);
+        });
+      });
+      it('it should not call engine.start immediately, but within 1ms', function (done) {
+        clock.start();
+        expect(clock.engine.start).not.to.have.been.called;
+        setTimeout(function () {
+          expect(clock.engine.start).to.have.been.called;
+          done();
+        }, 1);
       });
     });
   });
