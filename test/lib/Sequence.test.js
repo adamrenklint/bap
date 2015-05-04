@@ -163,7 +163,7 @@ describe('Sequence', function () {
         });
         describe('when tick is defined', function () {
           it('should return all notes on that bar, beat and tick', function () {
-          var pattern1 = new Pattern({ bars: 2 });
+            var pattern1 = new Pattern({ bars: 2 });
             pattern1.channel(1).add(
               ['*.1.01', 'A1'],
               ['2.3.3', 'A2']
@@ -179,6 +179,22 @@ describe('Sequence', function () {
             expect(Object.keys(notes).length).to.equal(1);
             expect(notes[2].length).to.equal(1);
             expect(notes[2][0].position).to.equal('1.1.13');
+          });
+          describe('when the same pattern is layered more than once', function () {
+            it('should return more than one instance of the same note', function () {
+              var pattern = new Pattern();
+              pattern.channel(1).add(
+                ['1.1.01', 'A1']
+              );
+              var seq = new Sequence([pattern, pattern]);
+              var notes = seq.notes(1, 1, 1);
+
+              expect(notes).to.be.a('object');
+              expect(Object.keys(notes).length).to.equal(1);
+              expect(notes[1].length).to.equal(2);
+              expect(notes[1][0].position).to.equal('1.1.01');
+              expect(notes[1][1].position).to.equal('1.1.01');
+            });
           });
           describe('when there are no notes on that bar, beat and tick', function () {
             it('should return an empty array', function () {
