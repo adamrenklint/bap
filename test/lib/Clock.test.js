@@ -9,21 +9,16 @@ chai.use(sinonChai);
 
 var clock;
 
-beforeEach(function () {
-  global.document = {};
-  clock = new Clock();
-  // clock.set('sequence', new Sequence(), { silent: true });
-});
-
 describe('Clock', function () {
 
-  /*
+  beforeEach(function () {
+    global.document = {};
+    clock = new Clock();
+  });
 
-    start(sequence) stop(sequence) pause(sequence)
-    _onSequenceChange: set engine beats, tempo
-    _onChangeBeat: schedule heartbeat
-
-  */
+  afterEach(function () {
+    clock.destroy();
+  });
 
   describe('canStartPlaying()', function () {
     describe('when document.readyState is "loading"', function () {
