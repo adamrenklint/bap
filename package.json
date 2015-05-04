@@ -20,7 +20,8 @@
     "beatmaking",
     "boombap",
     "music",
-    "dilla"
+    "dilla",
+    "drum"
   ],
   "dependencies": {
     "ampersand-collection": "^1.4.5",
@@ -51,10 +52,9 @@
     "karma-firefox-launcher": "^0.1.4",
     "karma-mocha": "^0.1.10",
     "karma-mocha-reporter": "^1.0.2",
+    "karma-osx-reporter": "^0.2.0",
     "karma-safari-launcher": "^0.1.1",
     "mocha": "^2.2.1",
-    "mocha-multi": "^0.7.1",
-    "mocha-osx-reporter": "^0.1.2",
     "rimraf": "^2.3.2",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0",
@@ -66,11 +66,9 @@
     "codeclimateCoverageId": "0959870e0a36bca751d63c1e3bf90fea270b45819b14674be83428c23ffe47ea"
   },
   "scripts": {
-    "test": "multi='mocha-osx-reporter=- dot=-' mocha -s 10 test/**/*.test.js --reporter mocha-multi",
-    "test:watch": "npm test -- -w",
-    "karma": "npm run karma:watch -- --single-run",
-    "karma:watch": "node_modules/karma/bin/karma start test/local.conf.js",
-    "karma:ci": "node_modules/karma/bin/karma start test/ci.conf.js",
+    "test": "npm run test:watch -- --single-run",
+    "test:watch": "node_modules/karma/bin/karma start test/local.conf.js",
+    "test:ci": "node_modules/karma/bin/karma start test/ci.conf.js",
     "pretest": "npm run lint",
     "lint": "jshint lib",
     "prestart": "watchify examples/main.js -o examples/bundle.js -v &",

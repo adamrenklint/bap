@@ -2,8 +2,6 @@ var bap = require('../index');
 
 function sequences () {
 
-  bap.clock.tempo = 84;
-
   var lowPianoKit = bap.sample({
     src: 'sounds/new/own_barricade_end.wav',
     attack: 0.1,

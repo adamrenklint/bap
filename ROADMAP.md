@@ -29,6 +29,9 @@ var newPattern = pattern.transpose(function (note) {
 ## version 0.x
 
 - Bitcrusher effect / 12-bit master MPC60 mode
+- Extend the concept of clock.step:
+  - Chain of step handlers on sequence and pattern
+  - Pass *params* into handler, to allow modification
 
 ## version 1.0 "primo"
 
