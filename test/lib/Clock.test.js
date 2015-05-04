@@ -122,7 +122,7 @@ describe('Clock', function () {
         clock.start();
         sinon.spy(clock, 'start');
         setTimeout(function () {
-          expect(clock.start).to.have.been.calledOnce;
+          expect(clock.start).to.have.been.called;
           done();
         }, 15);
       });
