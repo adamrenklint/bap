@@ -20,6 +20,35 @@ describe('Clock', function () {
     clock.destroy();
   });
 
+  describe('events', function () {
+    var spy;
+    beforeEach(function () {
+      spy = sinon.spy();
+      var MockedClock = Clock.extend({
+        _scheduleSteps: spy
+      });
+      clock = new MockedClock();
+    });
+    describe('when change:bar is called', function () {
+      it('should call _scheduleSteps()', function () {
+        clock.trigger('change:bar');
+        expect(spy).to.have.been.calledOnce;
+      });
+    });
+    describe('when change:beat is called', function () {
+      it('should call _scheduleSteps()', function () {
+        clock.trigger('change:beat');
+        expect(spy).to.have.been.calledOnce;
+      });
+    });
+    describe('when change:tick is called', function () {
+      it('should not call _scheduleSteps()', function () {
+        clock.trigger('change:tick');
+        expect(spy).not.to.have.been.called;
+      });
+    });
+  });
+
   describe('canStartPlaying()', function () {
     describe('when document.readyState is "loading"', function () {
       it('should return false', function () {
@@ -35,6 +64,20 @@ describe('Clock', function () {
     });
     it('should return true', function () {
       expect(clock.canStartPlaying()).to.be.true;
+    });
+  });
+
+  describe('start(sequence)', function () {
+    describe('when canStartPlaying() returns false', function () {
+      it('should call start() again in ~10 ms', function (done) {
+        clock.canStartPlaying = function () { return false; };
+        clock.start();
+        sinon.spy(clock, 'start');
+        setTimeout(function () {
+          expect(clock.start).to.have.been.calledOnce;
+          done();
+        }, 15);
+      });
     });
   });
 
@@ -174,11 +217,55 @@ describe('Clock', function () {
   });
 
   describe('_scheduleSteps()', function () {
-
+    it('should schedule lookahead steps', function () {
+      expect(clock.engine.get('steps').length).to.equal(0);
+      clock._scheduleSteps();
+      expect(clock.engine.get('steps').length).to.equal(96 * 4 * 2);
+    });
   });
 
-  describe('_onChangeBeat()', function () {
-    // it should schedule heartbeat
+  describe('_lookaheadSteps()', function () {
+    it('should return an array', function () {
+      expect(clock._lookaheadSteps()).to.be.a('array');
+    });
+    describe('when clock has a sequence set', function () {
+      it('should return 192 lookahead steps', function () {
+        clock.sequence = new Pattern({ bars: 4 });
+        expect(clock._lookaheadSteps().length).to.equal(192);
+      });
+      it('should return steps for the current and next beat', function () {
+        clock.sequence = new Pattern({ bars: 2 });
+        clock.position = '1.1.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps[0]).to.equal('1.1.01');
+        expect(steps[95]).to.equal('1.1.96');
+        expect(steps[96]).to.equal('1.2.01');
+        expect(steps[191]).to.equal('1.2.96');
+      });
+      it('should fold around the of a bar correctly', function () {
+        clock.sequence = new Pattern({ bars: 2 });
+        clock.position = '1.4.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps[0]).to.equal('1.4.01');
+        expect(steps[95]).to.equal('1.4.96');
+        expect(steps[96]).to.equal('2.1.01');
+        expect(steps[191]).to.equal('2.1.96');
+      });
+      it('should fold around the of a sequence correctly', function () {
+        clock.sequence = new Pattern({ bars: 2 });
+        clock.position = '2.4.01';
+        var steps = clock._lookaheadSteps();
+        expect(steps[0]).to.equal('2.4.01');
+        expect(steps[95]).to.equal('2.4.96');
+        expect(steps[96]).to.equal('1.1.01');
+        expect(steps[191]).to.equal('1.1.96');
+      });
+    });
+    describe('when clock has no sequence set', function () {
+      it('should return 192 lookahead steps', function () {
+        expect(clock._lookaheadSteps().length).to.equal(192);
+      });
+    });
   });
 
   describe('_onChangePosition()', function () {
