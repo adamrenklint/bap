@@ -13,6 +13,60 @@ beforeEach(function () {
 
 describe('Pattern', function () {
 
+  describe('notes(bar, beat, tick)', function () {
+    describe('when bar is not defined', function () {
+      it('should return all notes', function () {
+        pattern.channel(1).add(['1.1.01', 'A1']);
+        pattern.channel(1).add(['2.3.01', 'A1']);
+        var notes = pattern.notes();
+        expect(notes.length).to.equal(2);
+        expect(notes[0].position).to.equal('1.1.01');
+        expect(notes[1].position).to.equal('2.3.01');
+      });
+    });
+    describe('when bar is defined', function () {
+      describe('when beat is not defined', function () {
+        it('should return all notes on that bar', function () {
+          pattern.channel(1).add(['1.1.01', 'A1']);
+          pattern.channel(1).add(['2.3.01', 'A1']);
+          pattern.channel(2).add(['1.1.01', 'A1']);
+          pattern.channel(2).add(['2.3.01', 'A1']);
+          var notes = pattern.notes(2);
+          expect(notes.length).to.equal(2);
+          expect(notes[0].position).to.equal('2.3.01');
+          expect(notes[1].position).to.equal('2.3.01');
+        });
+      });
+      describe('when beat is defined', function () {
+        describe('when tick is not defined', function () {
+          it('should return all notes on that bar and beat', function () {
+            pattern.channel(1).add(['1.1.01', 'A1']);
+            pattern.channel(1).add(['2.3.01', 'A1']);
+            pattern.channel(1).add(['2.2.01', 'A1']);
+            pattern.channel(2).add(['2.3.45', 'A1']);
+            pattern.channel(1).add(['2.4.01', 'A1']);
+            var notes = pattern.notes(2, 3);
+            expect(notes.length).to.equal(2);
+            expect(notes[0].position).to.equal('2.3.01');
+            expect(notes[1].position).to.equal('2.3.45');
+          });
+        });
+        describe('when tick is defined', function () {
+          it('should return all notes on that bar, beat and tick', function () {
+            pattern.channel(1).add(['1.1.01', 'A1']);
+            pattern.channel(1).add(['2.3.01', 'A1']);
+            pattern.channel(1).add(['2.2.01', 'A1']);
+            pattern.channel(2).add(['2.3.45', 'A1']);
+            pattern.channel(1).add(['2.4.01', 'A1']);
+            var notes = pattern.notes(2, 3, 1);
+            expect(notes.length).to.equal(1);
+            expect(notes[0].position).to.equal('2.3.01');
+          });
+        });
+      });
+    });
+  });
+
   describe('kit(id, kit)', function () {
     describe('when id is a letter from A to Z', function () {
       describe('when kit is an instance of Kit', function () {

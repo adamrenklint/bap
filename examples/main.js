@@ -56,7 +56,6 @@ function navigate () {
     sourceEl.textContent = unwrap(fn.toString());
     hljs.highlightBlock(sourceEl);
     bap.clock.stop();
-    // bap.clock.position = '1.1.01';
     fn();
 
     [].forEach.call(document.getElementById('menu').children, function (child) {

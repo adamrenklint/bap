@@ -66,73 +66,188 @@ describe('Sequence', function () {
             var seq = new Sequence();
             var pattern = new Pattern();
             seq.sequences = [pattern];
-          }).to.throw(/Property 'sequences' must be of type sequence-array/);
+          }).to.throw(/'sequences' must be of type sequence-grid/);
         });
       });
     });
   });
 
-  describe('notes(returnOriginals)', function () {
-    describe('when returnOriginals is true', function () {
-      it('should return the original notes', function () {
-        var pattern = new Pattern();
-        pattern.channel(1).add(['1.1.01', 'A1']);
-        var seq = new Sequence(pattern);
-        var notes = seq.notes(true);
-        expect(notes.length).to.equal(1);
-        expect(notes[0]).to.equal(pattern.channel(1).notes.models[0]);
-      });
-      it('should only return one instance of each note', function () {
-        var pattern = new Pattern();
-        pattern.channel(1).add(['1.1.01', 'A1']);
-        var seq = new Sequence(pattern, pattern, pattern);
-        var notes = seq.notes(true);
-        expect(notes.length).to.equal(1);
+  describe('notes(bar, beat, tick)', function () {
+    describe('when bar is not defined', function () {
+      it('should throw a meaningful error', function () {
+        expect(function () {
+          sequence.notes(1);
+        }).to.throw('bar is not within sequence length');
       });
     });
-    describe('when returnOriginals is not true', function () {
-      it('should return ghost notes', function () {
-        var pattern = new Pattern();
-        pattern.channel(1).add(['1.1.01', 'A1']);
-        var seq = new Sequence(pattern);
-        var notes = seq.notes();
-        expect(notes.length).to.equal(1);
-        expect(notes[0].cid).not.to.equal(pattern.channel(1).notes.models[0].cid);
-        expect(notes[0].original.cid).to.equal(pattern.channel(1).notes.models[0].cid);
+    describe('when bar is defined', function () {
+      describe('when bar is higher than length', function () {
+        it('should throw a meaningful error', function () {
+          expect(function () {
+            sequence.notes(1);
+          }).to.throw('bar is not within sequence length');
+        });
       });
-      it('should scope position expressions', function () {
-        var pattern1 = new Pattern();
-        var pattern2 = new Pattern();
-        pattern1.channel(1).add(['1.1.01', 'A1']);
-        pattern2.channel(1).add(['*.1.05', 'B1']);
-        var seq = new Sequence(pattern1, [pattern1, pattern2]);
-        var notes = seq.notes();
-        expect(notes.length).to.equal(3);
-        expect(notes[0].position).to.equal('1.1.01');
-        expect(notes[0].key).to.equal('A1');
-        expect(notes[1].position).to.equal('2.1.01');
-        expect(notes[1].key).to.equal('A1');
-        expect(notes[2].position).to.equal('*>1<3.1.05');
-        expect(notes[2].key).to.equal('B1');
+      describe('when beat is not defined', function () {
+        it('should return all notes on that bar', function () {
+          var pattern1 = new Pattern({ bars: 2 });
+          pattern1.channel(1).add(
+            ['*.1.01', 'A1'],
+            ['2.3.3', 'A2']
+          );
+          pattern2 = new Pattern();
+          pattern2.channel(1).add(
+            ['1.*.13', 'B1']
+          );
+          var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
+          var notes = seq.notes(2);
+
+          expect(notes).to.be.a('object');
+          expect(Object.keys(notes).length).to.equal(1);
+
+          expect(notes[2].length).to.equal(5);
+          expect(notes[2][0].position).to.equal('1.1.01');
+          expect(notes[2][1].position).to.equal('1.1.13');
+          expect(notes[2][2].position).to.equal('1.2.13');
+          expect(notes[2][3].position).to.equal('1.3.13');
+          expect(notes[2][4].position).to.equal('1.4.13');
+        });
+        describe('when there are no notes on that bar', function () {
+          it('should return an empty array', function () {
+            var pattern1 = new Pattern({ bars: 2 });
+            pattern2 = new Pattern();
+            var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
+            var notes = seq.notes(2);
+            expect(notes).to.be.a('object');
+            expect(Object.keys(notes).length).to.equal(1);
+            expect(notes[2]).to.be.a('array');
+            expect(notes[2].length).to.equal(0);
+          })
+        });
       });
-      it('should add to scoped position expressions', function () {
-        var pattern1 = new Pattern();
-        var pattern2 = new Pattern();
-        pattern1.channel(1).add(['1.1.01', 'A1']);
-        pattern2.channel(1).add(['*.1.05', 'B1']);
-        var seq1 = new Sequence(pattern1, [pattern1, pattern2]);
-        var seq2 = new Sequence(seq1, seq1);
-        var notes = seq2.notes();
-        expect(notes.length).to.equal(6);
-        expect(notes[0].position).to.equal('1.1.01');
-        expect(notes[1].position).to.equal('2.1.01');
-        expect(notes[2].position).to.equal('*>1<3.1.05');
-        expect(notes[2].key).to.equal('B1');
-        expect(notes[3].position).to.equal('3.1.01');
-        expect(notes[4].position).to.equal('4.1.01');
-        expect(notes[5].position).to.equal('*>3<5.1.05');
-        expect(notes[5].key).to.equal('B1');
+      describe('when beat is defined', function () {
+        describe('when tick is not defined', function () {
+          it('should return all notes on that bar and beat', function () {
+            var pattern1 = new Pattern({ bars: 2 });
+            pattern1.channel(1).add(
+              ['*.1.01', 'A1'],
+              ['2.3.3', 'A2']
+            );
+            pattern2 = new Pattern();
+            pattern2.channel(1).add(
+              ['1.*.13', 'B1']
+            );
+            var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
+            var notes = seq.notes(2, 1);
+
+            expect(notes).to.be.a('object');
+            expect(Object.keys(notes).length).to.equal(1);
+
+            expect(notes[2].length).to.equal(2);
+            expect(notes[2][0].position).to.equal('1.1.01');
+            expect(notes[2][1].position).to.equal('1.1.13');
+          });
+          describe('when there are no notes on that bar and beat', function () {
+            it('should return an empty array', function () {
+              var pattern1 = new Pattern({ bars: 2 });
+              pattern2 = new Pattern();
+              var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
+              var notes = seq.notes(2, 1);
+
+              expect(notes).to.be.a('object');
+              expect(Object.keys(notes).length).to.equal(1);
+              expect(notes[2]).to.be.a('array');
+              expect(notes[2].length).to.equal(0);
+            })
+          });
+        });
+        describe('when tick is defined', function () {
+          it('should return all notes on that bar, beat and tick', function () {
+            var pattern1 = new Pattern({ bars: 2 });
+            pattern1.channel(1).add(
+              ['*.1.01', 'A1'],
+              ['2.3.3', 'A2']
+            );
+            pattern2 = new Pattern();
+            pattern2.channel(1).add(
+              ['1.*.13', 'B1']
+            );
+            var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
+            var notes = seq.notes(2, 1, 13);
+
+            expect(notes).to.be.a('object');
+            expect(Object.keys(notes).length).to.equal(1);
+            expect(notes[2].length).to.equal(1);
+            expect(notes[2][0].position).to.equal('1.1.13');
+          });
+          describe('when the same pattern is layered more than once', function () {
+            it('should return more than one instance of the same note', function () {
+              var pattern = new Pattern();
+              pattern.channel(1).add(
+                ['1.1.01', 'A1']
+              );
+              var seq = new Sequence([pattern, pattern]);
+              var notes = seq.notes(1, 1, 1);
+
+              expect(notes).to.be.a('object');
+              expect(Object.keys(notes).length).to.equal(1);
+              expect(notes[1].length).to.equal(2);
+              expect(notes[1][0].position).to.equal('1.1.01');
+              expect(notes[1][1].position).to.equal('1.1.01');
+            });
+          });
+          describe('when there are no notes on that bar, beat and tick', function () {
+            it('should return an empty array', function () {
+              var pattern1 = new Pattern({ bars: 2 });
+              pattern2 = new Pattern();
+              var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
+              var notes = seq.notes(2, 1, 13);
+
+              expect(notes).to.be.a('object');
+              expect(Object.keys(notes).length).to.equal(1);
+              expect(notes[2]).to.be.a('array');
+              expect(notes[2].length).to.equal(0);
+            });
+          });
+        });
       });
+    });
+    it('should find the right notes in the drum example', function () {
+      var drumPattern = new Pattern({ bars: 2 });
+      drumPattern.channel(1).add(
+        ['*.1.01', 'X1'],
+        ['*.3.52', 'X1'],
+        ['2.*.25', 'X3'],
+        ['*.odd.92', 'X2'],
+        ['*.*.%52', 'X3']
+      );
+      var seq = new Sequence(
+        [drumPattern],
+        [drumPattern]
+      );
+
+      var notes = seq.notes(1, 1, 1);
+      expect(Object.keys(notes).length).to.equal(1);
+      expect(notes[1].length).to.equal(2);
+      expect(notes[1][0].position).to.equal('1.1.01');
+      expect(notes[1][1].position).to.equal('1.1.01');
+
+      notes = seq.notes(2, 1, 1);
+      expect(Object.keys(notes).length).to.equal(1);
+      expect(notes[2].length).to.equal(2);
+      expect(notes[2][0].position).to.equal('2.1.01');
+      expect(notes[2][1].position).to.equal('2.1.01');
+
+      notes = seq.notes(2, 1, 25);
+      expect(Object.keys(notes).length).to.equal(1);
+      expect(notes[2].length).to.equal(1);
+      expect(notes[2][0].position).to.equal('2.1.25');
+
+      notes = seq.notes(3, 1, 1);
+      expect(Object.keys(notes).length).to.equal(1);
+      expect(notes[3].length).to.equal(2);
+      expect(notes[3][0].position).to.equal('1.1.01');
+      expect(notes[3][1].position).to.equal('1.1.01');
     });
   });
 
@@ -270,26 +385,82 @@ describe('Sequence', function () {
     });
   });
 
-  describe('addOffsetToExpression(value, offset, length)', function () {
-    describe('when value does not include existing offsets', function () {
-      it('should set the offsets', function () {
-        [
-          [2, 2, '*>2<5'],
-          [5, 3, '*>5<9']
-        ].forEach(function (test) {
-          expect(Sequence.addOffsetToExpression('*', test[0], test[1])).to.equal(test[2]);
-        });
+  describe('patterns(bar)', function () {
+    describe('when bar is not a number', function () {
+      it('should throw a meaningful error', function () {
+        expect(function () {
+          sequence.patterns('foo');
+        }).to.throw('bar is not a number');
       });
     });
-    describe('when value includes existing offsets', function () {
-      it('should add the offset', function () {
-        [
-          ['*>3<6', 2, 2, '*>5<8'],
-          ['*>2<6', 5, 3, '*>7<11']
-        ].forEach(function (test) {
-          expect(Sequence.addOffsetToExpression(test[0], test[1], test[2])).to.equal(test[3]);
-        });
+    describe('when bar is higher than sequence length', function () {
+      it('should throw a meaningful error', function () {
+        expect(function () {
+          sequence.patterns(1);
+        }).to.throw('bar is not within sequence length');
       });
+    });
+    describe('when bar is 0 or lower', function () {
+      it('should throw a meaningful error', function () {
+        expect(function () {
+          sequence.patterns(-1);
+        }).to.throw('bar is not within sequence length');
+        expect(function () {
+          sequence.patterns(0);
+        }).to.throw('bar is not within sequence length');
+      });
+    });
+
+    it('should return an object', function () {
+      var pattern = new Pattern();
+      sequence = new Sequence(pattern, pattern);
+      var ret = sequence.patterns(1);
+      expect(ret).to.be.a('object');
+    });
+
+    it('should group patterns by their offset to sequence start', function () {
+      var pattern1 = new Pattern({ bars: 2 });
+      var pattern2 = new Pattern({ bars: 2 });
+      sequence = new Sequence(pattern1, pattern2);
+
+      function test (bar, offset, pattern) {
+        var ret = sequence.patterns(bar);
+        expect(ret).to.be.a('object');
+        expect(Object.keys(ret).length).to.equal(1);
+        expect(ret[offset]).to.be.a('array');
+        expect(ret[offset].length).to.equal(1);
+        expect(ret[offset][0]).to.equal(pattern);
+      }
+
+      test(1, 0, pattern1);
+      test(2, 0, pattern1);
+      test(3, 2, pattern2);
+      test(4, 2, pattern2);
+    });
+
+    it('should group nested patterns by their offset to sequence start', function () {
+      var pattern1 = new Pattern({ bars: 2 });
+      var pattern2 = new Pattern({ bars: 2 });
+      var seq1 = new Sequence(pattern1, pattern2);
+      sequence = new Sequence(seq1, seq1);
+
+      function test (bar, offset, pattern) {
+        var ret = sequence.patterns(bar);
+        expect(ret).to.be.a('object');
+        expect(Object.keys(ret).length).to.equal(1);
+        expect(ret[offset]).to.be.a('array');
+        expect(ret[offset].length).to.equal(1);
+        expect(ret[offset][0]).to.equal(pattern);
+      }
+
+      test(1, 0, pattern1);
+      test(2, 0, pattern1);
+      test(3, 2, pattern2);
+      test(4, 2, pattern2);
+      test(5, 4, pattern1);
+      test(6, 4, pattern1);
+      test(7, 6, pattern2);
+      test(8, 6, pattern2);
     });
   });
 });

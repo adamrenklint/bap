@@ -28,6 +28,8 @@ var newPattern = pattern.transpose(function (note) {
 
 ## version 0.x
 
+- Bitcrusher effect / 12-bit master MPC60 mode
+
 ## version 1.0 "primo"
 
 - Website with proper docs and examples
