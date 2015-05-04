@@ -62,11 +62,11 @@
     "watchify": "^3.1.0"
   },
   "config": {
-    "coverageLimit": 1,
+    "coverageLimit": 70,
     "codeclimateCoverageId": "0959870e0a36bca751d63c1e3bf90fea270b45819b14674be83428c23ffe47ea"
   },
   "scripts": {
-    "test": "multi='mocha-osx-reporter=- spec=-' mocha -s 10 test/**/*.test.js --reporter mocha-multi",
+    "test": "multi='mocha-osx-reporter=- dot=-' mocha -s 10 test/**/*.test.js --reporter mocha-multi",
     "test:watch": "npm test -- -w",
     "karma": "npm run karma:watch -- --single-run",
     "karma:watch": "node_modules/karma/bin/karma start test/local.conf.js",
