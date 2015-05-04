@@ -13,8 +13,8 @@ var clock;
 describe('Clock', function () {
 
   beforeEach(function () {
+    global.document = {};
     clock = new Clock();
-    clock.document = {};
   });
 
   afterEach(function () {
@@ -100,7 +100,7 @@ describe('Clock', function () {
   describe('canStartPlaying()', function () {
     describe('when document.readyState is "loading"', function () {
       it('should return false', function () {
-        clock.document.readyState = 'loading';
+        global.document.readyState = 'loading';
         expect(clock.canStartPlaying()).to.be.false;
       });
     });
@@ -119,12 +119,10 @@ describe('Clock', function () {
     describe('when canStartPlaying() returns false', function () {
       it('should call start() again in ~10 ms', function (done) {
         clock.canStartPlaying = function () { return false; };
-        sinon.spy(clock, 'start');
         clock.start();
-        clock.start.reset();
-        clock.canStartPlaying = function () { return true; };
+        sinon.spy(clock, 'start');
         setTimeout(function () {
-        //   expect(clock.start).to.have.been.called;
+          expect(clock.start).to.have.been.calledOnce;
           done();
         }, 15);
       });

@@ -15,12 +15,11 @@ module.exports = function (config) {
       transform: [ 'brfs' ]
     },
     reportSlowerThan: 50,
-    reporters: ['mocha', 'osx'],
+    reporters: ['mocha'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    // browsers: ['Chrome'],
     browsers: ['Firefox', 'Chrome', 'Safari'],
     singleRun: false
   });
