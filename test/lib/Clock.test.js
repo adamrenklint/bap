@@ -2,6 +2,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var Clock = require('../../lib/Clock');
 var Sequence = require('../../lib/Sequence');
+var Note = require('../../lib/Note');
 var Pattern = require('../../lib/Pattern');
 var sinon = require('sinon');
 var sinonChai = require("sinon-chai");
@@ -79,6 +80,11 @@ describe('Clock', function () {
         }, 15);
       });
     });
+    describe('when canStartPlaying() returns true', function () {
+      beforeEach(function () {
+        clock.canStartPlaying = function () { return true; };
+      });
+    });
   });
 
   // xdescribe('step', function () {
@@ -145,6 +151,39 @@ describe('Clock', function () {
         clock.playing = false;
         expect(sequence.playing).to.be.false;
       });
+    });
+  });
+
+  describe('_onChangeSequence()', function () {
+    it('should bind change:sequence.beatsPerBar to _onChangeSequence', function () {
+      sinon.spy(clock, '_onChangeSequence');
+      var sequence = new Sequence();
+      clock.set('sequence', sequence, { silent: true });
+      clock._onChangeSequence();
+      clock._onChangeSequence.reset();
+      sequence.trigger('change:beatsPerBar');
+      expect(clock._onChangeSequence).to.have.been.calledOnce;
+    });
+    it('should bind change:sequence.bars to _onChangeSequence', function () {
+      sinon.spy(clock, '_onChangeSequence');
+      var sequence = new Sequence();
+      clock.set('sequence', sequence, { silent: true });
+      clock._onChangeSequence();
+      clock._onChangeSequence.reset();
+      sequence.trigger('change:bars');
+      expect(clock._onChangeSequence).to.have.been.calledOnce;
+    });
+    it('should unbind events on previous sequence', function () {
+      sinon.spy(clock, '_onChangeSequence');
+      var sequence1 = new Sequence();
+      clock.set('sequence', sequence1, { silent: true });
+      clock._onChangeSequence();
+      var sequence2 = new Sequence();
+      clock.set('sequence', sequence2, { silent: true });
+      clock._onChangeSequence();
+      clock._onChangeSequence.reset();
+      sequence1.trigger('change:beatsPerBar');
+      expect(clock._onChangeSequence).not.to.have.been.called;
     });
   });
 
@@ -218,9 +257,9 @@ describe('Clock', function () {
 
   describe('_scheduleSteps()', function () {
     it('should schedule lookahead steps', function () {
-      expect(clock.engine.get('steps').length).to.equal(0);
+      expect(clock.engine.get('lookahead').length).to.equal(0);
       clock._scheduleSteps();
-      expect(clock.engine.get('steps').length).to.equal(96 * 4 * 2);
+      expect(clock.engine.get('lookahead').length).to.equal(96 * 4 * 2);
     });
   });
 
@@ -264,6 +303,72 @@ describe('Clock', function () {
     describe('when clock has no sequence set', function () {
       it('should return 192 lookahead steps', function () {
         expect(clock._lookaheadSteps().length).to.equal(192);
+      });
+    });
+  });
+
+  describe('_onEngineStep(step)', function () {
+    describe('when step is a lookahead step', function () {
+      it('should call clock._queueNotes', function () {
+        var spy = clock._queueNotes = sinon.spy();
+        clock._onEngineStep({
+          id: 'lookahead',
+          time: 5,
+          position: '1.2.03'
+        });
+        expect(spy).to.have.been.calledOnce;
+        expect(spy).to.have.been.calledWith('1.2.03', 5);
+      });
+    });
+    describe('when step is not a lookahead step', function () {
+      it('should not call clock._queueNotes', function () {
+        var spy = clock._queueNotes = sinon.spy();
+        clock._onEngineStep({
+          id: 'foo',
+          time: 5,
+          position: '1.2.03'
+        });
+        expect(spy).not.to.have.been.called;
+      });
+    });
+  });
+
+  describe('_queueNotes(position, time)', function () {
+    describe('when there is no current sequence', function () {
+      it('should not throw an error', function () {
+        expect(function () {
+          clock._queueNotes('1.2.03', 5);
+        }).not.to.throw(Error);
+      });
+    });
+    describe('when the current sequence has notes on the current position', function () {
+      it('should call start() on notes and pass time', function () {
+        var pattern = clock.sequence = new Pattern();
+        var note = new Note({ position: '1.1.05' });
+        pattern.channel(1).add(note);
+        var spy = note.start = sinon.spy();
+        clock._queueNotes('1.1.05', 5);
+        expect(spy).to.have.been.calledOnce;
+        expect(spy).to.have.been.calledWith(5);
+      });
+    });
+    describe('when the current sequence has multiple notes from different patterns', function () {
+      it('should call start() on all of them', function () {
+        var pattern1 = new Pattern();
+        var note1 = new Note({ position: '1.1.05' });
+        pattern1.channel(1).add(note1);
+        var pattern2 = new Pattern();
+        var note2 = new Note({ position: '1.1.05' });
+        pattern2.channel(1).add(note2);
+        var sequence = new Sequence([pattern1, pattern2], [pattern1, pattern2]);
+        var spy1 = note1.start = sinon.spy();
+        var spy2 = note2.start = sinon.spy();
+        clock.sequence = sequence;
+        clock._queueNotes('2.1.05', 5);
+        expect(spy1).to.have.been.calledOnce;
+        expect(spy1).to.have.been.calledWith(5);
+        expect(spy2).to.have.been.calledOnce;
+        expect(spy2).to.have.been.calledWith(5);
       });
     });
   });
