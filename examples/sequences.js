@@ -2,6 +2,8 @@ var bap = require('../index');
 
 function sequences () {
 
+  bap.clock.tempo = 84;
+
   var lowPianoKit = bap.sample({
     src: 'sounds/new/own_barricade_end.wav',
     attack: 0.1,
@@ -62,7 +64,7 @@ function sequences () {
   drumPattern.channel(1).add(
     ['*.1.01', 'X1'],
     ['*.3.52', 'X1'],
-    ['2.*.25', 'X3'],
+    ['2.*.35', 'X3', null, 30],
     ['*.odd.92', 'X2'],
     ['*.*.%52', 'X3']
   );
