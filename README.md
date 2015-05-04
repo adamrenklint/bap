@@ -108,7 +108,7 @@ pattern.kit('A', kit).start();
 
 - ```playing``` boolean, current state of playback, can be set to start or pause
 - ```tempo``` number, current tempo of playback, can be used to set tempo but would be overriden by any future tempo changes scheduled in sequence
-- ```step``` function, called on each step, able to change note/params or cancel step by returning false
+- ```step``` function, called on each step with note and time as arguments, able to cancel step by returning false
 - ```start()``` start playback, if current pattern is set
 - ```start(pattern)``` set current pattern and start playback
 - ```pause()``` stop playback

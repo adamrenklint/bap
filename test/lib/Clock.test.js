@@ -50,6 +50,53 @@ describe('Clock', function () {
     });
   });
 
+  describe('step', function () {
+    describe('when a clock.step function is defined', function () {
+      describe('when it returns false', function () {
+        it('should not schedule the note', function () {
+          clock.step = function () { return false; };
+          var pattern = clock.sequence = new Pattern();
+          var note = new Note({ position: '1.1.01' });
+          pattern.channel(1).add(note);
+          var spy = note.start = sinon.spy();
+          clock._queueNotesForStep('1.1.01', 10);
+          expect(spy).not.to.have.been.called;
+        });
+      });
+      describe('when it does not return false', function () {
+        it('should schedule the note', function () {
+          clock.step = function () { return; };
+          var pattern = clock.sequence = new Pattern();
+          var note = new Note({ position: '1.1.01' });
+          pattern.channel(1).add(note);
+          var spy = note.start = sinon.spy();
+          clock._queueNotesForStep('1.1.01', 10);
+          expect(spy).to.have.been.calledOnce;
+        });
+      });
+    });
+    describe('when a clock.step function is not defined', function () {
+      it('should not throw an error', function () {
+        expect(function () {
+          var pattern = clock.sequence = new Pattern();
+          var note = new Note({ position: '1.1.01' });
+          pattern.channel(1).add(note);
+          var spy = note.start = sinon.spy();
+          clock._queueNotesForStep('1.1.01', 10);
+          expect(spy).to.have.been.calledOnce;
+        }).not.to.throw(Error);
+      });
+      it('should schedule the note', function () {
+        var pattern = clock.sequence = new Pattern();
+        var note = new Note({ position: '1.1.01' });
+        pattern.channel(1).add(note);
+        var spy = note.start = sinon.spy();
+        clock._queueNotesForStep('1.1.01', 10);
+        expect(spy).to.have.been.calledOnce;
+      });
+    });
+  });
+
   describe('canStartPlaying()', function () {
     describe('when document.readyState is "loading"', function () {
       it('should return false', function () {
@@ -337,8 +384,8 @@ describe('Clock', function () {
 
   describe('_onEngineStep(step)', function () {
     describe('when step is a lookahead step', function () {
-      it('should call clock._queueNotes', function () {
-        var spy = clock._queueNotes = sinon.spy();
+      it('should call clock._queueNotesForStep', function () {
+        var spy = clock._queueNotesForStep = sinon.spy();
         clock._onEngineStep({
           id: 'lookahead',
           time: 5,
@@ -349,8 +396,8 @@ describe('Clock', function () {
       });
     });
     describe('when step is not a lookahead step', function () {
-      it('should not call clock._queueNotes', function () {
-        var spy = clock._queueNotes = sinon.spy();
+      it('should not call clock._queueNotesForStep', function () {
+        var spy = clock._queueNotesForStep = sinon.spy();
         clock._onEngineStep({
           id: 'foo',
           time: 5,
@@ -361,11 +408,11 @@ describe('Clock', function () {
     });
   });
 
-  describe('_queueNotes(position, time)', function () {
+  describe('_queueNotesForStep(position, time)', function () {
     describe('when there is no current sequence', function () {
       it('should not throw an error', function () {
         expect(function () {
-          clock._queueNotes('1.2.03', 5);
+          clock._queueNotesForStep('1.2.03', 5);
         }).not.to.throw(Error);
       });
     });
@@ -375,7 +422,7 @@ describe('Clock', function () {
         var note = new Note({ position: '1.1.05' });
         pattern.channel(1).add(note);
         var spy = note.start = sinon.spy();
-        clock._queueNotes('1.1.05', 5);
+        clock._queueNotesForStep('1.1.05', 5);
         expect(spy).to.have.been.calledOnce;
         expect(spy).to.have.been.calledWith(5);
       });
@@ -392,7 +439,7 @@ describe('Clock', function () {
         var spy1 = note1.start = sinon.spy();
         var spy2 = note2.start = sinon.spy();
         clock.sequence = sequence;
-        clock._queueNotes('2.1.05', 5);
+        clock._queueNotesForStep('2.1.05', 5);
         expect(spy1).to.have.been.calledOnce;
         expect(spy1).to.have.been.calledWith(5);
         expect(spy2).to.have.been.calledOnce;

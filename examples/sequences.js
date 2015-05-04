@@ -9,7 +9,7 @@ function sequences () {
     attack: 0.1,
     release: 0.1,
     pitch: -40,
-    pan: 25
+    pan: 40
   }).slice(8);
 
   var piano1 = bap.pattern({ tempo: 84, bars: 2 });
@@ -27,7 +27,7 @@ function sequences () {
     attack: 0.3,
     release: 0.1,
     pitch: -40,
-    pan: -25,
+    pan: -40,
     volume: 150
   }).slice(5);
 

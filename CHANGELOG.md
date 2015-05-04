@@ -9,7 +9,7 @@
 - Added ```sample.loop``` param to define looping behavior
 - Added ```note.transform```, ```channel.transform``` and ```pattern.transform``` callback to allow modification of notes after expanding position expressions
 - Added ```bap.clock.tempo``` attribute for getting and setting current tempo
-- Added ```bap.clock.step``` callback to cancel step scheduling or change params
+- Added ```bap.clock.step``` callback to cancel scheduling of step
 - Updated to [dilla v1.5](https://www.npmjs.com/package/dilla) and [dilla-expressions v2.0](https://www.npmjs.com/package/dilla-expressions):
   - Added *greater than* and *less than* position expression operators
   - Expressions engine performance boost 25-1500x
