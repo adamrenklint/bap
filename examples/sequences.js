@@ -2,7 +2,7 @@ var bap = require('../index');
 
 function sequences () {
 
-  bap.clock.tempo = 84;
+  bap.clock.tempo = 120;
 
   var lowPianoKit = bap.sample({
     src: 'sounds/new/own_barricade_end.wav',
@@ -20,6 +20,16 @@ function sequences () {
     ['2.2.01', 'A4', 96],
     ['2.3.01', 'A1', 96],
     ['2.4.01', 'A2', 96]
+  );
+
+  var introPiano = bap.pattern({ tempo: 120, bars: 4 });
+  introPiano.kit('A', lowPianoKit).channel(1).add(
+    ['*.1.01', 'A3', 192, null, -40],
+    ['*.3.01', 'A4', 192, null, -40],
+    // ['*.1.01', 'A3', 96]
+    // ['*.2.01', 'A4', 96],
+    // ['*.3.01', 'A1', 96],
+    ['4.3.01', 'A2', 192]
   );
 
   var otherPianoKit = bap.sample({
@@ -92,19 +102,16 @@ function sequences () {
   );
 
   var y = bap.sequence(
-    // [drumPattern],
-    // // [drumPattern],
-    // [piano1, drumPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
-    // [piano1, otherPianoPattern, drumPattern, breakPattern],
-    // [piano1, otherPianoPattern, drumPattern, breakPattern],
-    // [piano1, otherPianoPattern, breakPattern],
+    [piano1, otherPianoPattern, drumPattern, breakPattern],
+    [piano1, otherPianoPattern, drumPattern, breakPattern],
+    [piano1, otherPianoPattern, breakPattern],
     { loop: true }
   );
 
   var z = bap.sequence(
-    // [y,y,y,y],
-    y,
+    introPiano,
+    y, y, y, y,
     // y,
     //
     // piano1,
@@ -122,6 +129,22 @@ function sequences () {
   z.start();
   // window.z = z;
 
+  // var foo = false;
+  // setInterval(function () {
+  //   if (foo) {
+  //     drumPattern.start();
+  //   }
+  //   else {
+  //     z.start();
+  //   }
+  //   foo = !foo;
+  //   // if (bap.clock.bar < 8) {
+  //   //   bap.clock.bar += 1;
+  //   // }
+  //   // else {
+  //   //   bap.clock.bar = 1;
+  //   // }
+  // }, 2000);
   // setTimeout(function () {
   //   bap.clock.position = '1.1.01';
   // }, 3000);
