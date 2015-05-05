@@ -96,9 +96,9 @@ function sequences () {
     // // [drumPattern],
     // [piano1, drumPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
+    // [piano1, otherPianoPattern, drumPattern, breakPattern],
+    // [piano1, otherPianoPattern, drumPattern, breakPattern],
+    // [piano1, otherPianoPattern, breakPattern],
     { loop: true }
   );
 
@@ -112,7 +112,7 @@ function sequences () {
     // y,
   //   [y,y],
   //   [y,y],
-    { loop: true }
+    { loop: false }
   );
   //
   // var x = bap.sequence(

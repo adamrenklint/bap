@@ -134,7 +134,8 @@ describe('Clock', function () {
           start: sinon.spy(),
           set: sinon.spy(),
           setBeatsPerBar: sinon.spy(),
-          setLoopLength: sinon.spy()
+          setLoopLength: sinon.spy(),
+          setPosition: sinon.spy()
         };
       });
       describe('when sequence is defined', function () {
@@ -159,39 +160,119 @@ describe('Clock', function () {
           done();
         }, 1);
       });
+      describe('when _stopByFold is true', function () {
+        it('should set _stopByFold to false', function () {
+          clock._stopByFold = true;
+          clock.start();
+          expect(clock._stopByFold).to.be.false
+        });
+        it('should set position to 1.1.01', function () {
+          clock._stopByFold = true;
+          clock.set('position', '2.4.96', { silent: true });
+          clock.start();
+          expect(clock.position).to.equal('1.1.01');
+        });
+      });
     });
   });
 
-  // xdescribe('step', function () {
-  //   it('should execute the callback with the step note as argument', function () {
-  //     var note = { foo: 'bar', start: function () {}, paddedPosition: function () {} };
-  //     var callback = sinon.spy();
-  //     clock.step = callback;
-  //     clock._onSchedulerStep({
-  //       id: 'current',
-  //       event: 'start',
-  //       args: note,
-  //       time: 1
-  //     });
-  //     expect(callback).to.have.been.calledOnce;
-  //     expect(callback).to.have.been.calledWith(1, note);
-  //   });
-  //   describe('when the callback returns false', function () {
-  //     it('should not execute note.start()', function () {
-  //       var start = sinon.spy();
-  //       var note = { foo: 'bar', start: start, paddedPosition: function () {} };
-  //       clock.step = function () {
-  //         return false;
-  //       };
-  //       clock._onSchedulerStep({
-  //         id: 'current',
-  //         event: 'start',
-  //         args: note
-  //       });
-  //       expect(start).not.to.have.been.called;
-  //     });
-  //   });
-  // });
+  describe('pause(sequence)', function () {
+    describe('when playing is false', function () {
+      beforeEach(function () {
+        clock.set('playing', false, { silent: true });
+      });
+      it('should not change position', function () {
+        clock.set('position', '1.2.95', { silent: true });
+        clock.pause();
+        expect(clock.position).to.equal('1.2.95');
+      });
+      it('should not change _lastQueuedPosition', function () {
+        clock.set('_lastQueuedPosition', '1.2.95', { silent: true });
+        clock.pause();
+        expect(clock._lastQueuedPosition).to.equal('1.2.95');
+      });
+    });
+    describe('when playing is true', function () {
+      beforeEach(function () {
+        clock.set('playing', true, { silent: true });
+      });
+      it('should reset _lastQueuedPosition', function () {
+        clock._lastQueuedPosition = '1.2.03';
+        clock.pause();
+        expect(clock._lastQueuedPosition).to.equal('0.0.00');
+      });
+      describe('when no sequence is defined', function () {
+        it('should change playing state', function () {
+          clock.sequence = new Pattern();
+          clock.pause();
+          expect(clock.playing).to.be.false;
+        });
+      });
+      describe('when sequence is not clock.sequence', function () {
+        it('should not change playing state', function () {
+          clock.sequence = new Pattern();
+          clock.pause(new Pattern());
+          expect(clock.playing).to.be.true;
+        });
+      });
+      describe('when sequence is clock.sequence', function () {
+        it('should change playing state', function () {
+          clock.sequence = new Pattern();
+          clock.pause(clock.sequence);
+          expect(clock.playing).to.be.false;
+        });
+      });
+    });
+  });
+
+  describe('stop(sequence)', function () {
+    describe('when playing is false', function () {
+      beforeEach(function () {
+        clock.set('playing', false, { silent: true });
+      });
+      it('should not change position', function () {
+        clock.set('position', '1.2.95', { silent: true });
+        clock.stop();
+        expect(clock.position).to.equal('1.2.95');
+      });
+      it('should not change _lastQueuedPosition', function () {
+        clock.set('_lastQueuedPosition', '1.2.95', { silent: true });
+        clock.stop();
+        expect(clock._lastQueuedPosition).to.equal('1.2.95');
+      });
+    });
+    describe('when playing is true', function () {
+      beforeEach(function () {
+        clock.set('playing', true, { silent: true });
+      });
+      it('should reset _lastQueuedPosition', function () {
+        clock._lastQueuedPosition = '1.2.03';
+        clock.stop();
+        expect(clock._lastQueuedPosition).to.equal('0.0.00');
+      });
+      describe('when no sequence is defined', function () {
+        it('should change playing state', function () {
+          clock.sequence = new Pattern();
+          clock.stop();
+          expect(clock.playing).to.be.false;
+        });
+      });
+      describe('when sequence is not clock.sequence', function () {
+        it('should not change playing state', function () {
+          clock.sequence = new Pattern();
+          clock.stop(new Pattern());
+          expect(clock.playing).to.be.true;
+        });
+      });
+      describe('when sequence is clock.sequence', function () {
+        it('should change playing state', function () {
+          clock.sequence = new Pattern();
+          clock.stop(clock.sequence);
+          expect(clock.playing).to.be.false;
+        });
+      });
+    });
+  });
 
   describe('playing', function () {
     describe('when setting to true', function () {
@@ -263,21 +344,69 @@ describe('Clock', function () {
   });
 
   describe('_onEngineTick(tick)', function () {
-    describe('when tick.position is not 0.0.00', function () {
-      it('should set clock.position', function () {
-        clock._onEngineTick({
-          position: '1.2.03'
-        });
-        expect(clock.position).to.equal('1.2.03');
-      });
-    });
-    describe('when tick.position is 0.0.00', function () {
+    describe('when clock.playing is false', function () {
       it('should not change clock.position', function () {
         clock.set('position', '1.1.01', { silent:true });
+        clock.set('playing', false, { silent: true });
         clock._onEngineTick({
-          position: '0.0.00'
+          position: '1.1.05'
         });
         expect(clock.position).to.equal('1.1.01');
+      });
+    });
+    describe('when clock.playing is true', function () {
+      beforeEach(function () {
+        clock.set('playing', true, { silent: true });
+      });
+      describe('when _stopByFold is false (default)', function () {
+        describe('when tick.position is not 0.0.00', function () {
+          it('should set clock.position', function () {
+            clock._onEngineTick({
+              position: '1.2.03'
+            });
+            expect(clock.position).to.equal('1.2.03');
+          });
+        });
+        describe('when tick.position is 0.0.00', function () {
+          it('should not change clock.position', function () {
+            clock.set('position', '1.1.01', { silent:true });
+            clock._onEngineTick({
+              position: '0.0.00'
+            });
+            expect(clock.position).to.equal('1.1.01');
+          });
+        });
+      });
+      describe('when _stopByFold is true', function () {
+        it('should call pause()', function () {
+          clock._stopByFold = true;
+          clock.set('position', '2.4.93', { silent: true });
+          clock.sequence = new Pattern({ bars: 2 });
+          var spy = clock.pause = sinon.spy();
+          clock._onEngineTick({
+            position: '1.1.01'
+          });
+          expect(spy).to.have.been.calledOnce;
+        });
+        it('should set the position to the last tick of the sequence', function () {
+          clock._stopByFold = true;
+          clock.set('position', '2.4.93', { silent: true });
+          clock.sequence = new Pattern({ bars: 2 });
+          clock._onEngineTick({
+            position: '1.1.01'
+          });
+          expect(clock.position).to.equal('2.4.96');
+        });
+        it('should reset _lastQueuedPosition', function () {
+          clock._stopByFold = true;
+          clock.set('position', '2.4.95', { silent: true });
+          clock._lastQueuedPosition = '2.4.95';
+          clock.sequence = new Pattern({ bars: 2 });
+          clock._onEngineTick({
+            position: '1.1.01'
+          });
+          expect(clock._lastQueuedPosition).to.equal('0.0.00');
+        });
       });
     });
   });
@@ -383,27 +512,124 @@ describe('Clock', function () {
   });
 
   describe('_onEngineStep(step)', function () {
-    describe('when step is a lookahead step', function () {
-      it('should call clock._queueNotesForStep', function () {
+    describe('when clock.playing is false', function () {
+      it('should not call clock._queueNotesForStep', function () {
         var spy = clock._queueNotesForStep = sinon.spy();
+        clock._foldingOverLoop = function () { return false; };
         clock._onEngineStep({
           id: 'lookahead',
           time: 5,
           position: '1.2.03'
         });
-        expect(spy).to.have.been.calledOnce;
-        expect(spy).to.have.been.calledWith('1.2.03', 5);
+        expect(spy).not.to.have.been.called;
       });
     });
-    describe('when step is not a lookahead step', function () {
-      it('should not call clock._queueNotesForStep', function () {
-        var spy = clock._queueNotesForStep = sinon.spy();
-        clock._onEngineStep({
-          id: 'foo',
-          time: 5,
-          position: '1.2.03'
+    describe('when clock.playing is true', function () {
+      beforeEach(function () {
+        clock.set('playing', true, { silent: true });
+      });
+      describe('when step is a lookahead step', function () {
+        describe('when _foldingOverLoop() returns false', function () {
+          it('should call clock._queueNotesForStep', function () {
+            var spy = clock._queueNotesForStep = sinon.spy();
+            clock._foldingOverLoop = function () { return false; };
+            clock._onEngineStep({
+              id: 'lookahead',
+              time: 5,
+              position: '1.2.03'
+            });
+            expect(spy).to.have.been.calledOnce;
+            expect(spy).to.have.been.calledWith('1.2.03', 5);
+          });
+          it('should set _lastQueuedPosition', function () {
+            var spy = clock._queueNotesForStep = sinon.spy();
+            clock._foldingOverLoop = function () { return false; };
+            clock._onEngineStep({
+              id: 'lookahead',
+              time: 5,
+              position: '1.2.03'
+            });
+            expect(clock._lastQueuedPosition).to.equal('1.2.03');
+          });
         });
-        expect(spy).not.to.have.been.called;
+        describe('when _foldingOverLoop() returns true', function () {
+          it('should not call clock._queueNotesForStep', function () {
+            var spy = clock._queueNotesForStep = sinon.spy();
+            clock._foldingOverLoop = function () { return true; };
+            clock._onEngineStep({
+              id: 'lookahead',
+              time: 5,
+              position: '1.2.03'
+            });
+            expect(spy).not.to.have.been.called;
+          });
+        });
+      });
+      describe('when step is not a lookahead step', function () {
+        it('should not call clock._queueNotesForStep', function () {
+          var spy = clock._queueNotesForStep = sinon.spy();
+          clock._onEngineStep({
+            id: 'foo',
+            time: 5,
+            position: '1.2.03'
+          });
+          expect(spy).not.to.have.been.called;
+        });
+      });
+    });
+  });
+
+  describe('_foldingOverLoop(position)', function () {
+    describe('when _lastQueuedPosition is not set', function () {
+      describe('when sequence.loop is true', function () {
+        it('should return false', function () {
+          clock.sequence = new Sequence({ loop: true });
+          expect(clock._foldingOverLoop('1.1.01')).to.be.false;
+          expect(clock._stopByFold).to.be.false;
+        });
+      });
+      describe('when sequence.loop is false', function () {
+        it('should return false', function () {
+          clock.sequence = new Sequence({ loop: false });
+          expect(clock._foldingOverLoop('1.1.01')).to.be.false;
+          expect(clock._stopByFold).to.be.false;
+        });
+      });
+    });
+    describe('when _lastQueuedPosition is before position', function () {
+      describe('when sequence.loop is true', function () {
+        it('should return false', function () {
+          clock._lastQueuedPosition = '1.1.01'
+          clock.sequence = new Sequence({ loop: true });
+          expect(clock._foldingOverLoop('1.2.02')).to.be.false;
+          expect(clock._stopByFold).to.be.false;
+        });
+      });
+      describe('when sequence.loop is false', function () {
+        it('should return false', function () {
+          clock._lastQueuedPosition = '1.1.01'
+          clock.sequence = new Sequence({ loop: false });
+          expect(clock._foldingOverLoop('1.2.02')).to.be.false;
+          expect(clock._stopByFold).to.be.false;
+        });
+      });
+    });
+    describe('when _lastQueuedPosition is after position', function () {
+      describe('when sequence.loop is true', function () {
+        it('should return false', function () {
+          clock._lastQueuedPosition = '1.4.01'
+          clock.sequence = new Sequence({ loop: true });
+          expect(clock._foldingOverLoop('1.1.02')).to.be.false;
+          expect(clock._stopByFold).to.be.false;
+        });
+      });
+      describe('when sequence.loop is false', function () {
+        it('should return true', function () {
+          clock._lastQueuedPosition = '1.4.01'
+          clock.sequence = new Sequence({ loop: false });
+          expect(clock._foldingOverLoop('1.1.02')).to.be.true;
+          expect(clock._stopByFold).to.be.true;
+        });
       });
     });
   });

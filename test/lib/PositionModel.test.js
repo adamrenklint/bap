@@ -14,11 +14,11 @@ describe('PositionModel', function () {
       model.position = '1.1.12';
       expect(model.paddedPosition()).to.equal('00001.00001.00012');
     });
-    it('should replace expressions with zeros', function () {
+    it('should not replace expressions with zeros', function () {
       model.position = '1.*.01';
-      expect(model.paddedPosition()).to.equal('00001.00000.00001');
+      expect(model.paddedPosition()).to.equal('00001.0000*.00001');
       model.position = '*.*.*';
-      expect(model.paddedPosition()).to.equal('00000.00000.00000');
+      expect(model.paddedPosition()).to.equal('0000*.0000*.0000*');
     });
   });
 
@@ -43,6 +43,25 @@ describe('PositionModel', function () {
         model._updatePositionFromFragments();
         expect(model.position).to.equal('0.0.00');
       });
+    });
+  });
+
+  describe('fragments()', function () {
+    it('should return the current position as fragments', function () {
+      model.position = '2.3.12';
+      var fragments = model.fragments();
+      expect(fragments[0]).to.equal(2);
+      expect(fragments[1]).to.equal(3);
+      expect(fragments[2]).to.equal(12);
+    });
+  });
+
+  describe('PositionModel.fragments(position)', function () {
+    it('should return the fragments as numbers', function () {
+      var fragments = PositionModel.fragments('1.2.03');
+      expect(fragments[0]).to.equal(1);
+      expect(fragments[1]).to.equal(2);
+      expect(fragments[2]).to.equal(3);
     });
   });
 });
