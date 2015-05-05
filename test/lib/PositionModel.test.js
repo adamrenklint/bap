@@ -63,5 +63,11 @@ describe('PositionModel', function () {
       expect(fragments[1]).to.equal(2);
       expect(fragments[2]).to.equal(3);
     });
+    it('should return fragments with expressions as strings', function () {
+      var fragments = PositionModel.fragments('1.2%1.03');
+      expect(fragments[0]).to.equal(1);
+      expect(fragments[1]).to.equal('2%1');
+      expect(fragments[2]).to.equal(3);
+    });
   });
 });
