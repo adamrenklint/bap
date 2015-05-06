@@ -135,7 +135,8 @@ describe('Clock', function () {
           set: sinon.spy(),
           setBeatsPerBar: sinon.spy(),
           setLoopLength: sinon.spy(),
-          setPosition: sinon.spy()
+          setPosition: sinon.spy(),
+          setTempo: sinon.spy()
         };
       });
       describe('when sequence is defined', function () {
@@ -425,14 +426,19 @@ describe('Clock', function () {
       expect(clock._lookaheadSteps()).to.be.a('array');
     });
     describe('when clock.position is 0.0.00', function () {
-      it('should return 0 lookahead steps', function () {
+      it('should return 192 lookahead steps', function () {
         clock.position = '0.0.00';
-        expect(clock._lookaheadSteps().length).to.equal(0);
+        var steps = clock._lookaheadSteps();
+        expect(steps.length).to.equal(192);
+        expect(steps[0]).to.equal('1.1.01');
+        expect(steps[95]).to.equal('1.1.96');
+        expect(steps[96]).to.equal('1.2.01');
+        expect(steps[191]).to.equal('1.2.96');
       });
     });
     describe('when clock has no sequence set', function () {
       it('should return 0 lookahead steps', function () {
-        expect(clock._lookaheadSteps().length).to.equal(0);
+        expect(clock._lookaheadSteps().length).to.equal(192);
       });
     });
     describe('when clock has a sequence set', function () {
@@ -641,6 +647,7 @@ describe('Clock', function () {
           var spy = sinon.spy();
           clock.engine = {
             setPosition: spy,
+            setTempo: function () {},
             _position: '1.1.01'
           };
           clock.set('position', '2.1.01', { silent: true });
