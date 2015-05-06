@@ -299,7 +299,7 @@ describe('Sequence', function () {
     });
   });
 
-  describe('tempoChanges()', function () {
+  xdescribe('tempoChanges()', function () {
     it('should return all tempo changes', function () {
       var pattern = new Pattern({ tempo: 95 });
       var pattern2 = new Pattern({ tempo: 105 });

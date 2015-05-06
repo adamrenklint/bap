@@ -411,68 +411,94 @@ describe('Clock', function () {
     });
   });
 
-  describe('_lookaheadSteps()', function () {
-    describe('when position is 1.1.01', function () {
-      it('should return all ticks for 1.1 and 1.2', function () {
-        clock.position = '1.1.01';
-        var steps = clock._lookaheadSteps();
-        expect(steps.length).to.equal(96 * 2);
-        expect(steps[0]).to.equal('1.1.01');
-        expect(steps[95]).to.equal('1.1.96');
-        expect(steps[96]).to.equal('1.2.01');
-        expect(steps[191]).to.equal('1.2.96');
-      });
-    });
-    describe('when position is 1.3.01', function () {
-      it('should return all ticks for 1.3 and 1.4', function () {
-        clock.position = '1.3.01';
-        var steps = clock._lookaheadSteps();
-        expect(steps.length).to.equal(96 * 2);
-        expect(steps[0]).to.equal('1.3.01');
-        expect(steps[95]).to.equal('1.3.96');
-        expect(steps[96]).to.equal('1.4.01');
-        expect(steps[191]).to.equal('1.4.96');
-      });
-    });
-    describe('when position is 1.4.01', function () {
-      it('should return all ticks for 1.4 and 1.1', function () {
-        clock.position = '1.4.01';
-        var steps = clock._lookaheadSteps();
-        expect(steps.length).to.equal(96 * 2);
-        expect(steps[0]).to.equal('1.4.01');
-        expect(steps[95]).to.equal('1.4.96');
-        expect(steps[96]).to.equal('1.1.01');
-        expect(steps[191]).to.equal('1.1.96');
-      });
-    });
-    describe('when position is 2.4.01', function () {
-      it('should return all ticks for 1.4 and 2.1', function () {
-        clock.position = '1.4.01';
-        clock.sequence = new Sequence(new Pattern(), new Pattern());
-        var steps = clock._lookaheadSteps();
-        expect(steps.length).to.equal(96 * 2);
-        expect(steps[0]).to.equal('1.4.01');
-        expect(steps[95]).to.equal('1.4.96');
-        expect(steps[96]).to.equal('2.1.01');
-        expect(steps[191]).to.equal('2.1.96');
-      });
-    });
-  });
-
   describe('_scheduleSteps()', function () {
     it('should schedule lookahead steps', function () {
       expect(clock.engine.get('lookahead').length).to.equal(0);
+      clock.position = '1.2.45';
       clock._scheduleSteps();
-      expect(clock.engine.get('lookahead').length).to.equal(96 * 4 * 2);
+      expect(clock.engine.get('lookahead').length).to.equal(192);
     });
   });
+
+
+    describe('_lookaheadSteps()', function () {
+      describe('when position is 0.0.00', function () {
+        it('should return an empty array', function () {
+          clock.position = '0.0.00';
+          var steps = clock._lookaheadSteps();
+          expect(steps).to.be.a('array');
+          expect(steps.length).to.equal(0);
+        });
+      });
+      describe('when position is 1.1.01', function () {
+        it('should return all ticks for 1.1 and 1.2', function () {
+          clock.position = '1.1.01';
+          var steps = clock._lookaheadSteps();
+          expect(steps).to.be.a('array');
+          expect(steps.length).to.equal(96 * 2);
+          expect(steps[0]).to.equal('1.1.01');
+          expect(steps[95]).to.equal('1.1.96');
+          expect(steps[96]).to.equal('1.2.01');
+          expect(steps[191]).to.equal('1.2.96');
+        });
+      });
+      describe('when position is 1.3.01', function () {
+        it('should return all ticks for 1.3 and 1.4', function () {
+          clock.position = '1.3.01';
+          var steps = clock._lookaheadSteps();
+          expect(steps).to.be.a('array');
+          expect(steps.length).to.equal(96 * 2);
+          expect(steps[0]).to.equal('1.3.01');
+          expect(steps[95]).to.equal('1.3.96');
+          expect(steps[96]).to.equal('1.4.01');
+          expect(steps[191]).to.equal('1.4.96');
+        });
+      });
+      describe('when position is 1.4.01', function () {
+        it('should return all ticks for 1.4 and 1.1', function () {
+          clock.position = '1.4.01';
+          var steps = clock._lookaheadSteps();
+          expect(steps).to.be.a('array');
+          expect(steps.length).to.equal(96 * 2);
+          expect(steps[0]).to.equal('1.4.01');
+          expect(steps[95]).to.equal('1.4.96');
+          expect(steps[96]).to.equal('1.1.01');
+          expect(steps[191]).to.equal('1.1.96');
+        });
+      });
+      describe('when position is 2.4.01', function () {
+        it('should return all ticks for 1.4 and 2.1', function () {
+          clock.position = '1.4.01';
+          clock.sequence = new Sequence(new Pattern(), new Pattern());
+          var steps = clock._lookaheadSteps();
+          expect(steps).to.be.a('array');
+          expect(steps.length).to.equal(96 * 2);
+          expect(steps[0]).to.equal('1.4.01');
+          expect(steps[95]).to.equal('1.4.96');
+          expect(steps[96]).to.equal('2.1.01');
+          expect(steps[191]).to.equal('2.1.96');
+        });
+      });
+    });
 
   describe('_lookaheadSteps()', function () {
     it('should return an array', function () {
       expect(clock._lookaheadSteps()).to.be.a('array');
     });
+    describe('when clock.position is 0.0.00', function () {
+      it('should return 0 lookahead steps', function () {
+        clock.position = '0.0.00';
+        expect(clock._lookaheadSteps().length).to.equal(0);
+      });
+    });
+    describe('when clock has no sequence set', function () {
+      it('should return 0 lookahead steps', function () {
+        expect(clock._lookaheadSteps().length).to.equal(0);
+      });
+    });
     describe('when clock has a sequence set', function () {
       it('should return 192 lookahead steps', function () {
+        clock.position = '1.2.45';
         clock.sequence = new Pattern({ bars: 4 });
         expect(clock._lookaheadSteps().length).to.equal(192);
       });
@@ -502,11 +528,6 @@ describe('Clock', function () {
         expect(steps[95]).to.equal('2.4.96');
         expect(steps[96]).to.equal('1.1.01');
         expect(steps[191]).to.equal('1.1.96');
-      });
-    });
-    describe('when clock has no sequence set', function () {
-      it('should return 192 lookahead steps', function () {
-        expect(clock._lookaheadSteps().length).to.equal(192);
       });
     });
   });
