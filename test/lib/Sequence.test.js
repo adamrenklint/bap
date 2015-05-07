@@ -299,21 +299,67 @@ describe('Sequence', function () {
     });
   });
 
-  xdescribe('tempoChanges()', function () {
+  describe('tempoChanges()', function () {
     it('should return all tempo changes', function () {
       var pattern = new Pattern({ tempo: 95 });
       var pattern2 = new Pattern({ tempo: 105 });
-      var pattern3 = new Pattern({ tempo: 25 });
-      var seq = new Sequence([pattern, pattern2], pattern3, pattern3);
+      var pattern3 = new Pattern({ bars: 2, tempo: 25, beatsPerBar: 5 });
+      var seq = new Sequence([pattern, pattern2], pattern3, pattern3, pattern2);
       var changes = seq.tempoChanges();
       expect(changes.length).to.equal(3);
-      expect(changes[0][0]).to.equal('1.1.01');
-      expect(changes[0][1].val).to.equal(95);
-      expect(changes[1][0]).to.equal('1.4.96');
-      expect(changes[1][1].val).to.equal(25);
-      expect(changes[2][0]).to.equal('3.4.96');
-      expect(changes[2][1].val).to.equal(95);
+      expect(changes[0][0]).to.equal(1);
+      expect(changes[0][1]).to.equal(95);
+      expect(changes[0][2]).to.equal(4);
+      expect(changes[1][0]).to.equal(2);
+      expect(changes[1][1]).to.equal(25);
+      expect(changes[1][2]).to.equal(5);
+      expect(changes[2][0]).to.equal(6);
+      expect(changes[2][1]).to.equal(105);
+      expect(changes[2][2]).to.equal(4);
     });
+  });
+
+  describe('tempoAt(bar)', function () {
+    beforeEach(function () {
+      var patternA = new Pattern({ bars: 2, tempo: 150 });
+      var patternB = new Pattern({ bars: 2, tempo: 100 });
+      sequence = new Sequence(patternA, patternB);
+    });
+    // describe('when position is 0.0.00', function () {
+    //   it('should return tempo from pattern A', function () {
+    //     expect(sequence.tempoAt('0.0.00')).to.equal(150);
+    //   });
+    // });
+    // describe('when position is 1.1.01', function () {
+    //   it('should return tempo from pattern A', function () {
+    //     expect(sequence.tempoAt('1.1.01')).to.equal(150);
+    //   });
+    // });
+    // describe('when position is 7 ticks before pattern B', function () {
+    //   it('should return tempo from pattern A', function () {
+    //     expect(sequence.tempoAt('2.4.90')).to.equal(150);
+    //   });
+    // });
+    // describe('when position is 6 ticks before pattern B', function () {
+    //   it('should return tempo from pattern B', function () {
+    //     expect(sequence.tempoAt('2.4.91')).to.equal(100);
+    //   });
+    // });
+    // describe('when position is at start of pattern B', function () {
+    //   it('should return tempo from pattern B', function () {
+    //     expect(sequence.tempoAt('3.1.01')).to.equal(100);
+    //   });
+    // });
+    // describe('when position is at end of sequence', function () {
+    //   it('should return tempo from pattern B', function () {
+    //     expect(sequence.tempoAt('4.4.91')).to.equal(100);
+    //   });
+    //   describe('when sequence is looping', function () {
+    //     it('should return tempo from pattern A', function () {
+    //       expect(sequence.tempoAt('4.4.91')).to.equal(125);
+    //     });
+    //   });
+    // });
   });
 
   describe('then(sequence...)', function () {

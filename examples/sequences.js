@@ -29,7 +29,7 @@ function sequences () {
     // ['*.1.01', 'A3', 96]
     // ['*.2.01', 'A4', 96],
     // ['*.3.01', 'A1', 96],
-    ['4.3.01', 'A2', 192]
+    ['4.3.01', 'A2', 192, null, -40]
   );
 
   var otherPianoKit = bap.sample({
@@ -146,8 +146,8 @@ function sequences () {
   //   // }
   // }, 2000);
   // setTimeout(function () {
-  //   bap.clock.position = '1.1.01';
-  // }, 3000);
+  //   bap.clock.pause();
+  // }, 2200);
 }
 
 module.exports = sequences;

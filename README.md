@@ -82,7 +82,7 @@ pattern.kit('A', kit).start();
 
 ### bap
 
-- ```clock``` reference to [clock](#clock) instance
+- ```clock``` reference to [clock](#clock) singleton
 - ```kit(params)``` returns a new [kit](#kit)
 - ```slot(params)``` returns a new [slot](#slot)
 - ```layer(params)``` returns a new [layer](#layer)

@@ -161,6 +161,21 @@ describe('Clock', function () {
           done();
         }, 1);
       });
+      describe('when restarting the sequence', function () {
+        it('should set current position as _lastQueuedPosition', function () {
+          clock.set('position', '1.3.54', { silent: true });
+          clock.sequence = new Sequence();
+          clock.start();
+          expect(clock._lastQueuedPosition).to.equal('1.3.54');
+        });
+        it('should set current position as engine position', function () {
+          clock.set('position', '1.3.54', { silent: true });
+          clock.sequence = new Sequence();
+          clock.start();
+          expect(clock.engine.setPosition).to.have.been.called;
+          expect(clock.engine.setPosition).to.have.been.calledWith('1.3.54');
+        });
+      });
       describe('when _stopByFold is true', function () {
         it('should set _stopByFold to false', function () {
           clock._stopByFold = true;
@@ -407,6 +422,71 @@ describe('Clock', function () {
             position: '1.1.01'
           });
           expect(clock._lastQueuedPosition).to.equal('0.0.00');
+        });
+      });
+    });
+  });
+
+  describe('__updateTempo(position)', function () {
+    describe('when no sequence is set', function () {
+      it('should set the tempo to 120', function () {
+        clock.set('tempo', 150, { silent: true });
+        clock._updateTempo();
+        expect(clock.tempo).to.equal(120);
+      });
+    });
+    describe('when a sequence is set', function () {
+      describe('when no position is passed', function () {
+        it('should set the tempo of the sequence', function () {
+          clock.sequence = new Sequence(new Pattern({ tempo: 135 }));
+          clock._updateTempo();
+          expect(clock.tempo).to.equal(135);
+        });
+      });
+      describe('when sequence is a pattern', function () {
+        it('should set the tempo of the pattern', function () {
+          clock.sequence = new Pattern({ tempo: 135 });
+          clock._updateTempo();
+          expect(clock.tempo).to.equal(135);
+        });
+      });
+      beforeEach(function () {
+        clock.sequence = new Sequence(
+          new Pattern({ bars: 2, tempo: 100 }),
+          new Pattern({ bars: 2, tempo: 50 }),
+          new Pattern({ bars: 2, tempo: 140 })
+        );
+      });
+      describe('when sequence is a multi-layered sequence', function () {
+        describe('when position is at middle of pattern', function () {
+          it('should set tempo of current pattern', function () {
+            clock._updateTempo('1.1.01');
+            expect(clock.tempo).to.equal(100);
+            clock._updateTempo('2.4.90');
+            expect(clock.tempo).to.equal(100);
+          });
+        });
+        describe('when position is at end of pattern', function () {
+          it('should set tempo of next pattern', function () {
+            clock._updateTempo('2.4.94');
+            expect(clock.tempo).to.equal(50);
+          });
+        });
+        describe('when position is at end of loop', function () {
+          describe('when sequence is looped', function () {
+            it('should set tempo of the first pattern', function () {
+              clock.sequence.loop = true;
+              clock._updateTempo('6.4.95');
+              expect(clock.tempo).to.equal(100);
+            });
+          });
+          describe('when sequence is not looped', function () {
+            it('should set tempo of the last pattern', function () {
+              clock.sequence.loop = false;
+              clock._updateTempo('6.4.95');
+              expect(clock.tempo).to.equal(140);
+            });
+          });
         });
       });
     });
@@ -679,6 +759,24 @@ describe('Clock', function () {
         clock.set('position', '2.1.01', { silent: true });
         clock._onChangePosition();
         expect(spy).not.to.have.been.called;
+      });
+    });
+  });
+
+  describe('Clock.ticksForTempoChange(tempo)', function () {
+    [
+      [0,   2],
+      [50,  2],
+      [100, 4],
+      [150, 6],
+      [200, 8],
+      [250, 15],
+      [300, 24]
+    ].forEach(function (test) {
+      describe('when tempo is ' + test[0], function () {
+        it('should return ' + test[1] + ' (ticks)', function () {
+          expect(Clock.ticksForTempoChange(test[0])).to.equal(test[1]);
+        });
       });
     });
   });

@@ -2,7 +2,7 @@
 
 ## version 0.2 "marl"
 
-- Added ```bap.sequence```, multi-layered sequences from patterns and other sequences
+- Added ```bap.sequence```, multi-layered sequences from patterns and other sequences, with variable tempo
 - Added ```pattern.then```, ```pattern.after``` and ```pattern.and``` methods for combining patterns and sequences into new sequence
 - Added ```sample.channel``` param to define behavior for stereo buffers
 - Added ```sample.reverse``` param to reverse buffer or slice of buffer
