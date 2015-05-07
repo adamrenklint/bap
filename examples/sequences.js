@@ -5,7 +5,7 @@ function sequences () {
   bap.clock.tempo = 120;
 
   var lowPianoKit = bap.sample({
-    src: 'sounds/new/own_barricade_end.wav',
+    src: 'sounds/own_barricade_end.wav',
     attack: 0.1,
     release: 0.1,
     pitch: -40,
@@ -26,14 +26,11 @@ function sequences () {
   introPiano.kit('A', lowPianoKit).channel(1).add(
     ['*.1.01', 'A3', 192, null, -40],
     ['*.3.01', 'A4', 192, null, -40],
-    // ['*.1.01', 'A3', 96]
-    // ['*.2.01', 'A4', 96],
-    // ['*.3.01', 'A1', 96],
-    ['4.3.01', 'A2', 192, null, -40]
+    ['4.3.25', 'A2', 192, null, -40]
   );
 
   var otherPianoKit = bap.sample({
-    src: 'sounds/new/own_barricade_middle.wav',
+    src: 'sounds/own_barricade_middle.wav',
     attack: 0.3,
     release: 0.1,
     pitch: -40,
@@ -48,21 +45,10 @@ function sequences () {
     ['2.*.48', 'B4', 48]
   );
 
-  var bassKit = bap.kit();
-  bassKit.slot(1).layer(bap.sample({
-    src: 'sounds/new/Sample25.WAV',
-    channel: 'left'
-  }));
-
-  var bassPattern = bap.pattern().kit('A', bassKit);
-  bassPattern.channel(1).add(
-    // ['2.3.01', 'A1']
-  );
-
   var drumKit = bap.kit();
   drumKit.slot(1).layer('sounds/kick.wav');
-  drumKit.slot(2).layer('sounds/new/SNARE1.WAV').layer(bap.sample({
-    src: 'sounds/new/SNARE_38.WAV',
+  drumKit.slot(2).layer('sounds/snare_1.wav').layer(bap.sample({
+    src: 'sounds/snare_38.wav',
     volume: 40
   }));
   drumKit.slot(3).layer(bap.sample({
@@ -72,11 +58,11 @@ function sequences () {
 
   var drumPattern = bap.pattern({ bars: 2 }).kit('X', drumKit);
   drumPattern.channel(1).add(
-    ['*.1.01', 'X1'],
-    ['*.3.52', 'X1'],
-    ['2.*.35', 'X3', null, 30],
+    ['*.1.01',   'X1'],
+    ['*.3.52',   'X1'],
+    ['2.*.35',   'X3', null, 30],
     ['*.odd.92', 'X2'],
-    ['*.*.%52', 'X3']
+    ['*.*.%52',  'X3']
   );
 
   var breakSample = bap.sample({
@@ -91,6 +77,7 @@ function sequences () {
   var breakPattern = bap.pattern({ tempo: 84, bars: 2 })
     .kit('A', breakKit)
     .kit('B', smallBreakKit);
+
   breakPattern.channel(1).add(
     ['*.1.01', 'A1', 96],
     ['*.1.93', 'A2', 100],
@@ -101,53 +88,22 @@ function sequences () {
     ['2.4.01', 'A4', 96]
   );
 
-  var y = bap.sequence(
+  var mainLoop = bap.sequence(
     [piano1, otherPianoPattern, drumPattern, breakPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
     [piano1, otherPianoPattern, drumPattern, breakPattern],
-    [piano1, otherPianoPattern, breakPattern],
-    { loop: true }
+    [piano1, otherPianoPattern, breakPattern]
   );
 
-  var z = bap.sequence(
+  var arrangedBeat = bap.sequence(
     introPiano,
-    y, y, y, y,
-    // y,
-    //
-    // piano1,
-    // [piano1, otherPianoPattern],
-    // y,
-  //   [y,y],
-  //   [y,y],
-    { loop: false }
+    mainLoop,
+    mainLoop,
+    mainLoop,
+    mainLoop
   );
-  //
-  // var x = bap.sequence(
-  //   y,z,y,z,y,z,y,z,y,z,y,
-  //   { loop: true }
-  // )
-  z.start();
-  // window.z = z;
 
-  // var foo = false;
-  // setInterval(function () {
-  //   if (foo) {
-  //     drumPattern.start();
-  //   }
-  //   else {
-  //     z.start();
-  //   }
-  //   foo = !foo;
-  //   // if (bap.clock.bar < 8) {
-  //   //   bap.clock.bar += 1;
-  //   // }
-  //   // else {
-  //   //   bap.clock.bar = 1;
-  //   // }
-  // }, 2000);
-  // setTimeout(function () {
-  //   bap.clock.pause();
-  // }, 2200);
+  arrangedBeat.start();
 }
 
 module.exports = sequences;
