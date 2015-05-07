@@ -1,9 +1,8 @@
 # Roadmap
 
-## version 0.2 "marl"
+## version 0.x
 
 - Add bap.volume, a global volume parameter
-- Cancel scheduled but not started events on pause/stop
 - Clock methods for transition to sequence/pattern
 - Allow trigger kit+slot from pattern
 - Mute group, mute target, mute self (monophonic/polyphonic)
@@ -25,9 +24,6 @@ var newPattern = pattern.transpose(function (note) {
   note.key = note.key.replace('A', 'Q');
 });
 ```
-
-## version 0.x
-
 - Bitcrusher effect / 12-bit master MPC60 mode
 
 ## version 1.0 "primo"

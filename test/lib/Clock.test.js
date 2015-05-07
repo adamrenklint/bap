@@ -97,28 +97,28 @@ describe('Clock', function () {
     });
   });
 
-  describe('canStartPlaying()', function () {
+  describe('_canStartPlaying()', function () {
     describe('when document.readyState is "loading"', function () {
       it('should return false', function () {
         global.document.readyState = 'loading';
-        expect(clock.canStartPlaying()).to.be.false;
+        expect(clock._canStartPlaying()).to.be.false;
       });
     });
     describe('when vent.loading is true', function () {
       it('should return false', function () {
         clock.vent.loading = true;
-        expect(clock.canStartPlaying()).to.be.false;
+        expect(clock._canStartPlaying()).to.be.false;
       });
     });
     it('should return true', function () {
-      expect(clock.canStartPlaying()).to.be.true;
+      expect(clock._canStartPlaying()).to.be.true;
     });
   });
 
   describe('start(sequence)', function () {
-    describe('when canStartPlaying() returns false', function () {
+    describe('when _canStartPlaying() returns false', function () {
       it('should call start() again in ~10 ms', function (done) {
-        clock.canStartPlaying = function () { return false; };
+        clock._canStartPlaying = function () { return false; };
         clock.start();
         sinon.spy(clock, 'start');
         setTimeout(function () {
@@ -127,9 +127,9 @@ describe('Clock', function () {
         }, 15);
       });
     });
-    describe('when canStartPlaying() returns true', function () {
+    describe('when _canStartPlaying() returns true', function () {
       beforeEach(function () {
-        clock.canStartPlaying = function () { return true; };
+        clock._canStartPlaying = function () { return true; };
         clock.engine = {
           start: sinon.spy(),
           set: sinon.spy(),

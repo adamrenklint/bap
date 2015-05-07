@@ -69,6 +69,7 @@ pattern.kit('A', kit).start();
   - [Metronome](http://examples.bapjs.org/#metronome)
   - [Boombap beat](http://examples.bapjs.org/#boombap)
   - [Sample slices](http://examples.bapjs.org/#slices)
+  - [Multi-layered sequences](http://examples.bapjs.org/#sequences)
 - [Related links](https://github.com/adamrenklint/bap/blob/master/links.md)
 
 ## API
@@ -107,7 +108,7 @@ pattern.kit('A', kit).start();
 ### clock
 
 - ```playing``` boolean, current state of playback, can be set to start or pause
-- ```tempo``` number, current tempo of playback, can be used to set tempo but would be overriden by any future tempo changes scheduled in sequence
+- ```tempo``` number, current tempo of playback, read only
 - ```step``` function, called on each step with note and time as arguments, able to cancel step by returning false
 - ```start()``` start playback, if current pattern is set
 - ```start(pattern)``` set current pattern and start playback
@@ -160,6 +161,7 @@ pattern.kit('A', kit).start();
 - ```bars``` number, length of pattern in bars, defaults to ```1```
 - ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
 - ```loop``` boolean, define if pattern should loop, defaults to true
+- ```transform``` function to be called after expanding position expressions into notes, called after ```channel.transform```
 - ```channel()``` returns a blank channel assigned to next id
 - ```channel(id)``` returns existing or blank channel with id
 - ```channel(id, channel)``` assign channel instance to id
@@ -186,7 +188,7 @@ pattern.kit('A', kit).start();
 
 ### channel
 
-- ```transform``` function to be called after expanding position expressions into notes, called after ``note.transform```
+- ```transform``` function to be called after expanding position expressions into notes, called after ```note.transform```, can return ```false``` to not execute ```pattern.transform```
 - ```add(note, note, ...)``` schedule note(s) to be played within context of channel
 
 ### note
