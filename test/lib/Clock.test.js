@@ -193,99 +193,65 @@ describe('Clock', function () {
   });
 
   describe('pause(sequence)', function () {
-    describe('when playing is false', function () {
-      beforeEach(function () {
-        clock.set('playing', false, { silent: true });
-      });
-      it('should not change position', function () {
-        clock.set('position', '1.2.95', { silent: true });
+    beforeEach(function () {
+      clock.set('playing', true, { silent: true });
+    });
+    it('should reset _lastQueuedPosition', function () {
+      clock._lastQueuedPosition = '1.2.03';
+      clock.pause();
+      expect(clock._lastQueuedPosition).to.equal('0.0.00');
+    });
+    describe('when no sequence is defined', function () {
+      it('should change playing state', function () {
+        clock.sequence = new Pattern();
         clock.pause();
-        expect(clock.position).to.equal('1.2.95');
-      });
-      it('should not change _lastQueuedPosition', function () {
-        clock.set('_lastQueuedPosition', '1.2.95', { silent: true });
-        clock.pause();
-        expect(clock._lastQueuedPosition).to.equal('1.2.95');
+        expect(clock.playing).to.be.false;
       });
     });
-    describe('when playing is true', function () {
-      beforeEach(function () {
-        clock.set('playing', true, { silent: true });
+    describe('when sequence is not clock.sequence', function () {
+      it('should not change playing state', function () {
+        clock.sequence = new Pattern();
+        clock.pause(new Pattern());
+        expect(clock.playing).to.be.true;
       });
-      it('should reset _lastQueuedPosition', function () {
-        clock._lastQueuedPosition = '1.2.03';
-        clock.pause();
-        expect(clock._lastQueuedPosition).to.equal('0.0.00');
-      });
-      describe('when no sequence is defined', function () {
-        it('should change playing state', function () {
-          clock.sequence = new Pattern();
-          clock.pause();
-          expect(clock.playing).to.be.false;
-        });
-      });
-      describe('when sequence is not clock.sequence', function () {
-        it('should not change playing state', function () {
-          clock.sequence = new Pattern();
-          clock.pause(new Pattern());
-          expect(clock.playing).to.be.true;
-        });
-      });
-      describe('when sequence is clock.sequence', function () {
-        it('should change playing state', function () {
-          clock.sequence = new Pattern();
-          clock.pause(clock.sequence);
-          expect(clock.playing).to.be.false;
-        });
+    });
+    describe('when sequence is clock.sequence', function () {
+      it('should change playing state', function () {
+        clock.sequence = new Pattern();
+        clock.pause(clock.sequence);
+        expect(clock.playing).to.be.false;
       });
     });
   });
 
   describe('stop(sequence)', function () {
-    describe('when playing is false', function () {
-      beforeEach(function () {
-        clock.set('playing', false, { silent: true });
-      });
-      it('should not change position', function () {
-        clock.set('position', '1.2.95', { silent: true });
+    beforeEach(function () {
+      clock.set('playing', true, { silent: true });
+    });
+    it('should reset _lastQueuedPosition', function () {
+      clock._lastQueuedPosition = '1.2.03';
+      clock.stop();
+      expect(clock._lastQueuedPosition).to.equal('0.0.00');
+    });
+    describe('when no sequence is defined', function () {
+      it('should change playing state', function () {
+        clock.sequence = new Pattern();
         clock.stop();
-        expect(clock.position).to.equal('1.2.95');
-      });
-      it('should not change _lastQueuedPosition', function () {
-        clock.set('_lastQueuedPosition', '1.2.95', { silent: true });
-        clock.stop();
-        expect(clock._lastQueuedPosition).to.equal('1.2.95');
+        expect(clock.playing).to.be.false;
       });
     });
-    describe('when playing is true', function () {
-      beforeEach(function () {
-        clock.set('playing', true, { silent: true });
+    describe('when sequence is not clock.sequence', function () {
+      it('should not change playing state', function () {
+        clock.sequence = new Pattern();
+        clock.stop(new Pattern());
+        expect(clock.playing).to.be.true;
       });
-      it('should reset _lastQueuedPosition', function () {
-        clock._lastQueuedPosition = '1.2.03';
-        clock.stop();
-        expect(clock._lastQueuedPosition).to.equal('0.0.00');
-      });
-      describe('when no sequence is defined', function () {
-        it('should change playing state', function () {
-          clock.sequence = new Pattern();
-          clock.stop();
-          expect(clock.playing).to.be.false;
-        });
-      });
-      describe('when sequence is not clock.sequence', function () {
-        it('should not change playing state', function () {
-          clock.sequence = new Pattern();
-          clock.stop(new Pattern());
-          expect(clock.playing).to.be.true;
-        });
-      });
-      describe('when sequence is clock.sequence', function () {
-        it('should change playing state', function () {
-          clock.sequence = new Pattern();
-          clock.stop(clock.sequence);
-          expect(clock.playing).to.be.false;
-        });
+    });
+    describe('when sequence is clock.sequence', function () {
+      it('should change playing state', function () {
+        clock.sequence = new Pattern();
+        clock.stop(clock.sequence);
+        expect(clock.playing).to.be.false;
       });
     });
   });
