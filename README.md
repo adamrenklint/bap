@@ -107,7 +107,7 @@ pattern.kit('A', kit).start();
 
 ### clock
 
-- ```playing``` boolean, current state of playback, can be set to start or pause
+- ```playing``` boolean, current state of playback, can be changed to start or pause
 - ```tempo``` number, current tempo of playback, read only
 - ```step``` function, called on each step with note and time as arguments, able to cancel step by returning false
 - ```start()``` start playback, if current pattern is set
@@ -156,7 +156,7 @@ pattern.kit('A', kit).start();
 
 ### pattern
 
-- ```playing``` boolean, current state of playback, can be set to start or pause
+- ```playing``` boolean, current state of playback, can be changed to start or pause
 - ```tempo``` number, playback tempo in bpm, defaults to ```120```
 - ```bars``` number, length of pattern in bars, defaults to ```1```
 - ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
@@ -178,7 +178,7 @@ pattern.kit('A', kit).start();
 ### sequence
 
 - ```constructor(sequence, ..., [params])``` the sequence constructor optionally takes any number of sequences and patterns as argument before the usual params
-- ```playing``` boolean, current state of playback, can be set to start or pause
+- ```playing``` boolean, current state of playback, can be changed to start or pause
 - ```loop``` boolean, define if sequence should loop, defaults to false
 - ```sequences``` an array of sequences, patterns or arrays of sequences and patterns
 - ```bars``` number, length in bars, read-only

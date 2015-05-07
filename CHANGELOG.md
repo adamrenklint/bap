@@ -1,6 +1,6 @@
 # Changelog
 
-## version 0.2 "marl"
+## version 0.2 "marl" (2015-05-07)
 
 - Added ```bap.sequence```, multi-layered sequences from patterns and other sequences, with variable tempo
 - Added ```pattern.then```, ```pattern.after``` and ```pattern.and``` methods for combining patterns and sequences into new sequence
