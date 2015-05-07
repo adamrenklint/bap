@@ -40,4 +40,51 @@ describe('Model', function () {
       });
     });
   });
+
+  describe('cacheMethodUntilEvent(name, event)', function () {
+    var Memoized = Model.extend({
+      initialize: function () {
+        Model.prototype.initialize.apply(this, arguments);
+        this.fooValues = [];
+        this.resetDoFoo = this.cacheMethodUntilEvent('doFoo', 'foo:bar');
+      },
+      doFoo: function (one, two, three) {
+        this.fooValues.push.apply(this.fooValues, arguments);
+      }
+    });
+    var memoized;
+    beforeEach(function () {
+      memoized = new Memoized();
+    });
+    it('should memoize the function', function () {
+      memoized.doFoo('a');
+      memoized.doFoo('b');
+      memoized.doFoo('a');
+      expect(memoized.fooValues.length).to.equal(2);
+      expect(memoized.fooValues.join('-')).to.equal('a-b');
+    });
+    it('should reset the memoization when event is called', function () {
+      memoized.doFoo('a');
+      memoized.doFoo('b');
+      memoized.trigger('foo:bar');
+      memoized.doFoo('a');
+      expect(memoized.fooValues.length).to.equal(3);
+      expect(memoized.fooValues.join('-')).to.equal('a-b-a');
+    });
+    it('should return a "reset" function', function () {
+      memoized.doFoo('a');
+      memoized.doFoo('b');
+      memoized.resetDoFoo();
+      memoized.doFoo('a');
+      expect(memoized.fooValues.length).to.equal(3);
+      expect(memoized.fooValues.join('-')).to.equal('a-b-a');
+    });
+    it('should serialize all arguments as hash key', function () {
+      memoized.doFoo('a', 'b', 'c');
+      memoized.doFoo('b');
+      memoized.doFoo('a', 'b', 'c');
+      expect(memoized.fooValues.length).to.equal(4);
+      expect(memoized.fooValues.join('-')).to.equal('a-b-c-b');
+    });
+  });
 });

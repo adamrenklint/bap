@@ -10,7 +10,7 @@ beforeEach(function () {
 
 describe('Sample', function () {
 
-  describe('getPlaybackRate(params)', function () {
+  describe('_getPlaybackRate(params)', function () {
     [
       [0, 1],
       [50, 1.5],
@@ -30,7 +30,7 @@ describe('Sample', function () {
       [-500, 0.03125]
     ].forEach(function (test) {
       it('should convert pitch ' + test[0] + ' to rate ' + test[1], function () {
-        expect(sample.getPlaybackRate({ pitch: test[0] })).to.equal(test[1]);
+        expect(sample._getPlaybackRate({ pitch: test[0] })).to.equal(test[1]);
       });
     });
   });

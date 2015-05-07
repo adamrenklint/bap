@@ -34,4 +34,17 @@ describe('Note', function () {
       });
     });
   });
+
+  describe('isPlainPosition(position)', function () {
+    it('should return false for position expressions', function () {
+      ['*.1.23', '4.odd.%12', '4.odd.15'].forEach(function (position) {
+        expect(Note.isPlainPosition(position)).to.be.false;
+      });
+    });
+    it('should return true for plain positions', function () {
+      ['1.1.23', '4.12.02', '2.3.96'].forEach(function (position) {
+        expect(Note.isPlainPosition(position)).to.be.true;
+      });
+    });
+  });
 });

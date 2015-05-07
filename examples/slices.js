@@ -5,7 +5,8 @@ function slices () {
   var base = bap.sample({
     src: 'sounds/slices.wav',
     attack: 0.01,
-    release: 0.01
+    release: 0.01,
+    channel: 'right'
   });
   sampleKit.slot(1).layer(base.with({
     offset: 0.072,
@@ -21,7 +22,8 @@ function slices () {
   }));
   sampleKit.slot(4).layer(base.with({
     offset: 9.49,
-    length: 2
+    length: 2,
+    reverse: true
   }));
 
   var breakKit = bap.sample({

@@ -4,22 +4,30 @@
 
 [![Travis branch](https://img.shields.io/travis/adamrenklint/bap.svg?style=flat-square)](https://travis-ci.org/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![David dependencies](https://img.shields.io/david/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap) [![David devDependencies](https://img.shields.io/david/dev/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap#info=devDependencies)
 
-[Bap](http://bapjs.org) is a small Javascript library for making beats and composing sequences of Web Audio events for playback in modern browsers. It is inspired by the classic "MPC workflow" and built to make all aspects of beatmaking completely modular and reusable.
+[Bap](http://bapjs.org) is a toolkit for making beats and composing sequences with Javascript and Web Audio for playback in modern browsers. It is inspired by the classic "MPC workflow" and built to make all aspects of beatmaking completely modular and reusable.
 
 **The project is in an early stage, and things may change and break between minor versions.**
 
 Made by [Adam Renklint](http://adamrenklint.com), Berlin april 2015
 
-## Install
+## Install and import
+
+### From npm
 
 ```sh
 $ npm install --save bap
 ```
 
+### From rawgit CDN
+
+```
+<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.2.0/bap.min.js"></script>
+```
+
 ## Usage
 
 ```js
-var bap = require('bap');
+var bap = require('bap'); // or window.bap
 
 // a kit is like an instrument, or program in mpc terms
 var kit = bap.kit();
@@ -55,12 +63,13 @@ pattern.kit('A', kit).start();
 
 ## Resources
 
-- [Changelog](https://github.com/adamrenklint/bap/blob/master/changelog.md)
-- [Roadmap](https://github.com/adamrenklint/bap/blob/master/roadmap.md)
+- [Changelog](https://github.com/adamrenklint/bap/blob/master/CHANGELOG.md)
+- [Roadmap](https://github.com/adamrenklint/bap/blob/master/ROADMAP.md)
 - Examples
   - [Metronome](http://examples.bapjs.org/#metronome)
   - [Boombap beat](http://examples.bapjs.org/#boombap)
   - [Sample slices](http://examples.bapjs.org/#slices)
+  - [Multi-layered sequences](http://examples.bapjs.org/#sequences)
 - [Related links](https://github.com/adamrenklint/bap/blob/master/links.md)
 
 ## API
@@ -74,15 +83,16 @@ pattern.kit('A', kit).start();
 
 ### bap
 
+- ```clock``` reference to [clock](#clock) singleton
 - ```kit(params)``` returns a new [kit](#kit)
 - ```slot(params)``` returns a new [slot](#slot)
 - ```layer(params)``` returns a new [layer](#layer)
 - ```oscillator(params)``` returns a new [oscillator](#oscillator)
 - ```sample(params)``` returns a new [sample](#sample)
 - ```pattern(params)``` returns a new [pattern](#pattern)
+- ```sequence(sequence..., params)``` returns a new [sequence](#sequence)
 - ```channel(params)``` returns a new [channel](#channel)
 - ```note(params)``` returns a new [note](#note)
-- ```clock``` reference to [clock](#clock) instance
 
 #### params
 
@@ -97,11 +107,13 @@ pattern.kit('A', kit).start();
 
 ### clock
 
+- ```playing``` boolean, current state of playback, can be changed to start or pause
+- ```tempo``` number, current tempo of playback, read only
+- ```step``` function, called on each step with note and time as arguments, able to cancel step by returning false
 - ```start()``` start playback, if current pattern is set
 - ```start(pattern)``` set current pattern and start playback
 - ```pause()``` stop playback
 - ```stop()``` stop playback and set position to ```1.1.01```
-- ```playing``` boolean, current state of playback, can be set to start or pause
 
 ### kit
 
@@ -137,10 +149,19 @@ pattern.kit('A', kit).start();
 
 - ```src``` string, url used to load sample buffer
 - ```offset``` number, starting point offset in seconds, defaults to ```0```
+- ```channel``` string, defines how to handle stereo buffers: ```left``` or ```right``` uses a single channel, ```merge``` and ```diff``` combines or differentates between channels, default is ```null``` and does nothing
+- ```reverse``` boolean, reverse buffer or slice of buffer
+- ```loop``` number, loop length in seconds, defaults to ```0``` i.e. not looping
 - ```slice(pieces)``` returns a kit with the sample sliced into even-sized sections
 
 ### pattern
 
+- ```playing``` boolean, current state of playback, can be changed to start or pause
+- ```tempo``` number, playback tempo in bpm, defaults to ```120```
+- ```bars``` number, length of pattern in bars, defaults to ```1```
+- ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
+- ```loop``` boolean, define if pattern should loop, defaults to true
+- ```transform``` function to be called after expanding position expressions into notes, called after ```channel.transform```
 - ```channel()``` returns a blank channel assigned to next id
 - ```channel(id)``` returns existing or blank channel with id
 - ```channel(id, channel)``` assign channel instance to id
@@ -150,17 +171,29 @@ pattern.kit('A', kit).start();
 - ```stop()``` stop playback and set position to ```1.1.01```
 - ```kit(id, kit)``` connect kit to id
 - ```kit(id)``` return kit connected to id
-- ```playing``` boolean, current state of playback, can be set to start or pause
-- ```tempo``` number, playback tempo in bpm, defaults to ```120```
-- ```bars``` number, length of pattern in bars, defaults to ```1```
-- ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
+- ```then(sequence, ...)``` return new sequence with passed sequences and patterns after pattern
+- ```after(sequence, ...)``` return new sequence with passed sequences and patterns before pattern
+- ```and(sequence, ...)``` return new sequence with passed sequences and patterns layered with pattern
+
+### sequence
+
+- ```constructor(sequence, ..., [params])``` the sequence constructor optionally takes any number of sequences and patterns as argument before the usual params
+- ```playing``` boolean, current state of playback, can be changed to start or pause
+- ```loop``` boolean, define if sequence should loop, defaults to false
+- ```sequences``` an array of sequences, patterns or arrays of sequences and patterns
+- ```bars``` number, length in bars, read-only
+- ```then(sequence, ...)``` return new sequence with passed sequences and patterns after sequence
+- ```after(sequence, ...)``` return new sequence with passed sequences and patterns before sequence
+- ```and(sequence, ...)``` return new sequence with passed sequences and patterns layered with sequence
 
 ### channel
 
+- ```transform``` function to be called after expanding position expressions into notes, called after ```note.transform```, can return ```false``` to not execute ```pattern.transform```
 - ```add(note, note, ...)``` schedule note(s) to be played within context of channel
 
 ### note
 
+- ```transform``` function to be called after expanding position expressions into notes, called before ```channel.transform```, can return ```false``` to not execute ```channel.transform```
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
 
@@ -175,10 +208,10 @@ pattern.kit('A', kit).start();
 
 - ```npm install``` install all dependencies
 - ```npm start``` run examples development server
-- ```npm test``` run unit tests
-- ```npm run test:watch``` run and watch unit tests
+- ```npm test``` run tests
+- ```npm run test:watch``` run and watch tests
 - ```npm run coverage``` generate coverage report with Istanbul
-- ```npm publish``` run tests, publish to npm, tag version and deploy examples
+- ```npm publish``` run tests, publish to npm, build minified version, tag and deploy examples
 
 ## Contribute
 
