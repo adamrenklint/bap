@@ -11,19 +11,6 @@
   - Allow sample.section to represent ranges, like ```1-4/9```
   - Allow passing an array of slice points to ```slice()```
 - Cleaner solution than ```this.vent.bap```
-- Effects and chains
-```js
-var fx1 = bap.compressor();
-var chain = bap.chain(fx1, fx2...);
-kit.dest(chain).send(chain2, amount);
-kit.slot(2).dest(fx1);
-```
-- Transpose notes to new pattern
-```js
-var newPattern = pattern.transpose(function (note) {
-  note.key = note.key.replace('A', 'Q');
-});
-```
 - Bitcrusher effect / 12-bit master MPC60 mode
 
 ## version 1.0 "primo"
