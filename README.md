@@ -21,7 +21,7 @@ $ npm install --save bap
 ### From rawgit CDN
 
 ```
-<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.2.0/bap.min.js"></script>
+<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.3.0/bap.min.js"></script>
 ```
 
 ## Usage
