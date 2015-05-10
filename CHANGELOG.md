@@ -1,5 +1,9 @@
 # Changelog
 
+## version 0.2.1 (2015-05-10)
+
+- Fixed incorrectly formatted header comments in ```bap.min.js```
+
 ## version 0.2 "marl" (2015-05-07)
 
 - Added ```bap.sequence```, multi-layered sequences from patterns and other sequences, with variable tempo

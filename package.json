@@ -1,6 +1,6 @@
 {
   "name": "bap",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "versionName": "marl",
   "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
   "homepage": "http://bapjs.org",
@@ -77,7 +77,7 @@
     "start": "node node_modules/3w/3w.js examples --3000",
     "build:examples": "browserify examples/main.js -o examples/bundle.js",
     "build:minified": "browserify index.js -o bap.min.js",
-    "postbuild:minified": "uglifyjs bap.min.js --preamble 'Bap v'$npm_package_version' (http://bapjs.org)\nLicense: MIT © 2015 Adam Renklint (http://adamrenklint.com)\n' --screw-ie8 --compress --mangle --o bap.min.js",
+    "postbuild:minified": "uglifyjs bap.min.js --preamble '// Bap v'$npm_package_version' (http://bapjs.org)\n// License: MIT © 2015 Adam Renklint (http://adamrenklint.com)\n' --screw-ie8 --compress --mangle --o bap.min.js",
     "prerelease:minified": "npm run build:minified",
     "release:minified": "git add bap.min.js && git commit -m 'Build minified version '$npm_package_version",
     "predeploy:examples": "npm run build:examples",
