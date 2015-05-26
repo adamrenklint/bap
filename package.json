@@ -1,6 +1,6 @@
 {
   "name": "bap",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "versionName": "marl",
   "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
   "homepage": "http://bapjs.org",

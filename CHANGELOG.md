@@ -1,5 +1,9 @@
 # Changelog
 
+## version 0.2.2 (2015-05-26)
+
+- Fixed broken links to examples in README
+
 ## version 0.2.1 (2015-05-10)
 
 - Fixed incorrectly formatted header comments in ```bap.min.js```

@@ -21,7 +21,7 @@ $ npm install --save bap
 ### From rawgit CDN
 
 ```
-<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.2.1/bap.min.js"></script>
+<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.2.2/bap.min.js"></script>
 ```
 
 ## Usage
@@ -66,10 +66,10 @@ pattern.kit('A', kit).start();
 - [Changelog](https://github.com/adamrenklint/bap/blob/master/CHANGELOG.md)
 - [Roadmap](https://github.com/adamrenklint/bap/blob/master/ROADMAP.md)
 - Examples
-  - [Metronome](http://examples.bapjs.org/#metronome)
-  - [Boombap beat](http://examples.bapjs.org/#boombap)
-  - [Sample slices](http://examples.bapjs.org/#slices)
-  - [Multi-layered sequences](http://examples.bapjs.org/#sequences)
+  - [Metronome](http://adamrenklint.com/bap/#metronome)
+  - [Boombap beat](http://adamrenklint.com/#boombap)
+  - [Sample slices](http://adamrenklint.com/#slices)
+  - [Multi-layered sequences](http://adamrenklint.com/#sequences)
 - [Related links](https://github.com/adamrenklint/bap/blob/master/links.md)
 
 ## API
