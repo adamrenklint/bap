@@ -90,6 +90,7 @@
     "coverage:report": "CODECLIMATE_REPO_TOKEN=$npm_package_config_codeclimateCoverageId codeclimate < coverage/lcov.info",
     "prepublish": "in-publish && git checkout master && npm test && npm run coverage:check && npm run release:minified && git push origin master || echo 'Skip prepublish'",
     "postpublish": "npm run tag && npm run deploy:examples && npm run coverage:report",
-    "tag": "git tag 'v'$npm_package_version && git push --tags"
+    "tag": "git tag 'v'$npm_package_version && git push --tags",
+    "docs": "node ../redok/bin/redok"
   }
 }
