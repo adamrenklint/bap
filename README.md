@@ -1,5 +1,7 @@
 [![Bap](https://raw.githubusercontent.com/adamrenklint/bap-logo/master/dist/bap-medium.png)](http://bapjs.org)
 
+pete - 0.3.0
+
 [![Join the chat at https://gitter.im/adamrenklint/bap](https://img.shields.io/badge/GITTER-join_chat-blue.svg?style=flat-square)](https://gitter.im/adamrenklint/bap) [![npm](https://img.shields.io/npm/v/bap.svg?style=flat-square)](https://www.npmjs.com/package/bap) [![npm](https://img.shields.io/npm/dm/bap.svg?style=flat-square)](https://www.npmjs.com/package/bap) [![GitHub stars](https://img.shields.io/github/stars/adamrenklint/bap.svg?style=flat-square)](https://github.com/adamrenklint/bap/stargazers) [![GitHub forks](https://img.shields.io/github/forks/adamrenklint/bap.svg?style=flat-square)](https://github.com/adamrenklint/bap/network)
 
 [![Travis branch](https://img.shields.io/travis/adamrenklint/bap.svg?style=flat-square)](https://travis-ci.org/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![David dependencies](https://img.shields.io/david/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap) [![David devDependencies](https://img.shields.io/david/dev/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap#info=devDependencies)
@@ -199,7 +201,7 @@ pattern.kit('A', kit).start();
 
 ## Feedback and issues
 
-- Report bugs with [Github issues](https://github.com/adamrenklint/bap/issues)
+- Report bugs with [Github Issues](https://github.com/adamrenklint/bap/issues)
 - Ask questions on [Gitter](https://gitter.im/adamrenklint/bap)
 - Send shoutouts on [Twitter](http://twitter.com/adamrenklint)
 - Or just [email me](mailto:adam@renklint.com)

@@ -1,5 +1,13 @@
 # Changelog
 
+## version 0.2.2 (2015-05-26) [diff](https://github.com/adamrenklint/bap/compare/v0.2.1...v0.2.2)
+
+- Fixed broken links to examples in README
+
+## version 0.2.1 (2015-05-10) [diff](https://github.com/adamrenklint/bap/compare/v0.2.0...v0.2.1)
+
+- Fixed incorrectly formatted header comments in ```bap.min.js```
+
 ## v0.2 "marl" (2015-05-07) [diff](https://github.com/adamrenklint/bap/compare/v0.1.0...v0.2.0)
 
 - Added ```bap.sequence```, multi-layered sequences from patterns and other sequences, with variable tempo
