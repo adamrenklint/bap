@@ -55,6 +55,7 @@
     "mocha": "^2.2.1",
     "mocha-multi": "^0.7.1",
     "mocha-osx-reporter": "^0.1.2",
+    "redok": "^0.2.0",
     "rimraf": "^2.3.2",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0",
@@ -91,6 +92,6 @@
     "prepublish": "in-publish && git checkout master && npm test && npm run coverage:check && npm run release:minified && git push origin master || echo 'Skip prepublish'",
     "postpublish": "npm run tag && npm run deploy:examples && npm run coverage:report",
     "tag": "git tag 'v'$npm_package_version && git push --tags",
-    "docs": "node ../redok/bin/redok"
+    "docs": "redok"
   }
 }

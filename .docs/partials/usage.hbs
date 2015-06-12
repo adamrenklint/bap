@@ -1,0 +1,26 @@
+## Usage
+
+```js
+var bap = require('bap'); // or window.bap
+
+// a kit is like an instrument, or program in mpc terms
+var kit = bap.kit();
+var oscillator = bap.oscillator({
+  frequency: 440
+});
+// a kit connects infinite slots with infinite layers
+kit.slot(1).layer(oscillator);
+kit.slot(2).layer(oscillator.with({ frequency: 330 }));
+kit.slot(3).layer(bap.sample('foo.wav'));
+
+// a pattern is a loop made up of channels and notes
+var pattern = bap.pattern();
+pattern.channel(1).add(
+  ['1.*.01', 'A1', 48, 70, 0, -50],
+  ['1.2.01', 'A2', 96, 100, 0, 50],
+  ['1.4.01', 'A3']
+);
+
+// connect the kit, and play
+pattern.kit('A', kit).start();
+```
