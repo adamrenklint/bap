@@ -12,16 +12,13 @@ beforeEach(function () {
 describe('Kit', function () {
 
   describe('slot(id, slot)', function () {
-    describe('when id is not a single letter', function () {
+    describe('when id is not a string', function () {
       it('should throw an error', function () {
         expect(function () {
           kit.slot(null)
         }).to.throw(/invalid slot identifier/i);
         expect(function () {
           kit.slot(12)
-        }).to.throw(/invalid slot identifier/i);
-        expect(function () {
-          kit.slot('AA')
         }).to.throw(/invalid slot identifier/i);
       });
     });
