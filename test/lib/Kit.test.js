@@ -28,10 +28,15 @@ describe('Kit', function () {
     describe('when id is a single letter', function () {
       describe('when slot is not an instance of Slot', function () {
         it('should return the current slot assigned to id', function () {
-          expect(kit.slot('Q')).to.equal(undefined);
           var slot = new Slot();
           kit.slot('Q', slot);
           expect(kit.slot('Q')).to.equal(slot);
+        });
+        describe('when there is no slot assigned to id', function () {
+          it('should return a new slot, assigned to id', function () {
+            var slot = kit.slot('Q');
+            expect(slot).to.be.instanceOf(Slot);
+          });
         });
       });
       describe('when slot is an instance of Slot', function () {
