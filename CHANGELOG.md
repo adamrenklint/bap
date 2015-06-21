@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3 "pete" (IN PROGRESS) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
+
+- Fixed error when reversing sample without offset and duration longer than actual buffer duration [#25](https://github.com/adamrenklint/bap/issues/25)
+
 ## v0.2.2 (2015-05-26) [diff](https://github.com/adamrenklint/bap/compare/v0.2.1...v0.2.2)
 
 - Fixed broken links to examples in README
@@ -27,4 +31,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Friday June 12th, 2015 - 11:19:31 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Sunday June 21st, 2015 - 10:18:26 PM*
