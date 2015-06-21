@@ -16,8 +16,8 @@ describe('Pattern', function () {
   describe('notes(bar, beat, tick)', function () {
     describe('when bar is not defined', function () {
       it('should return all notes', function () {
-        pattern.channel(1).add(['1.1.01', 'A1']);
-        pattern.channel(1).add(['2.3.01', 'A1']);
+        pattern.channel(1).add(['1.1.01', '1Q']);
+        pattern.channel(1).add(['2.3.01', '1Q']);
         var notes = pattern.notes();
         expect(notes.length).to.equal(2);
         expect(notes[0].position).to.equal('1.1.01');
@@ -27,10 +27,10 @@ describe('Pattern', function () {
     describe('when bar is defined', function () {
       describe('when beat is not defined', function () {
         it('should return all notes on that bar', function () {
-          pattern.channel(1).add(['1.1.01', 'A1']);
-          pattern.channel(1).add(['2.3.01', 'A1']);
-          pattern.channel(2).add(['1.1.01', 'A1']);
-          pattern.channel(2).add(['2.3.01', 'A1']);
+          pattern.channel(1).add(['1.1.01', '1Q']);
+          pattern.channel(1).add(['2.3.01', '1Q']);
+          pattern.channel(2).add(['1.1.01', '1Q']);
+          pattern.channel(2).add(['2.3.01', '1Q']);
           var notes = pattern.notes(2);
           expect(notes.length).to.equal(2);
           expect(notes[0].position).to.equal('2.3.01');
@@ -40,11 +40,11 @@ describe('Pattern', function () {
       describe('when beat is defined', function () {
         describe('when tick is not defined', function () {
           it('should return all notes on that bar and beat', function () {
-            pattern.channel(1).add(['1.1.01', 'A1']);
-            pattern.channel(1).add(['2.3.01', 'A1']);
-            pattern.channel(1).add(['2.2.01', 'A1']);
-            pattern.channel(2).add(['2.3.45', 'A1']);
-            pattern.channel(1).add(['2.4.01', 'A1']);
+            pattern.channel(1).add(['1.1.01', '1Q']);
+            pattern.channel(1).add(['2.3.01', '1Q']);
+            pattern.channel(1).add(['2.2.01', '1Q']);
+            pattern.channel(2).add(['2.3.45', '1Q']);
+            pattern.channel(1).add(['2.4.01', '1Q']);
             var notes = pattern.notes(2, 3);
             expect(notes.length).to.equal(2);
             expect(notes[0].position).to.equal('2.3.01');
@@ -53,57 +53,16 @@ describe('Pattern', function () {
         });
         describe('when tick is defined', function () {
           it('should return all notes on that bar, beat and tick', function () {
-            pattern.channel(1).add(['1.1.01', 'A1']);
-            pattern.channel(1).add(['2.3.01', 'A1']);
-            pattern.channel(1).add(['2.2.01', 'A1']);
-            pattern.channel(2).add(['2.3.45', 'A1']);
-            pattern.channel(1).add(['2.4.01', 'A1']);
+            pattern.channel(1).add(['1.1.01', '1Q']);
+            pattern.channel(1).add(['2.3.01', '1Q']);
+            pattern.channel(1).add(['2.2.01', '1Q']);
+            pattern.channel(2).add(['2.3.45', '1Q']);
+            pattern.channel(1).add(['2.4.01', '1Q']);
             var notes = pattern.notes(2, 3, 1);
             expect(notes.length).to.equal(1);
             expect(notes[0].position).to.equal('2.3.01');
           });
         });
-      });
-    });
-  });
-
-  describe('kit(id, kit)', function () {
-    describe('when id is a letter from A to Z', function () {
-      describe('when kit is an instance of Kit', function () {
-        it('should connect the kit to id', function () {
-          var kit = new Kit();
-          pattern.kit('A', kit);
-          expect(pattern.kits.A).to.equal(kit);
-        });
-        it('should be chainable', function () {
-          var kit = new Kit();
-          var ret = pattern.kit('A', kit);
-          expect(ret).to.equal(pattern);
-        });
-      });
-      describe('when kit is not an instance of Kit', function () {
-        describe('when there is a kit connected to id', function () {
-          it('should return the connected kit', function () {
-            var kit = new Kit();
-            pattern.kit('A', kit);
-            var ret = pattern.kit('A');
-            expect(ret).to.equal(kit);
-          });
-        });
-        describe('when there is no kit connected to id', function () {
-          it('should return falsy', function () {
-            var ret = pattern.kit('A');
-            expect(ret).to.be.falsy;
-          });
-        });
-      });
-    });
-    describe('when id is not a letter from A to Z', function () {
-      it('should throw a meaningful error', function () {
-        expect(function () {
-          var kit = new Kit();
-          pattern.kit(99, kit);
-        }).to.throw(/kit id must be single letter from A to Z/i);
       });
     });
   });

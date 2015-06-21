@@ -4,6 +4,8 @@ var boombap = require('./boombap');
 var slices = require('./slices');
 var sequences = require('./sequences');
 
+var debounce = require('lodash.debounce');
+
 var positionEl = document.getElementById('position');
 var tempoEl = document.getElementById('tempo');
 var toggleEl = document.getElementById('toggle-playback');
@@ -45,6 +47,8 @@ function unwrap (source) {
   }).join('\n');
 }
 
+var lastEvalFn = null;
+
 function navigate () {
   var hash = location.hash.substr(1);
   var example = examples[hash];
@@ -53,7 +57,10 @@ function navigate () {
     var description = example[1];
     exampleNameEl.textContent = hash;
     descriptionEl.innerHTML = description;
-    sourceEl.textContent = unwrap(fn.toString());
+
+    lastEvalFn = fn.toString();
+    sourceEl.textContent = unwrap(lastEvalFn);
+
     hljs.highlightBlock(sourceEl);
     bap.clock.stop();
     fn();
@@ -93,6 +100,14 @@ function onKeyUp (ev) {
 
 document.addEventListener('keydown', onKeyDown, false);
 document.addEventListener('keyup', onKeyUp, false);
+
+function onSourceChanged () {
+  if (sourceEl.textContent !== lastEvalFn) {
+    lastEvalFn = sourceEl.textContent;
+    eval(lastEvalFn);
+  }
+}
+sourceEl.addEventListener('keyup', debounce(onSourceChanged, 250));
 
 if (!location.hash) {
   location.hash = '#metronome';
