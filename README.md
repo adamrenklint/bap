@@ -35,20 +35,20 @@ var oscillator = bap.oscillator({
   frequency: 440
 });
 // a kit connects infinite slots with infinite layers
-kit.slot(1).layer(oscillator);
-kit.slot(2).layer(oscillator.with({ frequency: 330 }));
-kit.slot(3).layer(bap.sample('foo.wav'));
+kit.slot('Q').layer(oscillator);
+kit.slot('W').layer(oscillator.with({ frequency: 330 }));
+kit.slot('E').layer(bap.sample('foo.wav'));
 
 // a pattern is a loop made up of channels and notes
 var pattern = bap.pattern();
 pattern.channel(1).add(
-  ['1.*.01', 'A1', 48, 70, 0, -50],
-  ['1.2.01', 'A2', 96, 100, 0, 50],
-  ['1.4.01', 'A3']
+  ['1.*.01', '1Q', 48, 70, 0, -50],
+  ['1.2.01', '1W', 96, 100, 0, 50],
+  ['1.4.01', '1E']
 );
 
 // connect the kit, and play
-pattern.kit('A', kit).start();
+pattern.kit(1, kit).start();
 ```
 
 ## Basic concepts
@@ -56,8 +56,8 @@ pattern.kit('A', kit).start();
 - Bap runs at *96 ticks per beat*, with a position signature like MPC: ```bar.beat.tick```
 - Kit are like instruments (programs in MPC terms) and contains infinite slots, each with infinite layers of samples and oscillators
 - Patterns are playable collections of channels containing notes, and connect with kits
-- Notes are defined by six main parameters: position, key, duration, volume, pan and pitch
-- Only position and key params are required, all others can be null/falsy/undefined
+- Notes are defined by six main parameters: position, target, duration, volume, pan and pitch
+- Only position and target params are required, all others can be null/falsy/undefined
 - Positions containing [expressions](https://github.com/adamrenklint/dilla-expressions#operators) are automatically expanded
 - When a layer is played, it merges the params of the note, channel, layer, slot and kit
 
@@ -232,4 +232,4 @@ pattern.kit('A', kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Friday June 12th, 2015 - 11:19:31 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Sunday June 21st, 2015 - 10:24:22 PM*

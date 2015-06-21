@@ -9,21 +9,21 @@ function metronome () {
   });
 
   // shorthand, add copy of oscillator as layer on first slot
-  kit.slot(1).layer(basic.with({ frequency: 330 }));
+  kit.slot('Q').layer(basic.with({ frequency: 330 }));
 
   // more verbose: create slot, append oscillator, then assign to kit
   var nextSlot = bap.slot();
   nextSlot.layer(basic.with({ frequency: 440 }));
-  kit.slot(2, nextSlot);
+  kit.slot('W', nextSlot);
 
   // create the pattern and add notes using expressions
   var pattern = bap.pattern({ bars: 2, tempo: 140 });
   pattern.channel(1).add(
-    ['*.1.01', 'A1'],
-    ['*.2%1.01', 'A2']
+    ['*.1.01',   '1Q'],
+    ['*.2%1.01', '1W']
   );
 
-  pattern.kit('A', kit).start();
+  pattern.kit(kit).start();
 }
 
 module.exports = metronome;

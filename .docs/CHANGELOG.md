@@ -2,6 +2,10 @@
 
 ## v0.3 "pete" (IN PROGRESS) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
 
+- Changed ```pattern > kit``` connection to use numeric ids [#24](https://github.com/adamrenklint/bap/issues/24)
+- Changed ```kit > slot``` connection to use ```QWERTY``` ids [#24](https://github.com/adamrenklint/bap/issues/24)
+- Deprecated ```key``` parameter on note [#24](https://github.com/adamrenklint/bap/issues/24)
+- Added ```trigger``` param on note [#24](https://github.com/adamrenklint/bap/issues/24)
 - Fixed error when reversing sample without offset and duration longer than actual buffer duration [#25](https://github.com/adamrenklint/bap/issues/25)
 
 ## v0.2.2 (2015-05-26) [diff](https://github.com/adamrenklint/bap/compare/v0.2.1...v0.2.2)
