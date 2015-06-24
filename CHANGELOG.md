@@ -7,6 +7,7 @@
 - Deprecated ```key``` parameter on note [#24](https://github.com/adamrenklint/bap/issues/24)
 - Added ```trigger``` param on note [#24](https://github.com/adamrenklint/bap/issues/24)
 - Fixed error when reversing sample without offset and duration longer than actual buffer duration [#25](https://github.com/adamrenklint/bap/issues/25)
+- Added ```note.after``` callback that is triggered after a note's source has stopped playing
 
 ## v0.2.2 (2015-05-26) [diff](https://github.com/adamrenklint/bap/compare/v0.2.1...v0.2.2)
 
@@ -35,4 +36,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Sunday June 21st, 2015 - 10:24:22 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday June 24th, 2015 - 9:41:39 PM*
