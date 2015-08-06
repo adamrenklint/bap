@@ -55,10 +55,10 @@ function slices () {
     ['2.4.49', '2T', 48]
   );
 
-  pattern
+  bap.clock.sequence = pattern
     .kit(1, sampleKit)
-    .kit(2, breakKit)
-    .start();
+    .kit(2, breakKit);
+    // .start();
 }
 
 module.exports = slices;

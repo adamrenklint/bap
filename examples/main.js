@@ -1,3 +1,41 @@
+// @license http://opensource.org/licenses/MIT
+// copyright Paul Irish 2015
+
+
+// Date.now() is supported everywhere except IE8. For IE8 we use the Date.now polyfill
+//   github.com/Financial-Times/polyfill-service/blob/master/polyfills/Date.now/polyfill.js
+// as Safari 6 doesn't have support for NavigationTiming, we use a Date.now() timestamp for relative values
+
+// if you want values similar to what you'd get with real perf.now, place this towards the head of the page
+// but in reality, you're just getting the delta between now() calls, so it's not terribly important where it's placed
+
+
+(function(){
+
+  if ("performance" in window == false) {
+      window.performance = {};
+  }
+
+  Date.now = (Date.now || function () {  // thanks IE8
+	  return new Date().getTime();
+  });
+
+  if ("now" in window.performance == false){
+
+    var nowOffset = Date.now();
+
+    if (performance.timing && performance.timing.navigationStart){
+      nowOffset = performance.timing.navigationStart
+    }
+
+    window.performance.now = function now(){
+      return Date.now() - nowOffset;
+    }
+  }
+
+})();
+
+
 var bap = require('../index');
 var metronome = require('./metronome');
 var boombap = require('./boombap');
@@ -64,6 +102,7 @@ function navigate () {
     hljs.highlightBlock(sourceEl);
     bap.clock.stop();
     fn();
+    // bap.clock.pause();
 
     [].forEach.call(document.getElementById('menu').children, function (child) {
       var active = child.children[0].href.split('#')[1] === hash;
@@ -115,3 +154,25 @@ if (!location.hash) {
 else {
   navigate();
 }
+
+var inited = false;
+document.body.addEventListener('touchstart', function () {
+  if (!inited) {
+    inited = true;
+    alert('inited');
+
+    var source = bap.clock.context.createBufferSource();
+    source.buffer = bap.clock.context.createBuffer(1, 22050, 44100);
+    source.start(0);
+
+    // play empty sound buffer
+
+    // bap.clock.sequence.kits.models[0].slot('Q').start();
+    // setTimeout(function () {
+    //   bap.clock.sequence.kits.models[0].slot('Q').stop();
+    //   // setTimeout(function () {
+    //   //   bap.clock.start();
+    //   // }, 1000);
+    // }, 1000);
+  }
+});
