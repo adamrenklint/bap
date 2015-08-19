@@ -155,24 +155,22 @@ else {
   navigate();
 }
 
-var inited = false;
-document.body.addEventListener('touchstart', function () {
-  if (!inited) {
-    inited = true;
-    alert('inited');
-
-    var source = bap.clock.context.createBufferSource();
-    source.buffer = bap.clock.context.createBuffer(1, 22050, 44100);
-    source.start(0);
-
-    // play empty sound buffer
-
-    // bap.clock.sequence.kits.models[0].slot('Q').start();
-    // setTimeout(function () {
-    //   bap.clock.sequence.kits.models[0].slot('Q').stop();
-    //   // setTimeout(function () {
-    //   //   bap.clock.start();
-    //   // }, 1000);
-    // }, 1000);
-  }
-});
+// var inited = false;
+// document.body.addEventListener('touchstart', function () {
+//   if (!inited) {
+//     inited = true;
+//     alert('inited');
+//     bap.clock.start();
+//
+//
+//     // play empty sound buffer
+//
+//     // bap.clock.sequence.kits.models[0].slot('Q').start();
+//     // setTimeout(function () {
+//     //   bap.clock.sequence.kits.models[0].slot('Q').stop();
+//     //   // setTimeout(function () {
+//     //   //
+//     //   // }, 1000);
+//     // }, 1000);
+//   }
+// });

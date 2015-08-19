@@ -94,12 +94,11 @@ function boombap () {
     ['2.4.51', '4Q', 40, 80, -96]
   );
 
-  boombapPattern
+  bap.clock.sequence = boombapPattern
     .kit(1, drumKit)
     .kit(2, plongKit)
     .kit(3, stringKit)
-    .kit(4, bassKit)
-    .start();
+    .kit(4, bassKit);
 }
 
 module.exports = boombap;

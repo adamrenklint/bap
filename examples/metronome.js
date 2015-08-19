@@ -24,7 +24,6 @@ function metronome () {
   );
 
   bap.clock.sequence = pattern.kit(kit);
-  //.start();
 }
 
 module.exports = metronome;
