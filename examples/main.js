@@ -102,7 +102,6 @@ function navigate () {
     hljs.highlightBlock(sourceEl);
     bap.clock.stop();
     fn();
-    // bap.clock.pause();
 
     [].forEach.call(document.getElementById('menu').children, function (child) {
       var active = child.children[0].href.split('#')[1] === hash;
@@ -154,23 +153,3 @@ if (!location.hash) {
 else {
   navigate();
 }
-
-// var inited = false;
-// document.body.addEventListener('touchstart', function () {
-//   if (!inited) {
-//     inited = true;
-//     alert('inited');
-//     bap.clock.start();
-//
-//
-//     // play empty sound buffer
-//
-//     // bap.clock.sequence.kits.models[0].slot('Q').start();
-//     // setTimeout(function () {
-//     //   bap.clock.sequence.kits.models[0].slot('Q').stop();
-//     //   // setTimeout(function () {
-//     //   //
-//     //   // }, 1000);
-//     // }, 1000);
-//   }
-// });
