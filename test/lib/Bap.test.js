@@ -3,7 +3,12 @@ var expect = chai.expect;
 var Bap = require('../../lib/Bap');
 var AudioContextMock = require('../../node_modules/dilla/test/mocks/AudioContext');
 var context = require('../../lib/utils/context');
-context.set(new AudioContextMock());
+var mockContext = new AudioContextMock();
+mockContext.createBufferSource = function () {
+  return { start: function () {} };
+};
+mockContext.createBuffer = function () {};
+context.set(mockContext);
 
 var bap;
 
