@@ -23,7 +23,7 @@ function metronome () {
     ['*.2%1.01', '1W']
   );
 
-  pattern.kit(kit).start();
+  bap.clock.sequence = pattern.kit(kit);
 }
 
 module.exports = metronome;

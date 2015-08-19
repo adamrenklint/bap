@@ -103,7 +103,7 @@ function sequences () {
     mainLoop
   );
 
-  arrangedBeat.start();
+  bap.clock.sequence = arrangedBeat;
 }
 
 module.exports = sequences;
