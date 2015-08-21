@@ -1,6 +1,6 @@
 {
   "name": "bap",
-  "version": "0.3.0-beta5",
+  "version": "0.3.0-beta6",
   "versionName": "pete",
   "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
   "homepage": "http://bapjs.org",
