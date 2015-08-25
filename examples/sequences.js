@@ -2,12 +2,10 @@ var bap = require('../index');
 
 function sequences () {
 
-  bap.clock.tempo = 120;
-
   var lowPianoKit = bap.sample({
     src: 'sounds/own_barricade_end.wav',
-    attack: 0.1,
-    release: 0.1,
+    attack: 0.01,
+    release: 0.01,
     pitch: -40,
     pan: 40
   }).slice(8);
@@ -31,11 +29,11 @@ function sequences () {
 
   var otherPianoKit = bap.sample({
     src: 'sounds/own_barricade_middle.wav',
-    attack: 0.3,
-    release: 0.1,
+    attack: 0.05,
+    release: 0.05,
     pitch: -40,
     pan: -40,
-    volume: 150
+    volume: 100
   }).slice(5);
 
   var otherPianoPattern = bap.pattern({ bars: 2 }).kit(2, otherPianoKit);
