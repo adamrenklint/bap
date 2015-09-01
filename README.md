@@ -108,8 +108,11 @@ pattern.kit(1, kit).start();
 ### clock
 
 - ```playing``` boolean, current state of playback, can be changed to start or pause
+- ```position``` string in format ```bar.beat.tick```, can be set to move playback position
+- ```bar```, ```beat```, ```tick``` numbers, equal and bound to position
 - ```tempo``` number, current tempo of playback, read only
 - ```step``` function, called on each step with note and time as arguments, able to cancel step by returning false
+- ```sequence``` pattern or sequence currently playing
 - ```start()``` start playback, if current pattern is set
 - ```start(pattern)``` set current pattern and start playback
 - ```pause()``` stop playback
@@ -232,4 +235,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday June 24th, 2015 - 9:41:39 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Tuesday September 1st, 2015 - 8:54:54 PM*
