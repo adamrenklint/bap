@@ -527,6 +527,7 @@ describe('Clock', function () {
     describe('when clock.playing is false', function () {
       it('should not call clock._queueNotesForStep', function () {
         var spy = clock._queueNotesForStep = sinon.spy();
+        clock.sequence = new Pattern();
         clock._foldingOverLoop = function () { return false; };
         clock._onEngineStep({
           id: 'lookahead',
@@ -544,6 +545,7 @@ describe('Clock', function () {
         describe('when _foldingOverLoop() returns false', function () {
           it('should call clock._queueNotesForStep', function () {
             var spy = clock._queueNotesForStep = sinon.spy();
+            clock.sequence = new Pattern();
             clock._foldingOverLoop = function () { return false; };
             clock._onEngineStep({
               id: 'lookahead',
@@ -556,6 +558,7 @@ describe('Clock', function () {
           it('should set _lastQueuedPosition', function () {
             var spy = clock._queueNotesForStep = sinon.spy();
             clock._foldingOverLoop = function () { return false; };
+            clock.sequence = new Pattern();
             clock._onEngineStep({
               id: 'lookahead',
               time: 5,
