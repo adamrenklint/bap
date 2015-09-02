@@ -11,6 +11,7 @@
 - Fixed clock.tempo dropping to 0 when pausing or stopping playback
 - Added clock.looped attribute, increases each time a sequence reaches its end
 - Fixed bap.clock trowing error when starting playback without sequence
+- Fixed playback being completely broken in Safari and Mobile Safari [#30](https://github.com/adamrenklint/bap/issues/30)
 
 ## v0.2.2 (2015-05-26) [diff](https://github.com/adamrenklint/bap/compare/v0.2.1...v0.2.2)
 
