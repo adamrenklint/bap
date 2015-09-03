@@ -39,6 +39,3 @@
 ## v0.1 "damu" (2015-04-19) [diff](https://github.com/adamrenklint/bap/compare/a31c03fd0e95c7cace5615c37db5eebdec877f95...v0.1.0)
 
 - Initial public release
-
----
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday September 3rd, 2015 - 9:59:27 AM*

@@ -92,12 +92,12 @@ describe('Sequence', function () {
         it('should return all notes on that bar', function () {
           var pattern1 = new Pattern({ bars: 2 });
           pattern1.channel(1).add(
-            ['*.1.01', 'A1'],
-            ['2.3.3', 'A2']
+            ['*.1.01', '1Q'],
+            ['2.3.3', '1W']
           );
           pattern2 = new Pattern();
           pattern2.channel(1).add(
-            ['1.*.13', 'B1']
+            ['1.*.13', '2Q']
           );
           var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
           var notes = seq.notes(2);
@@ -130,12 +130,12 @@ describe('Sequence', function () {
           it('should return all notes on that bar and beat', function () {
             var pattern1 = new Pattern({ bars: 2 });
             pattern1.channel(1).add(
-              ['*.1.01', 'A1'],
-              ['2.3.3', 'A2']
+              ['*.1.01', '1Q'],
+              ['2.3.3', '1W']
             );
             pattern2 = new Pattern();
             pattern2.channel(1).add(
-              ['1.*.13', 'B1']
+              ['1.*.13', '2Q']
             );
             var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
             var notes = seq.notes(2, 1);
@@ -165,12 +165,12 @@ describe('Sequence', function () {
           it('should return all notes on that bar, beat and tick', function () {
             var pattern1 = new Pattern({ bars: 2 });
             pattern1.channel(1).add(
-              ['*.1.01', 'A1'],
-              ['2.3.3', 'A2']
+              ['*.1.01', '1Q'],
+              ['2.3.3', '1W']
             );
             pattern2 = new Pattern();
             pattern2.channel(1).add(
-              ['1.*.13', 'B1']
+              ['1.*.13', '2Q']
             );
             var seq = new Sequence(pattern2, [pattern1, pattern2], pattern1);
             var notes = seq.notes(2, 1, 13);
@@ -184,7 +184,7 @@ describe('Sequence', function () {
             it('should return more than one instance of the same note', function () {
               var pattern = new Pattern();
               pattern.channel(1).add(
-                ['1.1.01', 'A1']
+                ['1.1.01', '1Q']
               );
               var seq = new Sequence([pattern, pattern]);
               var notes = seq.notes(1, 1, 1);
@@ -215,11 +215,11 @@ describe('Sequence', function () {
     it('should find the right notes in the drum example', function () {
       var drumPattern = new Pattern({ bars: 2 });
       drumPattern.channel(1).add(
-        ['*.1.01', 'X1'],
-        ['*.3.52', 'X1'],
-        ['2.*.25', 'X3'],
-        ['*.odd.92', 'X2'],
-        ['*.*.%52', 'X3']
+        ['*.1.01', '1Q'],
+        ['*.3.52', '1Q'],
+        ['2.*.25', '1E'],
+        ['*.odd.92', '1W'],
+        ['*.*.%52', '1E']
       );
       var seq = new Sequence(
         [drumPattern],
@@ -325,41 +325,6 @@ describe('Sequence', function () {
       var patternB = new Pattern({ bars: 2, tempo: 100 });
       sequence = new Sequence(patternA, patternB);
     });
-    // describe('when position is 0.0.00', function () {
-    //   it('should return tempo from pattern A', function () {
-    //     expect(sequence.tempoAt('0.0.00')).to.equal(150);
-    //   });
-    // });
-    // describe('when position is 1.1.01', function () {
-    //   it('should return tempo from pattern A', function () {
-    //     expect(sequence.tempoAt('1.1.01')).to.equal(150);
-    //   });
-    // });
-    // describe('when position is 7 ticks before pattern B', function () {
-    //   it('should return tempo from pattern A', function () {
-    //     expect(sequence.tempoAt('2.4.90')).to.equal(150);
-    //   });
-    // });
-    // describe('when position is 6 ticks before pattern B', function () {
-    //   it('should return tempo from pattern B', function () {
-    //     expect(sequence.tempoAt('2.4.91')).to.equal(100);
-    //   });
-    // });
-    // describe('when position is at start of pattern B', function () {
-    //   it('should return tempo from pattern B', function () {
-    //     expect(sequence.tempoAt('3.1.01')).to.equal(100);
-    //   });
-    // });
-    // describe('when position is at end of sequence', function () {
-    //   it('should return tempo from pattern B', function () {
-    //     expect(sequence.tempoAt('4.4.91')).to.equal(100);
-    //   });
-    //   describe('when sequence is looping', function () {
-    //     it('should return tempo from pattern A', function () {
-    //       expect(sequence.tempoAt('4.4.91')).to.equal(125);
-    //     });
-    //   });
-    // });
   });
 
   describe('then(sequence...)', function () {

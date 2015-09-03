@@ -119,6 +119,7 @@ describe('Clock', function () {
     describe('when _canStartPlaying() returns false', function () {
       it('should call start() again in ~10 ms', function (done) {
         clock._canStartPlaying = function () { return false; };
+        clock.sequence = new Pattern();
         clock.start();
         sinon.spy(clock, 'start');
         setTimeout(function () {
@@ -129,6 +130,7 @@ describe('Clock', function () {
     });
     describe('when _canStartPlaying() returns true', function () {
       beforeEach(function () {
+        clock.sequence = new Pattern();
         clock._canStartPlaying = function () { return true; };
         clock.engine = {
           start: sinon.spy(),
@@ -154,6 +156,7 @@ describe('Clock', function () {
         });
       });
       it('it should not call engine.start immediately, but within 1ms', function (done) {
+        clock.sequence = new Pattern();
         clock.start();
         expect(clock.engine.start).not.to.have.been.called;
         setTimeout(function () {
@@ -178,11 +181,13 @@ describe('Clock', function () {
       });
       describe('when _stopByFold is true', function () {
         it('should set _stopByFold to false', function () {
+          clock.sequence = new Pattern();
           clock._stopByFold = true;
           clock.start();
           expect(clock._stopByFold).to.be.false
         });
         it('should set position to 1.1.01', function () {
+          clock.sequence = new Pattern();
           clock._stopByFold = true;
           clock.set('position', '2.4.96', { silent: true });
           clock.start();
@@ -527,6 +532,7 @@ describe('Clock', function () {
     describe('when clock.playing is false', function () {
       it('should not call clock._queueNotesForStep', function () {
         var spy = clock._queueNotesForStep = sinon.spy();
+        clock.sequence = new Pattern();
         clock._foldingOverLoop = function () { return false; };
         clock._onEngineStep({
           id: 'lookahead',
@@ -544,6 +550,7 @@ describe('Clock', function () {
         describe('when _foldingOverLoop() returns false', function () {
           it('should call clock._queueNotesForStep', function () {
             var spy = clock._queueNotesForStep = sinon.spy();
+            clock.sequence = new Pattern();
             clock._foldingOverLoop = function () { return false; };
             clock._onEngineStep({
               id: 'lookahead',
@@ -556,6 +563,7 @@ describe('Clock', function () {
           it('should set _lastQueuedPosition', function () {
             var spy = clock._queueNotesForStep = sinon.spy();
             clock._foldingOverLoop = function () { return false; };
+            clock.sequence = new Pattern();
             clock._onEngineStep({
               id: 'lookahead',
               time: 5,

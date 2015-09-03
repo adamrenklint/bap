@@ -18,12 +18,12 @@ describe('Channel', function () {
   describe('add(note, ...)', function () {
     describe('when note is a raw object', function () {
       it('should create a note instance', function () {
-        channel.add(['1.1.01', 'A1']);
+        channel.add(['1.1.01', '1Q']);
         expect(channel.rawNotes.length).to.equal(1);
         expect(channel.rawNotes.models[0].type).to.equal('note');
       });
       it('should add a ghost to expandedNotes', function () {
-        channel.add(['1.1.01', 'A1']);
+        channel.add(['1.1.01', '1Q']);
         expect(channel.expandedNotes.filter(function (note) {
           return note.original = channel.rawNotes.models[0];
         }).length).to.equal(1);
@@ -31,13 +31,13 @@ describe('Channel', function () {
     });
     describe('when passing a note instance', function () {
       it('should just add the note', function () {
-        var note = new Note({ position: '2.1.02', key: 'B5' });
+        var note = new Note({ position: '2.1.02', target: '1Q' });
         channel.add(note);
         expect(channel.rawNotes.length).to.equal(1);
         expect(channel.rawNotes.models[0]).to.equal(note);
       });
       it('should add a ghost to expandedNotes', function () {
-        var note = new Note({ position: '2.1.02', key: 'B5' });
+        var note = new Note({ position: '2.1.02', target: '1Q' });
         channel.add(note);
         expect(channel.expandedNotes.filter(function (note) {
           return note.original = channel.rawNotes.models[0];
@@ -206,8 +206,8 @@ describe('Channel', function () {
   describe('notes(bar, beat, tick)', function () {
     describe('when bar is not defined', function () {
       it('should return all notes', function () {
-        channel.add(['1.1.01', 'A1']);
-        channel.add(['2.3.01', 'A1']);
+        channel.add(['1.1.01', '1Q']);
+        channel.add(['2.3.01', '1Q']);
         var notes = channel.notes();
         expect(notes.length).to.equal(2);
         expect(notes[0].position).to.equal('1.1.01');
@@ -224,15 +224,15 @@ describe('Channel', function () {
     describe('when bar is defined', function () {
       describe('when beat is not defined', function () {
         it('should return all notes on that bar', function () {
-          channel.add(['1.1.01', 'A1']);
-          channel.add(['2.3.01', 'A1']);
+          channel.add(['1.1.01', '1Q']);
+          channel.add(['2.3.01', '1Q']);
           var notes = channel.notes(2);
           expect(notes.length).to.equal(1);
           expect(notes[0].position).to.equal('2.3.01');
         });
         describe('when there are no notes on that bar', function () {
           it('should return an empty array', function () {
-            channel.add(['1.1.01', 'A1']);
+            channel.add(['1.1.01', '1Q']);
             var notes = channel.notes(2);
             expect(notes).to.be.a('array');
             expect(notes.length).to.equal(0);
@@ -242,11 +242,11 @@ describe('Channel', function () {
       describe('when beat is defined', function () {
         describe('when tick is not defined', function () {
           it('should return all notes on that bar and beat', function () {
-            channel.add(['1.1.01', 'A1']);
-            channel.add(['2.3.01', 'A1']);
-            channel.add(['2.2.01', 'A1']);
-            channel.add(['2.3.45', 'A1']);
-            channel.add(['2.4.01', 'A1']);
+            channel.add(['1.1.01', '1Q']);
+            channel.add(['2.3.01', '1Q']);
+            channel.add(['2.2.01', '1Q']);
+            channel.add(['2.3.45', '1Q']);
+            channel.add(['2.4.01', '1Q']);
             var notes = channel.notes(2, 3);
             expect(notes.length).to.equal(2);
             expect(notes[0].position).to.equal('2.3.01');
@@ -254,9 +254,9 @@ describe('Channel', function () {
           });
           describe('when there are no notes on that bar and beat', function () {
             it('should return an empty array', function () {
-              channel.add(['1.1.01', 'A1']);
-              channel.add(['2.2.01', 'A1']);
-              channel.add(['2.4.01', 'A1']);
+              channel.add(['1.1.01', '1Q']);
+              channel.add(['2.2.01', '1Q']);
+              channel.add(['2.4.01', '1Q']);
               var notes = channel.notes(2, 3);
               expect(notes).to.be.a('array');
               expect(notes.length).to.equal(0);
@@ -265,21 +265,21 @@ describe('Channel', function () {
         });
         describe('when tick is defined', function () {
           it('should return all notes on that bar, beat and tick', function () {
-            channel.add(['1.1.01', 'A1']);
-            channel.add(['2.3.01', 'A1']);
-            channel.add(['2.2.01', 'A1']);
-            channel.add(['2.3.45', 'A1']);
-            channel.add(['2.4.01', 'A1']);
+            channel.add(['1.1.01', '1Q']);
+            channel.add(['2.3.01', '1Q']);
+            channel.add(['2.2.01', '1Q']);
+            channel.add(['2.3.45', '1Q']);
+            channel.add(['2.4.01', '1Q']);
             var notes = channel.notes(2, 3, 1);
             expect(notes.length).to.equal(1);
             expect(notes[0].position).to.equal('2.3.01');
           });
           describe('when there are no notes on that bar, beat and tick', function () {
             it('should return an empty array', function () {
-              channel.add(['1.1.01', 'A1']);
-              channel.add(['2.2.01', 'A1']);
-              channel.add(['2.3.45', 'A1']);
-              channel.add(['2.4.01', 'A1']);
+              channel.add(['1.1.01', '1Q']);
+              channel.add(['2.2.01', '1Q']);
+              channel.add(['2.3.45', '1Q']);
+              channel.add(['2.4.01', '1Q']);
               var notes = channel.notes(2, 3, 1);
               expect(notes).to.be.a('array');
               expect(notes.length).to.equal(0);
@@ -292,7 +292,7 @@ describe('Channel', function () {
 
   describe('_onAddExpandedNote(note)', function () {
     it('should add the note to the trie index', function () {
-      var note = new Note({ position: '2.1.02', key: 'B5' });
+      var note = new Note({ position: '2.1.02', target: '1Q' });
       channel._onAddExpandedNote(note);
       expect(channel._cache[2][1][2].length).to.equal(1);
       expect(channel._cache[2][1][2]).to.contain(note);
@@ -305,7 +305,7 @@ describe('Channel', function () {
 
   describe('_onRemoveExpandedNote(note)', function () {
     it('should remove the note from the trie index', function () {
-      var note = new Note({ position: '2.1.02', key: 'B5' });
+      var note = new Note({ position: '2.1.02', target: '1Q' });
       channel._onAddExpandedNote(note);
       channel._onRemoveExpandedNote(note);
       expect(channel._cache[2][1][2].length).to.equal(0);
@@ -319,7 +319,7 @@ describe('Channel', function () {
 
   describe('_onAddRawNote', function () {
     it('should expand the expression and add ghost to expandedNotes', function () {
-      var note = new Note({ position: '1.*.02', key: 'B5' });
+      var note = new Note({ position: '1.*.02', target: '1Q' });
       channel._onAddRawNote(note);
       expect(channel.expandedNotes.models.length).to.equal(4);
       expect(channel.expandedNotes.models[0].position).to.equal('1.1.02');
@@ -329,7 +329,7 @@ describe('Channel', function () {
     });
     describe('when channel is child of a pattern', function () {
       it('should use the length properties of that pattern when expanding', function () {
-        var note = new Note({ position: '*.*.02', key: 'B5' });
+        var note = new Note({ position: '*.*.02', target: '1Q' });
         channel.collection = {
           parent: {
             bars: 2,
@@ -354,7 +354,7 @@ describe('Channel', function () {
     });
     describe('when note.position is a plain position', function () {
       it('should use itself as its ghost', function () {
-        var note = new Note({ position: '1.1.02', key: 'B5' });
+        var note = new Note({ position: '1.1.02', target: '1Q' });
         channel._onAddRawNote(note);
         expect(channel.expandedNotes.models.length).to.equal(1);
         expect(channel.expandedNotes.models[0].position).to.equal('1.1.02');
@@ -362,7 +362,7 @@ describe('Channel', function () {
       });
       describe('when note, channel or pattern has a transform function', function () {
         it('should not use itself as ghost', function () {
-          var note = new Note({ position: '1.1.02', key: 'B5' });
+          var note = new Note({ position: '1.1.02', target: '1Q' });
           note.transform = function (n) {
             n.tick += 50;
           };
@@ -379,8 +379,8 @@ describe('Channel', function () {
 
   describe('_onRemoveRawNote', function () {
     it('should remove all ghost notes in expandedNotes', function () {
-      var note = new Note({ position: '1.*.05', key: 'B5' });
-      var note2 = new Note({ position: '1.*.02', key: 'C8' });
+      var note = new Note({ position: '1.*.05', target: '1Q' });
+      var note2 = new Note({ position: '1.*.02', target: '1I' });
       channel._onAddRawNote(note);
       channel._onAddRawNote(note2);
       expect(channel.expandedNotes.models.length).to.equal(8);
@@ -395,7 +395,7 @@ describe('Channel', function () {
 
   describe('_onChangeRawNote', function () {
     it('should remove ghost notes and expand again', function () {
-      var note = new Note({ position: '1.*.05', key: 'B5' });
+      var note = new Note({ position: '1.*.05', target: '1Q' });
       channel._onAddRawNote(note);
       note.position = '1.*.09';
       channel._onChangeRawNote(note);
