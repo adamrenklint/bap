@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.3 "pete" (IN PROGRESS) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
+## v0.3 "pete" (2015-0903) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
 
 - Added bitcrusher effect for sample layers [#23](https://github.com/adamrenklint/bap/issues/23)
 - Added ```note.after``` callback that is triggered after a note source has stopped playing
