@@ -33,7 +33,8 @@ function slices () {
     bitcrush: 12
   }).slice(16);
   var crushedSample = bap.sample({
-    bitcrush: 12
+    bitcrush: 12,
+    bitcrushFreq: 20
   });
   breakKit.slot('Q').layer(crushedSample.with({ src: 'sounds/kick.wav' }));
   breakKit.slot('W').layer(crushedSample.with({ src: 'sounds/snare.wav' }));
