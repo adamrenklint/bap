@@ -238,4 +238,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday September 3rd, 2015 - 10:04:47 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday September 3rd, 2015 - 10:11:39 AM*
