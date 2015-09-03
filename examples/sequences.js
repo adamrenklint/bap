@@ -44,13 +44,18 @@ function sequences () {
   );
 
   var drumKit = bap.kit();
-  drumKit.slot('Q').layer('sounds/kick.wav');
+  drumKit.slot('Q').layer(bap.sample ({
+    src: 'sounds/kick.wav',
+    bitcrush: 12
+  }));
   drumKit.slot('W').layer('sounds/snare_1.wav').layer(bap.sample({
     src: 'sounds/snare_38.wav',
+    bitcrush: 12,
     volume: 40
   }));
   drumKit.slot('E').layer(bap.sample({
     src: 'sounds/hihat.wav',
+    bitcrush: 12,
     volume: 20
   }));
 
@@ -67,7 +72,8 @@ function sequences () {
     src: 'sounds/esther.wav',
     pitch: -48,
     volume: 30,
-    channel: 'right'
+    channel: 'right',
+    bitcrush: 12
   });
   var breakKit = breakSample.slice(16);
   var smallBreakKit = breakSample.slice(32);

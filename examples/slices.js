@@ -6,6 +6,7 @@ function slices () {
     src: 'sounds/slices.wav',
     attack: 0.01,
     release: 0.01,
+    bitcrush: 12,
     channel: 'right'
   });
   sampleKit.slot('Q').layer(base.with({
@@ -28,11 +29,16 @@ function slices () {
 
   var breakKit = bap.sample({
     src: 'sounds/esther.wav',
-    pitch: -26
+    pitch: -26,
+    bitcrush: 12
   }).slice(16);
-  breakKit.slot('Q').layer('sounds/kick.wav');
-  breakKit.slot('W').layer('sounds/snare.wav');
-  breakKit.slot('R').layer('sounds/snare.wav');
+  var crushedSample = bap.sample({
+    bitcrush: 12,
+    bitcrushFreq: 20
+  });
+  breakKit.slot('Q').layer(crushedSample.with({ src: 'sounds/kick.wav' }));
+  breakKit.slot('W').layer(crushedSample.with({ src: 'sounds/snare.wav' }));
+  breakKit.slot('R').layer(crushedSample.with({ src: 'sounds/snare.wav' }));
 
   var pattern = bap.pattern({ bars: 2, tempo: 95 });
   pattern.channel(1).add(

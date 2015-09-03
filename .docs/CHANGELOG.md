@@ -2,14 +2,15 @@
 
 ## v0.3 "pete" (IN PROGRESS) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
 
+- Added bitcrusher effect for sample layers [#23](https://github.com/adamrenklint/bap/issues/23)
+- Added ```note.after``` callback that is triggered after a note source has stopped playing
+- Added clock.looped attribute, increases each time a sequence reaches its end
+- Added ```trigger``` param on note [#24](https://github.com/adamrenklint/bap/issues/24)
+- Deprecated ```key``` parameter on note [#24](https://github.com/adamrenklint/bap/issues/24)
 - Changed ```pattern > kit``` connection to use numeric ids [#24](https://github.com/adamrenklint/bap/issues/24)
 - Changed ```kit > slot``` connection to use ```QWERTY``` ids [#24](https://github.com/adamrenklint/bap/issues/24)
-- Deprecated ```key``` parameter on note [#24](https://github.com/adamrenklint/bap/issues/24)
-- Added ```trigger``` param on note [#24](https://github.com/adamrenklint/bap/issues/24)
 - Fixed error when reversing sample without offset and duration longer than actual buffer duration [#25](https://github.com/adamrenklint/bap/issues/25)
-- Added ```note.after``` callback that is triggered after a note source has stopped playing
 - Fixed clock.tempo dropping to 0 when pausing or stopping playback
-- Added clock.looped attribute, increases each time a sequence reaches its end
 - Fixed bap.clock trowing error when starting playback without sequence
 - Fixed playback being completely broken in Safari and Mobile Safari [#30](https://github.com/adamrenklint/bap/issues/30)
 

@@ -66,7 +66,7 @@ draw();
 var examples = {
   'metronome': [metronome, 'A simple metronome made with <a href="http://bapjs.org">Bap</a> to test playback, and note expressions and scheduling.'],
   'boombap': [boombap, 'The boombap demo beat from <a href="https://github.com/adamrenklint/dilla">Dilla</a>, reimplemented with <a href="">Bap</a>.'],
-  'slices': [slices, 'Using different parts of same sample for different layers, either by manually defining sample offset and length, or "auto-slicing" sample to a kit.'],
+  'slices': [slices, 'Using different parts of same sample for different layers, either by manually defining sample offset and length, or "auto-slicing" sample to a kit.\n\nAlso uses bitcrusher effect on samples.'],
   'sequences': [sequences, 'Layering patterns and sequences into longer and bigger sequences']
 };
 var sourceEl = document.getElementById('source');
