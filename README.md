@@ -109,7 +109,7 @@ pattern.kit(1, kit).start();
 
 - ```playing``` boolean, current state of playback, can be changed to start or pause
 - ```position``` string in format ```bar.beat.tick```, can be set to move playback position
-- ```bar```, ```beat```, ```tick``` numbers, equal and bound to position
+- ```bar```, ```beat```, ```tick``` numbers, equal and bound to position, can be set to move playback position
 - ```tempo``` number, current tempo of playback, read only
 - ```step``` function, called on each step with note and time as arguments, able to cancel step by returning false
 - ```sequence``` pattern or sequence currently playing
@@ -156,6 +156,9 @@ pattern.kit(1, kit).start();
 - ```reverse``` boolean, reverse buffer or slice of buffer
 - ```loop``` number, loop length in seconds, defaults to ```0``` i.e. not looping
 - ```slice(pieces)``` returns a kit with the sample sliced into even-sized sections
+- ```bitcrush``` number between 0 and 16, resamples waveform to defined bit depth, defaults to ```0```, i.e. no resampling
+- ```bitcrushFreq``` number between 0 and 100, normalization frequency at which to apply the bitcrusher effect, defaults to 30
+- ```bitcrushMix``` number between 0 and 100, ratio of wet bitcrushed signal to mix with dry signal, defaults to 50
 
 ### pattern
 
@@ -235,4 +238,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Tuesday September 1st, 2015 - 8:54:54 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday September 3rd, 2015 - 9:59:27 AM*
