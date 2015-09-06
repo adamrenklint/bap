@@ -1,7 +1,7 @@
 {
   "name": "bap",
-  "version": "0.3.0",
-  "versionName": "pete",
+  "version": "0.4.0",
+  "versionName": "apollo",
   "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
   "homepage": "http://bapjs.org",
   "main": "index.js",
