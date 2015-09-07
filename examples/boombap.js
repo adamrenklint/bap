@@ -6,12 +6,26 @@ function boombap () {
   drumKit.slot('Q').layer('sounds/kick.wav');
   var snare = bap.sample('sounds/snare.wav');
   drumKit.slot('W').layer(snare);
+  drumKit.slot('W').connect(bap.reverb({
+    filter: 'notch',
+    cutoff: 4000,
+    wet: 10
+  }));
   drumKit.slot('E').layer(bap.sample({
     src: 'sounds/hihat.wav',
     volume: 50
   }));
+  drumKit.slot('E').connect(bap.reverb({
+    wet: 10,
+    cutoff: 5000
+  }));
 
   var plongKit = bap.kit();
+  plongKit.connect(bap.reverb({
+    filter: 'highshelf',
+    decay: 1,
+    cutoff: 8000
+  }));
   plongKit.slot('Q').layer(bap.sample({
     src: 'sounds/plong1.wav',
     duration: 95

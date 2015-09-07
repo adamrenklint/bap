@@ -50,6 +50,7 @@
 - ```slot(id)``` returns existing or blank slot with id
 - ```slot(id, slot)``` assign slot instance to id
 - ```slot(slot)``` assign slot instance to next id
+- ```connect(effect)``` route output signal to destination via effect
 
 ### slot
 
@@ -62,11 +63,13 @@
 - ```start([params])``` start playback of slot immediately
 - ```stop(time, [params])``` stop playback of slot at (AudioContext) time
 - ```stop([params])``` stop playback of slot immediately
+- ```connect(effect)``` route output signal to destination via effect
 
 ### layer
 
 - ```start(time, [params])``` start playback of slot at (AudioContext) time
 - ```start([params])``` start playback of slot immediately
+- ```connect(effect)``` route output signal to destination via effect
 
 #### oscillator
 
@@ -122,9 +125,25 @@
 
 - ```transform``` function to be called after expanding position expressions into notes, called after ```note.transform```, can return ```false``` to not execute ```pattern.transform```
 - ```add(note, note, ...)``` schedule note(s) to be played within context of channel
+- ```connect(effect)``` route output signal to destination via effect
 
 ### note
 
 - ```transform``` function to be called after expanding position expressions into notes, called before ```channel.transform```, can return ```false``` to not execute ```channel.transform```
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
+- ```connect(effect)``` route output signal to destination via effect
+
+### reverb
+
+- ```time``` number, impulse time in seconds, defaults to 1
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 30
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 100
+- ```decay``` number, drop off time in seconds, defaults to 3
+- ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
+- ```cutoff``` number, frequency where filter is applied, defaults to 2000
+- ```reverse``` boolean, defaults to false
+
+### delay
+
+-

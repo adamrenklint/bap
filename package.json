@@ -33,7 +33,8 @@
     "lodash.debounce": "^3.0.3",
     "lodash.memoize": "^3.0.3",
     "lodash.merge": "^3.1.0",
-    "lodash.padleft": "^3.1.0"
+    "lodash.padleft": "^3.1.0",
+    "soundbank-reverb": "^1.1.2"
   },
   "devDependencies": {
     "3w": "0.0.4",
