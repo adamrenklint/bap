@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4 "apollo" (?)
+
+- Added reverb and delay effect for sample and oscillator layers [#15](https://github.com/adamrenklint/bap/issues/15)
+- Improved performance and memory footprint with general Web Audio node pooling
+
 ## v0.3 "pete" (2015-09-03) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
 
 - Added bitcrusher effect for sample layers [#23](https://github.com/adamrenklint/bap/issues/23)

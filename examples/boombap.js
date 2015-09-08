@@ -21,11 +21,16 @@ function boombap () {
   }));
 
   var plongKit = bap.kit();
-  plongKit.connect(bap.reverb({
+  plongKit.connect(bap.delay({
     filter: 'highshelf',
-    decay: 1,
-    cutoff: 8000,
+    time: 10,
+    feedback: 6,
+    cutoff: 5000,
     wet: 25
+  }));
+  plongKit.connect(bap.reverb({
+    time: 3,
+    wet: 5
   }));
   plongKit.slot('Q').layer(bap.sample({
     src: 'sounds/plong1.wav',
@@ -37,6 +42,9 @@ function boombap () {
   }));
 
   var stringKit = bap.kit();
+  stringKit.connect(bap.reverb({
+    wet: 15
+  }));
   stringKit.slot('Q').layer(bap.sample({
     src: 'sounds/string1.wav',
     duration: 90
