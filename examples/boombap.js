@@ -8,8 +8,8 @@ function boombap () {
   drumKit.slot('W').layer(snare);
   drumKit.slot('W').connect(bap.reverb({
     filter: 'notch',
-    cutoff: 4000,
-    wet: 10
+    cutoff: 2000,
+    wet: 15
   }));
   drumKit.slot('E').layer(bap.sample({
     src: 'sounds/hihat.wav',
