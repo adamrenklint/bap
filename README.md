@@ -122,6 +122,7 @@ pattern.kit(1, kit).start();
 - ```slot(id)``` returns existing or blank slot with id
 - ```slot(id, slot)``` assign slot instance to id
 - ```slot(slot)``` assign slot instance to next id
+- ```connect(effect)``` route output signal to destination via effect
 
 ### slot
 
@@ -134,11 +135,13 @@ pattern.kit(1, kit).start();
 - ```start([params])``` start playback of slot immediately
 - ```stop(time, [params])``` stop playback of slot at (AudioContext) time
 - ```stop([params])``` stop playback of slot immediately
+- ```connect(effect)``` route output signal to destination via effect
 
 ### layer
 
 - ```start(time, [params])``` start playback of slot at (AudioContext) time
 - ```start([params])``` start playback of slot immediately
+- ```connect(effect)``` route output signal to destination via effect
 
 #### oscillator
 
@@ -194,12 +197,49 @@ pattern.kit(1, kit).start();
 
 - ```transform``` function to be called after expanding position expressions into notes, called after ```note.transform```, can return ```false``` to not execute ```pattern.transform```
 - ```add(note, note, ...)``` schedule note(s) to be played within context of channel
+- ```connect(effect)``` route output signal to destination via effect
 
 ### note
 
 - ```transform``` function to be called after expanding position expressions into notes, called before ```channel.transform```, can return ```false``` to not execute ```channel.transform```
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
+- ```connect(effect)``` route output signal to destination via effect
+
+### reverb
+
+- ```time``` number, impulse time in seconds, defaults to 1
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 30
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 100
+- ```decay``` number, drop off time in seconds, defaults to 3
+- ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
+- ```cutoff``` number, frequency where filter is applied, defaults to 2000
+- ```reverse``` boolean, defaults to false
+
+### delay
+
+- ```time``` number, delay time in seconds, defaults to 0.3
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 100
+- ```feedback``` number, amount of regeneration from processed signal, defaults to 50
+- ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
+- ```cutoff``` number, frequency where filter is applied, defaults to 2000
+
+### compressor
+
+- ```threshold``` number between -100 and 0, decibel value above which the compression will start taking effect, defaults to -24
+- ```knee``` number between 0 and 40, decibel value representing the range above the threshold where the curve smoothly transitions to the compressed portion, defaults to 30
+- ```ratio``` number between 0 and 20, amount of change in dB needed in input for 1 dB change in the output, defaults to 12
+- ```reduction``` number between -20 and 0, amount of gain reduction applied by the compressor to the signal, defaults to -20
+- ```attack``` number, seconds required to reduce the gain by 10 dB, defaults to 0
+- ```release```, number, seconds required to increase the gain by 10 dB, defaults to 0.25
+
+### overdrive
+
+- ```gain``` number between 0 and 24, amount of dB increase of signal, defaults to 1
+- ```preBand``` number between 0 and 100, amount of preband filtering, defaults to 50
+- ```color``` number between 20 and 22050, frequency cutoff for preband filtering, defaults to 800
+- ```postCut``` number between 20 and 22050, frequency cutoff for post filter, defaults to 3000
 
 ## Feedback and issues
 
@@ -236,4 +276,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday September 3rd, 2015 - 10:13:28 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday September 9th, 2015 - 12:30:11 AM*

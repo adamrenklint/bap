@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4 "apollo" (?) [diff](https://github.com/adamrenklint/bap/compare/v0.3.0...v0.4.0)
+
+- Added ```connect``` method to kit, slot, layer, channel and note, making them connectable with bap effect factories or vanilla WAA effect nodes
+- Added reverb, delay, compressor and overdrive effect factories for sample and oscillator layers [#15](https://github.com/adamrenklint/bap/issues/15)
+- Improved performance and memory footprint with general Web Audio node pooling
+
 ## v0.3 "pete" (2015-09-03) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
 
 - Added bitcrusher effect for sample layers [#23](https://github.com/adamrenklint/bap/issues/23)
@@ -41,4 +47,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday September 3rd, 2015 - 10:13:28 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday September 9th, 2015 - 12:30:11 AM*
