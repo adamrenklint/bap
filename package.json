@@ -35,6 +35,7 @@
     "lodash.merge": "^3.1.0",
     "lodash.padleft": "^3.1.0",
     "soundbank-delay": "^2.0.0",
+    "soundbank-overdrive": "^1.0.0",
     "soundbank-reverb": "^1.1.2"
   },
   "devDependencies": {

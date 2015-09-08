@@ -5,6 +5,7 @@ function boombap () {
   drumKit.connect(bap.compressor({
     threshold: -15
   }));
+
   // three ways to add a sample layer to a slot
   drumKit.slot('Q').layer('sounds/kick.wav');
   var snare = bap.sample('sounds/snare.wav');
