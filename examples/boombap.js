@@ -2,6 +2,9 @@ var bap = require('../index');
 
 function boombap () {
   var drumKit = bap.kit();
+  drumKit.connect(bap.compressor({
+    threshold: -15
+  }));
   // three ways to add a sample layer to a slot
   drumKit.slot('Q').layer('sounds/kick.wav');
   var snare = bap.sample('sounds/snare.wav');
@@ -20,7 +23,9 @@ function boombap () {
     cutoff: 5000
   }));
 
-  var plongKit = bap.kit();
+  var plongKit = bap.kit({
+    volume: 90
+  });
   plongKit.connect(bap.delay({
     filter: 'highshelf',
     time: 10,
@@ -41,7 +46,9 @@ function boombap () {
     duration: 60
   }));
 
-  var stringKit = bap.kit();
+  var stringKit = bap.kit({
+    volume: 90
+  });
   stringKit.connect(bap.reverb({
     wet: 15
   }));
