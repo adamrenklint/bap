@@ -24,7 +24,8 @@ function boombap () {
   plongKit.connect(bap.reverb({
     filter: 'highshelf',
     decay: 1,
-    cutoff: 8000
+    cutoff: 8000,
+    wet: 25
   }));
   plongKit.slot('Q').layer(bap.sample({
     src: 'sounds/plong1.wav',
