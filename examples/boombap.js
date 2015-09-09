@@ -5,6 +5,7 @@ function boombap () {
   drumKit.connect(bap.compressor({
     threshold: -15
   }));
+  drumKit.volume = 120;
 
   // three ways to add a sample layer to a slot
   drumKit.slot('Q').layer('sounds/kick.wav');
@@ -13,7 +14,8 @@ function boombap () {
   drumKit.slot('W').connect(bap.reverb({
     filter: 'notch',
     cutoff: 2000,
-    wet: 15
+    wet: 15,
+    dry: 80
   }));
   drumKit.slot('E').layer(bap.sample({
     src: 'sounds/hihat.wav',
