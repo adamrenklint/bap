@@ -128,10 +128,10 @@ function boombap () {
   );
 
   bap.clock.sequence = boombapPattern
-    .kit(1, drumKit)
-    .kit(2, plongKit)
+    // .kit(1, drumKit)
+    // .kit(2, plongKit)
     .kit(3, stringKit)
-    .kit(4, bassKit);
+    // .kit(4, bassKit);
 }
 
 module.exports = boombap;
