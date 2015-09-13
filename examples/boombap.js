@@ -3,7 +3,7 @@ var bap = require('../index');
 function boombap () {
   var drumKit = bap.kit();
   drumKit.connect(bap.compressor({
-    threshold: -15
+    threshold: -10
   }));
   drumKit.volume = 120;
 
