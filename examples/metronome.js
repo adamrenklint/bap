@@ -23,25 +23,6 @@ function metronome () {
     ['*.2%1.01', '1W']
   );
 
-  // var step = 500;
-  // function one () {
-  //   kit.slot('Q').start();
-  //   setTimeout(two, step);
-  // }
-  // function two () {
-  //   kit.slot('W').start();
-  //   setTimeout(three, step);
-  // }
-  // function three () {
-  //   kit.slot('W').start();
-  //   setTimeout(four, step);
-  // }
-  // function four () {
-  //   kit.slot('W').start();
-  //   setTimeout(one, step);
-  // }
-  //
-  // setTimeout(one, 1000);
   bap.clock.sequence = pattern.kit(kit);
 }
 
