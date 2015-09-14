@@ -12,13 +12,13 @@ describe('PositionModel', function () {
   describe('paddedPosition()', function () {
     it('should return the position padded with zeros', function () {
       model.position = '1.1.12';
-      expect(model.paddedPosition()).to.equal('00001.00001.00012');
+      expect(model.paddedPosition()).to.equal('001.001.012');
     });
     it('should not replace expressions with zeros', function () {
       model.position = '1.*.01';
-      expect(model.paddedPosition()).to.equal('00001.0000*.00001');
+      expect(model.paddedPosition()).to.equal('001.00*.001');
       model.position = '*.*.*';
-      expect(model.paddedPosition()).to.equal('0000*.0000*.0000*');
+      expect(model.paddedPosition()).to.equal('00*.00*.00*');
     });
   });
 

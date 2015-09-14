@@ -481,10 +481,10 @@ describe('Clock', function () {
         clock.position = '0.0.00';
         var steps = clock._lookaheadSteps();
         expect(steps.length).to.equal(192);
-        expect(steps[0]).to.equal('1.1.01');
-        expect(steps[95]).to.equal('1.1.96');
-        expect(steps[96]).to.equal('1.2.01');
-        expect(steps[191]).to.equal('1.2.96');
+        expect(steps[0][0]).to.equal('1.1.01');
+        expect(steps[95][0]).to.equal('1.1.96');
+        expect(steps[96][0]).to.equal('1.2.01');
+        expect(steps[191][0]).to.equal('1.2.96');
       });
     });
     describe('when clock has no sequence set', function () {
@@ -502,28 +502,28 @@ describe('Clock', function () {
         clock.sequence = new Pattern({ bars: 2 });
         clock.position = '1.1.01';
         var steps = clock._lookaheadSteps();
-        expect(steps[0]).to.equal('1.1.01');
-        expect(steps[95]).to.equal('1.1.96');
-        expect(steps[96]).to.equal('1.2.01');
-        expect(steps[191]).to.equal('1.2.96');
+        expect(steps[0][0]).to.equal('1.1.01');
+        expect(steps[95][0]).to.equal('1.1.96');
+        expect(steps[96][0]).to.equal('1.2.01');
+        expect(steps[191][0]).to.equal('1.2.96');
       });
       it('should fold around the of a bar correctly', function () {
         clock.sequence = new Pattern({ bars: 2 });
         clock.position = '1.4.01';
         var steps = clock._lookaheadSteps();
-        expect(steps[0]).to.equal('1.4.01');
-        expect(steps[95]).to.equal('1.4.96');
-        expect(steps[96]).to.equal('2.1.01');
-        expect(steps[191]).to.equal('2.1.96');
+        expect(steps[0][0]).to.equal('1.4.01');
+        expect(steps[95][0]).to.equal('1.4.96');
+        expect(steps[96][0]).to.equal('2.1.01');
+        expect(steps[191][0]).to.equal('2.1.96');
       });
       it('should fold around the of a sequence correctly', function () {
         clock.sequence = new Pattern({ bars: 2 });
         clock.position = '2.4.01';
         var steps = clock._lookaheadSteps();
-        expect(steps[0]).to.equal('2.4.01');
-        expect(steps[95]).to.equal('2.4.96');
-        expect(steps[96]).to.equal('1.1.01');
-        expect(steps[191]).to.equal('1.1.96');
+        expect(steps[0][0]).to.equal('2.4.01');
+        expect(steps[95][0]).to.equal('2.4.96');
+        expect(steps[96][0]).to.equal('1.1.01');
+        expect(steps[191][0]).to.equal('1.1.96');
       });
     });
   });
