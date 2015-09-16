@@ -30,6 +30,7 @@
     "audio-notes": "0.1.0",
     "dilla": "1.8.0-beta3",
     "dilla-expressions": "2.1.2",
+    "es6-object-assign": "^1.0.1",
     "lodash.debounce": "3.0.3",
     "lodash.merge": "3.1.0",
     "lodash.padleft": "3.1.0",
