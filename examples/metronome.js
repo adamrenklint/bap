@@ -17,7 +17,7 @@ function metronome () {
   kit.slot('W', nextSlot);
 
   // create the pattern and add notes using expressions
-  var pattern = bap.pattern({ bars: 2, tempo: 140 });
+  var pattern = bap.pattern({ bars: 2, tempo: 120 });
   pattern.channel(1).add(
     ['*.1.01',   '1Q'],
     ['*.2%1.01', '1W']
