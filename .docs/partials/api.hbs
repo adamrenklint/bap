@@ -92,10 +92,11 @@
 ### pattern
 
 - ```playing``` boolean, current state of playback, can be changed to start or pause
-- ```tempo``` number, playback tempo in bpm, defaults to ```120```
-- ```bars``` number, length of pattern in bars, defaults to ```1```
-- ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
+- ```tempo``` number, playback tempo in bpm, defaults to 120
+- ```bars``` number, length of pattern in bars, defaults to 1
+- ```beatsPerBar``` number, amount of beats per bar, defaults to 4
 - ```loop``` boolean, define if pattern should loop, defaults to true
+- ```volume``` number between 0 and 999, master volume for pattern, defaults to 100
 - ```transform``` function to be called after expanding position expressions into notes, called after ```channel.transform```
 - ```channel()``` returns a blank channel assigned to next id
 - ```channel(id)``` returns existing or blank channel with id
