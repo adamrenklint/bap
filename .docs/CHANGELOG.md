@@ -2,6 +2,7 @@
 
 ## v0.4 "apollo" (?) [diff](https://github.com/adamrenklint/bap/compare/v0.3.0...v0.4.0)
 
+- **BREAKING:** Changed bitcrusher normalization frequency attribute to a proper frequency range
 - Added ```connect``` method to kit, slot, layer, channel and note, making them connectable with bap effect factories or vanilla WAA effect nodes
 - Added reverb, delay, compressor and overdrive effect factories for sample and oscillator layers [#15](https://github.com/adamrenklint/bap/issues/15)
 - Improved performance and memory footprint with general Web Audio node pooling
