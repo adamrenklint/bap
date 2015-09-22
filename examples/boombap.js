@@ -3,9 +3,9 @@ var bap = require('../index');
 function boombap () {
   var drumKit = bap.kit();
   drumKit.connect(bap.compressor({
-    threshold: -10
+    threshold: -12,
+    gain: 110
   }));
-  drumKit.volume = 120;
 
   // three ways to add a sample layer to a slot
   drumKit.slot('Q').layer('sounds/kick.wav');
@@ -74,7 +74,7 @@ function boombap () {
     attack: 0.01,
     release: 0.01
   }));
-  // bassKit.connect(bap.overdrive({ dry: 120, wet: 40, gain: 80 }));
+  bassKit.connect(bap.overdrive({ dry: 120, wet: 40, gain: 60 }));
 
   var boombapPattern = bap.pattern({ bars: 2, tempo: 90 });
   boombapPattern.channel(1).add(
