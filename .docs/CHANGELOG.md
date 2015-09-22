@@ -7,7 +7,7 @@
 - Added reverb, delay, compressor and overdrive effect factories for sample and oscillator layers [#15](https://github.com/adamrenklint/bap/issues/15)
 - Added pattern volume attribute and master bap.volume attribute
 - Improved performance and memory footprint with general object and Web Audio node pooling, avoiding V8 deopt patterns and allocating temporary memory
-- Removed memoization of lookahead steps for pattern or sequence that is not looping
+- Removed memoization of lookahead steps for pattern or sequence that is not looping or longer than 16 bars
 
 ## v0.3 "pete" (2015-09-03) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
 
