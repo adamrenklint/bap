@@ -2,8 +2,10 @@
 
 ## v0.4 "apollo" (?) [diff](https://github.com/adamrenklint/bap/compare/v0.3.0...v0.4.0)
 
+- **BREAKING:** Changed bitcrusher normalization frequency attribute to a proper frequency range [#37](https://github.com/adamrenklint/bap/issues/37)
 - Added ```connect``` method to kit, slot, layer, channel and note, making them connectable with bap effect factories or vanilla WAA effect nodes
 - Added reverb, delay, compressor and overdrive effect factories for sample and oscillator layers [#15](https://github.com/adamrenklint/bap/issues/15)
+- Added pattern volume attribute and master bap.volume attribute
 - Improved performance and memory footprint with general Web Audio node pooling
 
 ## v0.3 "pete" (2015-09-03) [diff](https://github.com/adamrenklint/bap/compare/v0.2.2...v0.3.0)
@@ -47,4 +49,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday September 9th, 2015 - 12:30:11 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Tuesday September 22nd, 2015 - 9:43:10 AM*

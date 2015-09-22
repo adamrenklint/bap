@@ -82,6 +82,7 @@ pattern.kit(1, kit).start();
 ### bap
 
 - ```clock``` reference to [clock](#clock) singleton
+- ```volume``` number between 0 and 999, master volume setting, defaults to 100
 - ```kit(params)``` returns a new [kit](#kit)
 - ```slot(params)``` returns a new [slot](#slot)
 - ```layer(params)``` returns a new [layer](#layer)
@@ -91,6 +92,10 @@ pattern.kit(1, kit).start();
 - ```sequence(sequence..., params)``` returns a new [sequence](#sequence)
 - ```channel(params)``` returns a new [channel](#channel)
 - ```note(params)``` returns a new [note](#note)
+- ```reverb(params)``` returns a new [reverb](#reverb)
+- ```delay(params)``` returns a new [delay](#delay)
+- ```compressor(params)``` returns a new [compressor](#compressor)
+- ```overdrive(params)``` returns a new [overdrive](#overdrive)
 
 #### params
 
@@ -122,7 +127,7 @@ pattern.kit(1, kit).start();
 - ```slot(id)``` returns existing or blank slot with id
 - ```slot(id, slot)``` assign slot instance to id
 - ```slot(slot)``` assign slot instance to next id
-- ```connect(effect)``` route output signal to destination via effect
+- ```connect(effect)``` route output signal to destination via effect or chain
 
 ### slot
 
@@ -135,13 +140,13 @@ pattern.kit(1, kit).start();
 - ```start([params])``` start playback of slot immediately
 - ```stop(time, [params])``` stop playback of slot at (AudioContext) time
 - ```stop([params])``` stop playback of slot immediately
-- ```connect(effect)``` route output signal to destination via effect
+- ```connect(effect)``` route output signal to destination via effect or chain
 
 ### layer
 
 - ```start(time, [params])``` start playback of slot at (AudioContext) time
 - ```start([params])``` start playback of slot immediately
-- ```connect(effect)``` route output signal to destination via effect
+- ```connect(effect)``` route output signal to destination via effect or chain
 
 #### oscillator
 
@@ -158,16 +163,17 @@ pattern.kit(1, kit).start();
 - ```loop``` number, loop length in seconds, defaults to ```0``` i.e. not looping
 - ```slice(pieces)``` returns a kit with the sample sliced into even-sized sections
 - ```bitcrush``` number between 0 and 16, resamples waveform to defined bit depth, defaults to ```0```, i.e. no resampling
-- ```bitcrushFreq``` number between 0 and 100, normalization frequency at which to apply the bitcrusher effect, defaults to 30
+- ```bitcrushFrequency``` number between 20 and 22050, normalization frequency at which to apply the bitcrusher effect, defaults to 6500
 - ```bitcrushMix``` number between 0 and 100, ratio of wet bitcrushed signal to mix with dry signal, defaults to 50
 
 ### pattern
 
 - ```playing``` boolean, current state of playback, can be changed to start or pause
-- ```tempo``` number, playback tempo in bpm, defaults to ```120```
-- ```bars``` number, length of pattern in bars, defaults to ```1```
-- ```beatsPerBar``` number, amount of beats per bar, defaults to ```4```
+- ```tempo``` number, playback tempo in bpm, defaults to 120
+- ```bars``` number, length of pattern in bars, defaults to 1
+- ```beatsPerBar``` number, amount of beats per bar, defaults to 4
 - ```loop``` boolean, define if pattern should loop, defaults to true
+- ```volume``` number between 0 and 999, master volume for pattern, defaults to 100
 - ```transform``` function to be called after expanding position expressions into notes, called after ```channel.transform```
 - ```channel()``` returns a blank channel assigned to next id
 - ```channel(id)``` returns existing or blank channel with id
@@ -197,20 +203,20 @@ pattern.kit(1, kit).start();
 
 - ```transform``` function to be called after expanding position expressions into notes, called after ```note.transform```, can return ```false``` to not execute ```pattern.transform```
 - ```add(note, note, ...)``` schedule note(s) to be played within context of channel
-- ```connect(effect)``` route output signal to destination via effect
+- ```connect(effect)``` route output signal to destination via effect or chain
 
 ### note
 
 - ```transform``` function to be called after expanding position expressions into notes, called before ```channel.transform```, can return ```false``` to not execute ```channel.transform```
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
-- ```connect(effect)``` route output signal to destination via effect
+- ```connect(effect)``` route output signal to destination via effect or chain
 
 ### reverb
 
-- ```time``` number, impulse time in seconds, defaults to 1
 - ```wet``` number between 0 and 999, amount of wet signal, defaults to 30
 - ```dry``` number between 0 and 999, amount of dry signal, defaults to 100
+- ```time``` number, impulse time in seconds, defaults to 1
 - ```decay``` number, drop off time in seconds, defaults to 3
 - ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
 - ```cutoff``` number, frequency where filter is applied, defaults to 2000
@@ -218,9 +224,9 @@ pattern.kit(1, kit).start();
 
 ### delay
 
-- ```time``` number, delay time in seconds, defaults to 0.3
 - ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
 - ```dry``` number between 0 and 999, amount of dry signal, defaults to 100
+- ```time``` number, delay time in seconds, defaults to 0.3
 - ```feedback``` number, amount of regeneration from processed signal, defaults to 50
 - ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
 - ```cutoff``` number, frequency where filter is applied, defaults to 2000
@@ -232,14 +238,17 @@ pattern.kit(1, kit).start();
 - ```ratio``` number between 0 and 20, amount of change in dB needed in input for 1 dB change in the output, defaults to 12
 - ```reduction``` number between -20 and 0, amount of gain reduction applied by the compressor to the signal, defaults to -20
 - ```attack``` number, seconds required to reduce the gain by 10 dB, defaults to 0
-- ```release```, number, seconds required to increase the gain by 10 dB, defaults to 0.25
+- ```release``` number, seconds required to increase the gain by 10 dB, defaults to 0.25
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
 
 ### overdrive
 
-- ```gain``` number between 0 and 24, amount of dB increase of signal, defaults to 1
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
 - ```preBand``` number between 0 and 100, amount of preband filtering, defaults to 50
 - ```color``` number between 20 and 22050, frequency cutoff for preband filtering, defaults to 800
 - ```postCut``` number between 20 and 22050, frequency cutoff for post filter, defaults to 3000
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
 
 ## Feedback and issues
 
@@ -276,4 +285,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday September 9th, 2015 - 12:30:11 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Tuesday September 22nd, 2015 - 9:43:10 AM*

@@ -74,7 +74,7 @@ function boombap () {
     attack: 0.01,
     release: 0.01
   }));
-  bassKit.connect(bap.overdrive({ dry: 120, wet: 40, gain: 80 }));
+  // bassKit.connect(bap.overdrive({ dry: 120, wet: 40, gain: 80 }));
 
   var boombapPattern = bap.pattern({ bars: 2, tempo: 90 });
   boombapPattern.channel(1).add(
