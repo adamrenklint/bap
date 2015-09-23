@@ -56,6 +56,7 @@
 - ```slot(id, slot)``` assign slot instance to id
 - ```slot(slot)``` assign slot instance to next id
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 ### slot
 
@@ -69,12 +70,14 @@
 - ```stop(time, [params])``` stop playback of slot at (AudioContext) time
 - ```stop([params])``` stop playback of slot immediately
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 ### layer
 
 - ```start(time, [params])``` start playback of slot at (AudioContext) time
 - ```start([params])``` start playback of slot immediately
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 #### oscillator
 
@@ -132,6 +135,7 @@
 - ```transform``` function to be called after expanding position expressions into notes, called after ```note.transform```, can return ```false``` to not execute ```pattern.transform```
 - ```add(note, note, ...)``` schedule note(s) to be played within context of channel
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 ### note
 
@@ -139,6 +143,7 @@
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 ### reverb
 
@@ -149,6 +154,7 @@
 - ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
 - ```cutoff``` number, frequency where filter is applied, defaults to 2000
 - ```reverse``` boolean, defaults to false
+- ```bypass``` boolean, defaults to false
 
 ### delay
 
@@ -158,6 +164,7 @@
 - ```feedback``` number, amount of regeneration from processed signal, defaults to 50
 - ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
 - ```cutoff``` number, frequency where filter is applied, defaults to 2000
+- ```bypass``` boolean, defaults to false
 
 ### compressor
 
@@ -168,6 +175,7 @@
 - ```attack``` number, seconds required to reduce the gain by 10 dB, defaults to 0
 - ```release``` number, seconds required to increase the gain by 10 dB, defaults to 0.25
 - ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
 
 ### overdrive
 
@@ -177,3 +185,4 @@
 - ```color``` number between 20 and 22050, frequency cutoff for preband filtering, defaults to 800
 - ```postCut``` number between 20 and 22050, frequency cutoff for post filter, defaults to 3000
 - ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
