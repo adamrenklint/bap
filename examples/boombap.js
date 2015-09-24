@@ -75,7 +75,18 @@ function boombap () {
     release: 0.01
   }));
   var overdrive = bap.overdrive({ dry: 120, wet: 40, gain: 60 });
-  bassKit.connect(overdrive);
+  var delay = bap.delay();
+  var reverb = bap.reverb();
+  setInterval(function () {
+    overdrive.bypass=!overdrive.bypass;
+    if (!bassKit.bypass.length) {
+      bassKit.bypass = ['reverb', 'delay'];
+    }
+    else {
+      bassKit.bypass.pop()
+    }
+  }, 2500)
+  bassKit.connect([reverb,  delay, overdrive]);
 
   var boombapPattern = bap.pattern({ bars: 2, tempo: 90 });
   // boombapPattern.channel(1).add(
