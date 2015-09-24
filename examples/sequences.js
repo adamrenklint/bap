@@ -58,6 +58,7 @@ function sequences () {
     bitcrush: 12,
     volume: 20
   }));
+  drumKit.connect(bap.filter({ type: 'lowpass' }));
 
   var drumPattern = bap.pattern({ bars: 2 }).kit(1, drumKit);
   drumPattern.channel(1).add(
@@ -107,7 +108,8 @@ function sequences () {
     mainLoop
   );
 
-  bap.clock.sequence = arrangedBeat;
+  // bap.clock.sequence = arrangedBeat;
+  bap.clock.sequence = mainLoop;
 }
 
 module.exports = sequences;
