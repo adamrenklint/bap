@@ -68,7 +68,7 @@
     "watchify": "3.1.0"
   },
   "config": {
-    "coverageLimit": 70,
+    "coverageLimit": 60,
     "codeclimateCoverageId": "0959870e0a36bca751d63c1e3bf90fea270b45819b14674be83428c23ffe47ea"
   },
   "scripts": {
