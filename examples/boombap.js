@@ -37,7 +37,7 @@ function boombap () {
     sync: true,
     feedback: 30,
     cutoff: 5000,
-    wet: 25
+    wet: 10
   }));
   plongKit.slot('Q').layer(bap.sample({
     src: 'sounds/plong1.wav',
