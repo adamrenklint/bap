@@ -3,8 +3,8 @@ var bap = require('../index');
 function boombap () {
   var drumKit = bap.kit();
   drumKit.connect(bap.compressor({
-    threshold: -12,
-    gain: 110
+    threshold: -8,
+    gain: 120
   }));
 
   // three ways to add a sample layer to a slot
