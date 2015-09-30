@@ -23,8 +23,6 @@ function metronome () {
     ['*.2%1.01', '1W']
   );
 
-  var reverb = bap.reverb();
-
   bap.clock.sequence = pattern.kit(kit);
 }
 
