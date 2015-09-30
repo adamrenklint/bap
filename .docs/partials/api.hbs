@@ -160,8 +160,9 @@
 
 - ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
 - ```dry``` number between 0 and 999, amount of dry signal, defaults to 100
-- ```time``` number, delay time in seconds, defaults to 0.3
-- ```feedback``` number, amount of regeneration from processed signal, defaults to 50
+- ```sync``` boolean, sync delay with current tempo, defaults to false
+- ```time``` number between 0.001 and 4, delay time in seconds (or beats if sync is true), defaults to 0.3
+- ```feedback``` number between 0 and 999, amount of regeneration from processed signal, defaults to 50
 - ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
 - ```cutoff``` number, frequency where filter is applied, defaults to 2000
 - ```bypass``` boolean, defaults to false
