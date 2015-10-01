@@ -2,19 +2,21 @@ var bap = require('../index');
 
 function boombap () {
   var drumKit = bap.kit();
-  drumKit.connect(bap.compressor({
-    threshold: -8,
-    gain: 120
-  }));
+  var drumCompressor = bap.compressor({
+    threshold: -12,
+    gain: 110
+  });
 
   // three ways to add a sample layer to a slot
   drumKit.slot('Q').layer('sounds/kick.wav');
+  drumKit.slot('Q').connect(drumCompressor);
   var snare = bap.sample('sounds/snare.wav');
   drumKit.slot('W').layer(snare);
+  drumKit.slot('W').connect(drumCompressor);
   drumKit.slot('W').connect(bap.reverb({
     filter: 'notch',
     cutoff: 1000,
-    wet: 3,
+    wet: 5,
     dry: 80
   }));
   drumKit.slot('E').layer(bap.sample({
@@ -23,7 +25,7 @@ function boombap () {
   }));
   drumKit.slot('E').connect(bap.reverb({
     wet: 5,
-    dry: 80,
+    dry: 70,
     time: 0.5,
     cutoff: 5000
   }));
@@ -122,11 +124,11 @@ function boombap () {
 
   boombapPattern.channel(5).add(
     ['1.1.01', '4Q', 60, 80, -90],
-    ['1.2.72', '4Q', 15, 50, -90, { attack: 0.01, release: 0.01 }],
-    ['1.3.02', '4Q', 40, 80, -90],
+    ['1.2.72', '4Q', 15, 50, -90],
+    ['1.3.02', '4Q', 41, 80, -90],
     ['1.4.01', '4Q', 40, 60, -72],
-    ['1.4.51', '4Q', 100, 80, -52],
-    ['2.3.51', '4Q', 60, 80, -116],
+    ['1.4.51', '4Q', 96, 80, -52],
+    ['2.3.51', '4Q', 55, 80, -116],
     ['2.4.51', '4Q', 40, 80, -96]
   );
 
