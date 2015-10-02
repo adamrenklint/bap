@@ -3,8 +3,9 @@ var bap = require('../index');
 function effects () {
 
   var baseSample = bap.sample({
-    src: 'sounds/plong1.wav',
-    duration: 120
+    src: 'sounds/plong2.wav',
+    duration: 120,
+    volume: 80
   });
 
   // reverb
@@ -86,9 +87,9 @@ function effects () {
 
   bap.clock.sequence = bap.sequence(
     compressorPattern,
-    // overdrivePattern,
-    // reverbPattern,
-    // delayPattern,
+    overdrivePattern,
+    reverbPattern,
+    delayPattern,
     { loop: true }
   );
 }
