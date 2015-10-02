@@ -3,7 +3,7 @@ var bap = require('../index');
 function effects () {
 
   var baseSample = bap.sample({
-    src: 'sounds/plong2.wav',
+    src: 'sounds/plong1.wav',
     duration: 120,
     volume: 80
   });
