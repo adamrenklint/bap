@@ -63,7 +63,7 @@ function slices () {
 
   bap.clock.sequence = pattern
     .kit(1, sampleKit)
-    .kit(2, breakKit);
+    // .kit(2, breakKit);
 }
 
 module.exports = slices;

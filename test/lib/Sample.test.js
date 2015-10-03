@@ -34,4 +34,67 @@ describe('Sample', function () {
       });
     });
   });
+
+  describe('Sample.getNewBufferChannelCount(params, buffer)', function () {
+    [
+      [2, 'left', 1],
+      [2, 'right', 1],
+      [2, 'merge', 1],
+      [2, 'diff', 1],
+      [2, null, 2],
+      [1, 'left', 1],
+      [1, 'right', 1],
+      [1, 'merge', 1],
+      [1, 'diff', 1],
+      [1, null, 1]
+    ].forEach(function (test) {
+      describe('when a buffer with ' + test[0] + ' is processed with params.channel defined as "' + test[1] + '"', function () {
+        it('should return the correct new channel count (' + test[2] + ')', function () {
+          var params = { channel: test[1] };
+          var buffer = { numberOfChannels: test[0] };
+          var result = Sample.getNewBufferChannelCount(params, buffer);
+          expect(result).to.equal(test[2]);
+        });
+      });
+    });
+  });
+
+  describe('Sample.getNewBufferSize(params, buffer)', function () {
+    describe('when params.trimToZeroCrossingPoint is true', function () {
+      describe('when params.loop is true', function () {
+        it('should not add Sample.silentTailSize', function () {
+          var params = { length: 1, loop: 0.5, trimToZeroCrossingPoint: true };
+          var buffer = { sampleRate: 44100 };
+          var result = Sample.getNewBufferSize(params, buffer);
+          expect(result).to.equal(22050);
+        });
+      });
+      describe('when params.loop is false', function () {
+        it('should add Sample.silentTailSize', function () {
+          var params = { length: 1, loop: 0, trimToZeroCrossingPoint: true };
+          var buffer = { sampleRate: 44100 };
+          var result = Sample.getNewBufferSize(params, buffer);
+          expect(result).to.equal(44100 + Sample.silentTailSize);
+        });
+      });
+    });
+    describe('when params.trimToZeroCrossingPoint is false', function () {
+      describe('when params.loop is true', function () {
+        it('should not add Sample.silentTailSize', function () {
+          var params = { length: 1, loop: 0.5, trimToZeroCrossingPoint: false };
+          var buffer = { sampleRate: 44100 };
+          var result = Sample.getNewBufferSize(params, buffer);
+          expect(result).to.equal(22050);
+        });
+      });
+      describe('when params.loop is false', function () {
+        it('should not add Sample.silentTailSize', function () {
+          var params = { length: 1, loop: 0, trimToZeroCrossingPoint: false };
+          var buffer = { sampleRate: 44100 };
+          var result = Sample.getNewBufferSize(params, buffer);
+          expect(result).to.equal(44100);
+        });
+      });
+    });
+  });
 });
