@@ -4,8 +4,9 @@ function effects () {
 
   var baseSample = bap.sample({
     src: 'sounds/plong1.wav',
-    duration: 120,
-    volume: 80
+    duration: 96,
+    volume: 80,
+    release: 0.05
   });
 
   // reverb
@@ -105,12 +106,33 @@ function effects () {
     ['2.3.01', '1R']
   );
 
+  // chorus
+
+  var chorusKit = bap.kit();
+  var defaultChorus = bap.chorus();
+  chorusKit.slot('Q').layer(baseSample.with()).connect(defaultChorus);
+  var secondChorus = bap.chorus({ rate: 5 });
+  chorusKit.slot('W').layer(baseSample.with()).connect(secondChorus);
+  var thirdChorus = bap.chorus({ feedback: 0.8 });
+  chorusKit.slot('E').layer(baseSample.with()).connect(thirdChorus);
+  var fourthChorus = bap.chorus({ rate: 10, delay: 0.01, feedback: 0.6 });
+  chorusKit.slot('R').layer(baseSample.with()).connect(fourthChorus);
+
+  var chorusPattern = bap.pattern({ bars: 2 }).kit(1, chorusKit);
+  chorusPattern.channel().add(
+    ['1.1.01', '1Q'],
+    ['1.3.01', '1W'],
+    ['2.1.01', '1E'],
+    ['2.3.01', '1R']
+  );
+
   bap.clock.sequence = bap.sequence(
+    reverbPattern,
+    delayPattern,
     filterPattern,
     compressorPattern,
     overdrivePattern,
-    reverbPattern,
-    delayPattern,
+    chorusPattern,
     { loop: true }
   );
 }

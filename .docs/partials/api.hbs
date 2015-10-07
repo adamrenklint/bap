@@ -187,3 +187,25 @@
 - ```postCut``` number between 20 and 22050, frequency cutoff for post filter, defaults to 3000
 - ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
 - ```bypass``` boolean, defaults to false
+
+### filter
+
+- based on  [BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```shape``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
+- ```frequency``` number between 20 and 22050, frequency at which to apply effect, defaults to 440
+- ```q``` number between 0.001 and 100, controls the frequency band width or peak at cutoff, defaults to 1
+- ```value``` number between -999 and 999, amount of gain to affected frequency band, defaults to 0
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### chorus
+
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```rate``` number between 0.01 and 99, defaults to 1.5
+- ```feedback``` number between 0 and 999, defaults to 0.2
+- ```delay``` number between 0 and 1, defaults to 0.005
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
