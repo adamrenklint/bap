@@ -126,6 +126,35 @@ function effects () {
     ['2.3.01', '1R']
   );
 
+  // phaser
+
+  var basePhaserSample = bap.sample({
+    src: 'sounds/slices.wav',
+    attack: 0.01,
+    release: 0.01,
+    bitcrush: 12,
+    offset: 1.68,
+    length: 0.690,
+    volume: 200
+  });
+  var phaserKit = bap.kit();
+  var defaultPhaser = bap.phaser();
+  phaserKit.slot('Q').layer(basePhaserSample.with()).connect(defaultPhaser);
+  var secondPhaser = bap.phaser({ rate: 3, depth: 0.9 });
+  phaserKit.slot('W').layer(basePhaserSample.with()).connect(secondPhaser);
+  var thirdPhaser = bap.phaser({ rate: 8, depth: 1 });
+  phaserKit.slot('E').layer(basePhaserSample.with()).connect(thirdPhaser);
+  var fourthPhaser = bap.phaser({ rate: 5, depth: 0.5, feedback: 0.8 });
+  phaserKit.slot('R').layer(basePhaserSample.with()).connect(fourthPhaser);
+
+  var phaserPattern = bap.pattern({ bars: 2 }).kit(1, phaserKit);
+  phaserPattern.channel().add(
+    ['1.1.01', '1Q'],
+    ['1.3.01', '1W'],
+    ['2.1.01', '1E'],
+    ['2.3.01', '1R']
+  );
+
   bap.clock.sequence = bap.sequence(
     reverbPattern,
     delayPattern,
@@ -133,6 +162,7 @@ function effects () {
     compressorPattern,
     overdrivePattern,
     chorusPattern,
+    phaserPattern,
     { loop: true }
   );
 }
