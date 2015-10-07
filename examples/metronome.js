@@ -3,8 +3,8 @@ var bap = require('../index');
 function metronome () {
   var kit = bap.kit();
   var basic = bap.oscillator({
-    attack: 0.001,
-    release: 0.1,
+    attack: 0.01,
+    release: 0.05,
     length: 0.08
   });
 
@@ -17,7 +17,7 @@ function metronome () {
   kit.slot('W', nextSlot);
 
   // create the pattern and add notes using expressions
-  var pattern = bap.pattern({ bars: 2, tempo: 140 });
+  var pattern = bap.pattern({ bars: 2, tempo: 120 });
   pattern.channel(1).add(
     ['*.1.01',   '1Q'],
     ['*.2%1.01', '1W']

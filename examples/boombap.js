@@ -2,16 +2,45 @@ var bap = require('../index');
 
 function boombap () {
   var drumKit = bap.kit();
+  var drumCompressor = bap.compressor({
+    threshold: -12,
+    gain: 110
+  });
+
   // three ways to add a sample layer to a slot
   drumKit.slot('Q').layer('sounds/kick.wav');
+  drumKit.slot('Q').connect(drumCompressor);
   var snare = bap.sample('sounds/snare.wav');
   drumKit.slot('W').layer(snare);
+  drumKit.slot('W').connect(drumCompressor);
+  drumKit.slot('W').connect(bap.reverb({
+    filter: 'notch',
+    cutoff: 1000,
+    wet: 5,
+    dry: 80
+  }));
   drumKit.slot('E').layer(bap.sample({
     src: 'sounds/hihat.wav',
     volume: 50
   }));
+  drumKit.slot('E').connect(bap.reverb({
+    wet: 5,
+    dry: 70,
+    time: 0.5,
+    cutoff: 5000
+  }));
 
-  var plongKit = bap.kit();
+  var plongKit = bap.kit({
+    volume: 90
+  });
+  plongKit.connect(bap.delay({
+    filter: 'highshelf',
+    time: 0.5,
+    sync: true,
+    feedback: 30,
+    cutoff: 5000,
+    wet: 10
+  }));
   plongKit.slot('Q').layer(bap.sample({
     src: 'sounds/plong1.wav',
     duration: 95
@@ -21,7 +50,14 @@ function boombap () {
     duration: 60
   }));
 
-  var stringKit = bap.kit();
+  var stringKit = bap.kit({
+    volume: 90
+  });
+  stringKit.connect(bap.reverb({
+    wet: 5,
+    dry: 90,
+    cutoff: 2500
+  }));
   stringKit.slot('Q').layer(bap.sample({
     src: 'sounds/string1.wav',
     duration: 90
@@ -39,8 +75,10 @@ function boombap () {
   bassKit.slot('Q').layer(bap.sample({
     src: 'sounds/bass.wav',
     attack: 0.01,
-    release: 0.01
+    release: 0.05
   }));
+  var overdrive = bap.overdrive({ dry: 110, wet: 40, gain: 60 });
+  bassKit.connect(overdrive);
 
   var boombapPattern = bap.pattern({ bars: 2, tempo: 90 });
   boombapPattern.channel(1).add(
@@ -89,7 +127,7 @@ function boombap () {
     ['1.2.72', '4Q', 15, 50, -90],
     ['1.3.02', '4Q', 40, 80, -90],
     ['1.4.01', '4Q', 40, 60, -72],
-    ['1.4.51', '4Q', 100, 80, -52],
+    ['1.4.51', '4Q', 96, 80, -52],
     ['2.3.51', '4Q', 60, 80, -116],
     ['2.4.51', '4Q', 40, 80, -96]
   );

@@ -27,7 +27,7 @@ describe('Bap', function () {
     'pattern',
     'sequence',
     'channel',
-    'note',
+    'note'
   ].forEach(function (name) {
     it('should expose factory for "' + name + '"', function () {
       expect(bap[name]).to.be.a('function');
