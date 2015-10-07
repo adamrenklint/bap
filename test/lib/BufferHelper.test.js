@@ -22,7 +22,7 @@ function MockBuffer(params, channels) {
 
 describe('BufferHelper', function () {
 
-  describe('getNewBufferChannelCount(params, buffer)', function () {
+  describe('getChannelCount(params, buffer)', function () {
     [
       [2, 'left', 1],
       [2, 'right', 1],
@@ -39,21 +39,21 @@ describe('BufferHelper', function () {
         it('should return the correct new channel count (' + test[2] + ')', function () {
           var params = { channel: test[1] };
           var buffer = { numberOfChannels: test[0] };
-          var result = BufferHelper.getNewBufferChannelCount(params, buffer);
+          var result = BufferHelper.getChannelCount(params, buffer);
           expect(result).to.equal(test[2]);
         });
       });
     });
   });
 
-  describe('getNewBufferSourceChannel(params, buffer)', function () {
+  describe('getSourceChannel(params, buffer)', function () {
     describe('when buffer has one channel', function () {
       ['left', 'right', 'merge', 'diff', null].forEach(function (channel) {
         describe('when params.channel is "' + channel + '"', function () {
           it('should target the first channel', function () {
             var params = { channel: channel };
             var buffer = { numberOfChannels: 1 };
-            var result = BufferHelper.getNewBufferSourceChannel(params, buffer);
+            var result = BufferHelper.getSourceChannel(params, buffer);
             expect(result).to.equal(0);
           });
         });
@@ -64,7 +64,7 @@ describe('BufferHelper', function () {
         it('should target the first channel', function () {
           var params = { channel: 'left' };
           var buffer = { numberOfChannels: 2 };
-          var result = BufferHelper.getNewBufferSourceChannel(params, buffer);
+          var result = BufferHelper.getSourceChannel(params, buffer);
           expect(result).to.equal(0);
         });
       });
@@ -72,7 +72,7 @@ describe('BufferHelper', function () {
         it('should target the second channel', function () {
           var params = { channel: 'right' };
           var buffer = { numberOfChannels: 2 };
-          var result = BufferHelper.getNewBufferSourceChannel(params, buffer);
+          var result = BufferHelper.getSourceChannel(params, buffer);
           expect(result).to.equal(1);
         });
       });
@@ -80,7 +80,7 @@ describe('BufferHelper', function () {
         it('should return a null target', function () {
           var params = { channel: 'merge' };
           var buffer = { numberOfChannels: 2 };
-          var result = BufferHelper.getNewBufferSourceChannel(params, buffer);
+          var result = BufferHelper.getSourceChannel(params, buffer);
           expect(result).to.equal(null);
         });
       });
@@ -88,19 +88,19 @@ describe('BufferHelper', function () {
         it('should return a null target', function () {
           var params = { channel: 'diff' };
           var buffer = { numberOfChannels: 2 };
-          var result = BufferHelper.getNewBufferSourceChannel(params, buffer);
+          var result = BufferHelper.getSourceChannel(params, buffer);
           expect(result).to.equal(null);
         });
       });
     });
   });
 
-  describe('getNewBufferSourceStartIndex(params, buffer)', function () {
+  describe('getSourceStartIndex(params, buffer)', function () {
     describe('when params.offset is 0', function () {
       it('should return the first frame index', function () {
         var params = { offset: 0 };
         var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 });
-        var result = BufferHelper.getNewBufferSourceStartIndex(params, buffer);
+        var result = BufferHelper.getSourceStartIndex(params, buffer);
         expect(result).to.equal(0);
       });
     });
@@ -110,7 +110,7 @@ describe('BufferHelper', function () {
           expect(function () {
             var params = { offset: 7 };
             var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-            BufferHelper.getNewBufferSourceStartIndex(params, buffer);
+            BufferHelper.getSourceStartIndex(params, buffer);
           }).to.throw('Invalid buffer source start index');
         });
       });
@@ -119,7 +119,7 @@ describe('BufferHelper', function () {
           expect(function () {
             var params = { offset: 6 };
             var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-            BufferHelper.getNewBufferSourceStartIndex(params, buffer);
+            BufferHelper.getSourceStartIndex(params, buffer);
           }).to.throw('Invalid buffer source start index');
         });
       });
@@ -127,19 +127,19 @@ describe('BufferHelper', function () {
         it('should return the offset in frames', function () {
           var params = { offset: 4 };
           var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-          var result = BufferHelper.getNewBufferSourceStartIndex(params, buffer);
+          var result = BufferHelper.getSourceStartIndex(params, buffer);
           expect(result).to.equal(4 * 44100);
         });
       });
     });
   });
 
-  describe('getNewBufferTargetStartIndex(params)', function () {
+  describe('getTargetStartIndex(params)', function () {
     describe('when params.trimToZeroCrossingPoint is true', function () {
       describe('when params.reverse is false', function () {
         it('should return 0', function () {
           var params = { trimToZeroCrossingPoint: true, reverse: false };
-          var result = BufferHelper.getNewBufferTargetStartIndex(params);
+          var result = BufferHelper.getTargetStartIndex(params);
           expect(result).to.equal(0);
         });
       });
@@ -147,14 +147,14 @@ describe('BufferHelper', function () {
         describe('when params.loop is 0', function () {
           it('should return offset by BufferHelper.silentTailSize', function () {
             var params = { trimToZeroCrossingPoint: true, reverse: true, loop: 0 };
-            var result = BufferHelper.getNewBufferTargetStartIndex(params);
+            var result = BufferHelper.getTargetStartIndex(params);
             expect(result).to.equal(BufferHelper.silentTailSize);
           });
         });
         describe('when params.loop is not 0', function () {
           it('should return 0', function () {
             var params = { trimToZeroCrossingPoint: true, reverse: true, loop: 1.2 };
-            var result = BufferHelper.getNewBufferTargetStartIndex(params);
+            var result = BufferHelper.getTargetStartIndex(params);
             expect(result).to.equal(0);
           });
         });
@@ -164,27 +164,27 @@ describe('BufferHelper', function () {
       describe('when params.reverse is false', function () {
         it('should return 0', function () {
           var params = { trimToZeroCrossingPoint: false, reverse: false };
-          var result = BufferHelper.getNewBufferTargetStartIndex(params);
+          var result = BufferHelper.getTargetStartIndex(params);
           expect(result).to.equal(0);
         });
       });
       describe('when params.reverse is true', function () {
         it('should return 0', function () {
           var params = { trimToZeroCrossingPoint: false, reverse: true };
-          var result = BufferHelper.getNewBufferTargetStartIndex(params);
+          var result = BufferHelper.getTargetStartIndex(params);
           expect(result).to.equal(0);
         });
       });
     });
   });
 
-  describe('getNewBufferCopyLength(params, buffer)', function () {
+  describe('getCopyLength(params, buffer)', function () {
     describe('when params.offset is 0', function () {
       describe('when params.length is less than buffer.duration', function () {
         it('should return params.length in frames', function () {
           var params = { offset: 0, length: 2 };
           var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-          var result = BufferHelper.getNewBufferCopyLength(params, buffer);
+          var result = BufferHelper.getCopyLength(params, buffer);
           expect(result).to.equal(88200);
         });
       });
@@ -192,7 +192,7 @@ describe('BufferHelper', function () {
         it('should return params.length in frames', function () {
           var params = { offset: 0, length: 2 };
           var buffer = new MockBuffer({ numberOfChannels: 1, length: 2 * 44100 });
-          var result = BufferHelper.getNewBufferCopyLength(params, buffer);
+          var result = BufferHelper.getCopyLength(params, buffer);
           expect(result).to.equal(88200);
         });
       });
@@ -200,7 +200,7 @@ describe('BufferHelper', function () {
         it('should return buffer.length', function () {
           var params = { offset: 0, length: 2 };
           var buffer = new MockBuffer({ numberOfChannels: 1, length: 44100 });
-          var result = BufferHelper.getNewBufferCopyLength(params, buffer);
+          var result = BufferHelper.getCopyLength(params, buffer);
           expect(result).to.equal(44100);
         });
       });
@@ -210,7 +210,7 @@ describe('BufferHelper', function () {
         it('should return params.length in frames', function () {
           var params = { offset: 1, length: 2 };
           var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-          var result = BufferHelper.getNewBufferCopyLength(params, buffer);
+          var result = BufferHelper.getCopyLength(params, buffer);
           expect(result).to.equal(88200);
         });
       });
@@ -218,7 +218,7 @@ describe('BufferHelper', function () {
         it('should return params.length in frames', function () {
           var params = { offset: 4, length: 2 };
           var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-          var result = BufferHelper.getNewBufferCopyLength(params, buffer);
+          var result = BufferHelper.getCopyLength(params, buffer);
           expect(result).to.equal(88200);
         });
       });
@@ -226,26 +226,26 @@ describe('BufferHelper', function () {
         it('should return buffer.length - params.offset in frames', function () {
           var params = { offset: 5, length: 2 };
           var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-          var result = BufferHelper.getNewBufferCopyLength(params, buffer);
+          var result = BufferHelper.getCopyLength(params, buffer);
           expect(result).to.equal(44100);
         });
       });
     });
   });
 
-  describe('getNewBufferRealLength(params, copyLength)', function () {
+  describe('getRealLength(params, copyLength)', function () {
     describe('when params.trimToZeroCrossingPoint is true', function () {
       describe('when params.loop is 0', function () {
         it('should return copyLength + BufferHelper.silentTailSize', function () {
           var params = { trimToZeroCrossingPoint: true, loop: 0 };
-          var result = BufferHelper.getNewBufferRealLength(params, 44100);
+          var result = BufferHelper.getRealLength(params, 44100);
           expect(result).to.equal(44100 + BufferHelper.silentTailSize);
         });
       });
       describe('when params.loop is not 0', function () {
         it('should return copyLength', function () {
           var params = { trimToZeroCrossingPoint: true, loop: 1 };
-          var result = BufferHelper.getNewBufferRealLength(params, 44100);
+          var result = BufferHelper.getRealLength(params, 44100);
           expect(result).to.equal(44100);
         });
       });
@@ -253,7 +253,7 @@ describe('BufferHelper', function () {
     describe('when params.trimToZeroCrossingPoint is false', function () {
       it('should return copyLength', function () {
         var params = { trimToZeroCrossingPoint: false, loop: 0 };
-        var result = BufferHelper.getNewBufferRealLength(params, 44100);
+        var result = BufferHelper.getRealLength(params, 44100);
         expect(result).to.equal(44100);
       });
     });
@@ -392,24 +392,24 @@ describe('BufferHelper', function () {
     });
   });
 
-  describe('trimStartToZeroCrossingPoint(buffer, channel)', function () {
+  describe('trimStart(buffer, channel)', function () {
     it('should mute all frames before first neg>pos zero crossing', function () {
       var buffer = new MockBuffer({ numberOfChannels: 1 }, [
         [-0.3, -0.1, 0.1, 0.3, 0.1, -0.1, -0.4, -0.1, 0.2, 0.3]
       ]);
-      BufferHelper.trimStartToZeroCrossingPoint(buffer, 0);
+      BufferHelper.trimStart(buffer, 0);
       expect(buffer.getChannelData(0).join()).to.equal([
         0, 0, 0.1, 0.3, 0.1, -0.1, -0.4, -0.1, 0.2, 0.3
       ].join());
     });
   });
 
-  describe('trimEndToZeroCrossingPoint(buffer, channel)', function () {
+  describe('trimEnd(buffer, channel)', function () {
     it('should mute all frames after last pos>neg zero crossing', function () {
       var buffer = new MockBuffer({ numberOfChannels: 1 }, [
         [-0.3, -0.1, 0.1, 0.3, 0.1, -0.1, -0.4, -0.1, 0.2, 0.3]
       ]);
-      BufferHelper.trimEndToZeroCrossingPoint(buffer, 0);
+      BufferHelper.trimEnd(buffer, 0);
       expect(buffer.getChannelData(0).join()).to.equal([
         -0.3, -0.1, 0.1, 0.3, 0.1, -0.1, -0.4, -0.1, 0, 0
       ].join());
