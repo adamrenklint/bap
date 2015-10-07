@@ -8,7 +8,7 @@ function sequences () {
     release: 0.01,
     pitch: -40,
     pan: 40
-  }).slice(8);
+  }).connect(bap.filter({ shape: 'highpass', dry: 80, wet: 40 })).slice(8);
 
   var piano1 = bap.pattern({ tempo: 84, bars: 2 });
   piano1.kit(1, lowPianoKit).channel(1).add(
@@ -44,7 +44,7 @@ function sequences () {
   );
 
   var drumKit = bap.kit();
-  drumKit.slot('Q').layer(bap.sample ({
+  drumKit.slot('Q').layer(bap.sample({
     src: 'sounds/kick.wav',
     bitcrush: 12
   }));
@@ -58,7 +58,7 @@ function sequences () {
     bitcrush: 12,
     volume: 20
   }));
-  drumKit.connect(bap.filter({ type: 'lowpass' }));
+  drumKit.connect(bap.filter({ shape: 'lowpass', wet: 40, dry: 80 }));
 
   var drumPattern = bap.pattern({ bars: 2 }).kit(1, drumKit);
   drumPattern.channel(1).add(
@@ -108,8 +108,7 @@ function sequences () {
     mainLoop
   );
 
-  // bap.clock.sequence = arrangedBeat;
-  bap.clock.sequence = mainLoop;
+  bap.clock.sequence = arrangedBeat;
 }
 
 module.exports = sequences;

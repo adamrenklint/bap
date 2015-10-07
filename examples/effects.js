@@ -85,7 +85,28 @@ function effects () {
     ['2.3.01', '1R']
   );
 
+  // filter
+
+  var filterKit = bap.kit();
+  var lowpassFilter = bap.filter({ shape: 'lowpass', frequency: 500 });
+  filterKit.slot('Q').layer(baseSample.with()).connect(lowpassFilter);
+  var highpassFilter = bap.filter({ shape: 'highpass', frequency: 2000 });
+  filterKit.slot('W').layer(baseSample.with()).connect(highpassFilter);
+  var peakingFilter = bap.filter({ shape: 'peaking', frequency: 600, value: 200, gain: 50 });
+  filterKit.slot('E').layer(baseSample.with()).connect(peakingFilter);
+  var highshelfFilter = bap.filter({ shape: 'lowshelf', frequency: 150, value: -300 });
+  filterKit.slot('R').layer(baseSample.with()).connect(highshelfFilter);
+
+  var filterPattern = bap.pattern({ bars: 2 }).kit(1, filterKit);
+  filterPattern.channel().add(
+    ['1.1.01', '1Q'],
+    ['1.3.01', '1W'],
+    ['2.1.01', '1E'],
+    ['2.3.01', '1R']
+  );
+
   bap.clock.sequence = bap.sequence(
+    filterPattern,
     compressorPattern,
     overdrivePattern,
     reverbPattern,
