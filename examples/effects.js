@@ -3,8 +3,9 @@ var bap = require('../index');
 function effects () {
 
   var baseSample = bap.sample({
-    src: 'sounds/plong2.wav',
-    duration: 96
+    src: 'sounds/plong1.wav',
+    duration: 120,
+    volume: 80
   });
 
   // reverb
@@ -67,13 +68,13 @@ function effects () {
   // compressor
 
   var compressorKit = bap.kit();
-  var smallCompressor = bap.compressor({ threshold: -12, ratio: 5, knee: 30 });
+  var smallCompressor = bap.compressor({ threshold: -10, ratio: 10 });
   compressorKit.slot('Q').layer(baseSample.with()).connect(smallCompressor);
-  var mediumCompressor = bap.compressor({ threshold: -20, ratio: 10, knee: 20 });
+  var mediumCompressor = bap.compressor({ threshold: -20, ratio: 10 });
   compressorKit.slot('W').layer(baseSample.with()).connect(mediumCompressor);
-  var bigCompressor = bap.compressor({ threshold: -30, ratio: 15, knee: 15 });
+  var bigCompressor = bap.compressor({ threshold: -30, ratio: 10 });
   compressorKit.slot('E').layer(baseSample.with()).connect(bigCompressor);
-  var hugeCompressor = bap.compressor({ threshold: -40, ratio: 20, knee: 10 });
+  var hugeCompressor = bap.compressor({ threshold: -40, ratio: 10 });
   compressorKit.slot('R').layer(baseSample.with()).connect(hugeCompressor);
 
   var compressorPattern = bap.pattern({ bars: 2 }).kit(1, compressorKit);
@@ -86,9 +87,9 @@ function effects () {
 
   bap.clock.sequence = bap.sequence(
     compressorPattern,
-    // overdrivePattern,
-    // reverbPattern,
-    // delayPattern,
+    overdrivePattern,
+    reverbPattern,
+    delayPattern,
     { loop: true }
   );
 }

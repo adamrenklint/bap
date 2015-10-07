@@ -96,6 +96,7 @@
 - ```bitcrush``` number between 0 and 16, resamples waveform to defined bit depth, defaults to ```0```, i.e. no resampling
 - ```bitcrushFrequency``` number between 20 and 22050, normalization frequency at which to apply the bitcrusher effect, defaults to 6500
 - ```bitcrushMix``` number between 0 and 100, ratio of wet bitcrushed signal to mix with dry signal, defaults to 50
+- ```trimToZeroCrossingPoint``` boolean, automatically trim sample start and end to zero crossing point to avoid clipping, defaults to true
 
 ### pattern
 
@@ -169,10 +170,9 @@
 
 ### compressor
 
-- ```threshold``` number between -100 and 0, decibel value above which the compression will start taking effect, defaults to -24
+- ```threshold``` number between -100 and 0, decibel value above which the compression will start taking effect, defaults to -12
 - ```knee``` number between 0 and 40, decibel value representing the range above the threshold where the curve smoothly transitions to the compressed portion, defaults to 30
 - ```ratio``` number between 0 and 20, amount of change in dB needed in input for 1 dB change in the output, defaults to 12
-- ```reduction``` number between -20 and 0, amount of gain reduction applied by the compressor to the signal, defaults to -20
 - ```attack``` number, seconds required to reduce the gain by 10 dB, defaults to 0
 - ```release``` number, seconds required to increase the gain by 10 dB, defaults to 0.25
 - ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
