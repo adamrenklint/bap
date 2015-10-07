@@ -1,11 +1,12 @@
 # Changelog
 
-## v0.4 "apollo" (?) [diff](https://github.com/adamrenklint/bap/compare/v0.3.0...v0.4.0)
+## v0.4 "apollo" (2015-10-07) [diff](https://github.com/adamrenklint/bap/compare/v0.3.0...v0.4.0)
 
 - **BREAKING:** Changed bitcrusher normalization frequency attribute to a proper frequency range [#37](https://github.com/adamrenklint/bap/issues/37)
 - Added ```connect``` method to kit, slot, layer, channel and note, making them connectable with bap effect factories, using smart, dynamic and performant node creation and routing
-- Added reverb, delay, compressor and overdrive effect factories for sample and oscillator layers [#15](https://github.com/adamrenklint/bap/issues/15)
+- Added reverb, delay, compressor, overdrive, filter, chorus, phaser and ping pong delay effect factories for sample and oscillator layers [#15](https://github.com/adamrenklint/bap/issues/15)
 - Added pattern volume attribute and master bap.volume attribute
+- Added ```trimToZeroCrossingPoint``` param to trim clipping edges from beginning and end from sample buffers
 - Improved performance and memory footprint with general object and Web Audio node pooling, avoiding V8 deopt patterns and allocating temporary memory
 - Removed memoization of lookahead steps for pattern or sequence that is not looping or longer than 16 bars
 
@@ -50,4 +51,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday October 7th, 2015 - 11:43:04 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday October 7th, 2015 - 11:56:06 PM*

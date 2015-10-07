@@ -3,7 +3,7 @@
 ## Bap
 
 - [Website](http://bapjs.org)
-- [Examples](http://examples.bapjs.org)
+- [Examples](http://adamrenklint.com/bap)
 
 ### Credits
 

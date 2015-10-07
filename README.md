@@ -52,7 +52,7 @@ pattern.kit(1, kit).start();
 ## Basic concepts
 
 - Bap runs at *96 ticks per beat*, with a position signature like MPC: ```bar.beat.tick```
-- Kit are like instruments (programs in MPC terms) and contains infinite slots, each with infinite layers of samples and oscillators
+- Kits are like instruments (programs in MPC terms) and contains infinite slots, each with infinite layers of samples and oscillators
 - Patterns are playable collections of channels containing notes, and connect with kits
 - Notes are defined by six main parameters: position, target, duration, volume, pan and pitch
 - Only position and target params are required, all others can be null/falsy/undefined
@@ -62,12 +62,11 @@ pattern.kit(1, kit).start();
 ## Resources
 
 - [Changelog](https://github.com/adamrenklint/bap/blob/master/CHANGELOG.md)
-- [Roadmap](https://github.com/adamrenklint/bap/blob/master/ROADMAP.md)
 - Examples
-  - [Metronome](http://examples.bapjs.org/#metronome)
-  - [Boombap beat](http://examples.bapjs.org/#boombap)
-  - [Sample slices](http://examples.bapjs.org/#slices)
-  - [Multi-layered sequences](http://examples.bapjs.org/#sequences)
+  - [Metronome](http://adamrenklint.com/bap/#metronome)
+  - [Boombap beat](http://adamrenklint.com/bap/#boombap)
+  - [Sample slices](http://adamrenklint.com/bap/#slices)
+  - [Multi-layered sequences](http://adamrenklint.com/bap/#sequences)
 - [Related links](https://github.com/adamrenklint/bap/blob/master/links.md)
 
 ## API
@@ -343,4 +342,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday October 7th, 2015 - 11:43:04 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday October 7th, 2015 - 11:56:06 PM*
