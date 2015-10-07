@@ -96,6 +96,10 @@ pattern.kit(1, kit).start();
 - ```delay(params)``` returns a new [delay](#delay)
 - ```compressor(params)``` returns a new [compressor](#compressor)
 - ```overdrive(params)``` returns a new [overdrive](#overdrive)
+- ```filter(params)``` returns a new [filter](#filter)
+- ```chorus(params)``` returns a new [chorus](#chorus)
+- ```phaser(params)``` returns a new [phaser](#phaser)
+- ```pingpong(params)``` returns a new [ping pong delay](#ping pong delay)
 
 #### params
 
@@ -128,6 +132,7 @@ pattern.kit(1, kit).start();
 - ```slot(id, slot)``` assign slot instance to id
 - ```slot(slot)``` assign slot instance to next id
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 ### slot
 
@@ -141,12 +146,14 @@ pattern.kit(1, kit).start();
 - ```stop(time, [params])``` stop playback of slot at (AudioContext) time
 - ```stop([params])``` stop playback of slot immediately
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 ### layer
 
 - ```start(time, [params])``` start playback of slot at (AudioContext) time
 - ```start([params])``` start playback of slot immediately
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 #### oscillator
 
@@ -165,6 +172,7 @@ pattern.kit(1, kit).start();
 - ```bitcrush``` number between 0 and 16, resamples waveform to defined bit depth, defaults to ```0```, i.e. no resampling
 - ```bitcrushFrequency``` number between 20 and 22050, normalization frequency at which to apply the bitcrusher effect, defaults to 6500
 - ```bitcrushMix``` number between 0 and 100, ratio of wet bitcrushed signal to mix with dry signal, defaults to 50
+- ```trimToZeroCrossingPoint``` boolean, automatically trim sample start and end to zero crossing point to avoid clipping, defaults to true
 
 ### pattern
 
@@ -204,6 +212,7 @@ pattern.kit(1, kit).start();
 - ```transform``` function to be called after expanding position expressions into notes, called after ```note.transform```, can return ```false``` to not execute ```pattern.transform```
 - ```add(note, note, ...)``` schedule note(s) to be played within context of channel
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 ### note
 
@@ -211,6 +220,7 @@ pattern.kit(1, kit).start();
 - ```start([time])``` start playback of note at (AudioContext) time or immediately
 - ```stop([time])``` stop playback of note at (AudioContext) time or immediately
 - ```connect(effect)``` route output signal to destination via effect or chain
+- ```bypass``` boolean to bypass all effects, effect type string or array of strings to bypass specific effect types, defaults to false
 
 ### reverb
 
@@ -221,25 +231,28 @@ pattern.kit(1, kit).start();
 - ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
 - ```cutoff``` number, frequency where filter is applied, defaults to 2000
 - ```reverse``` boolean, defaults to false
+- ```bypass``` boolean, defaults to false
 
 ### delay
 
 - ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
 - ```dry``` number between 0 and 999, amount of dry signal, defaults to 100
-- ```time``` number, delay time in seconds, defaults to 0.3
-- ```feedback``` number, amount of regeneration from processed signal, defaults to 50
+- ```sync``` boolean, sync delay with current tempo, defaults to false
+- ```time``` number between 0.001 and 4, delay time in seconds (or beats if sync is true), defaults to 0.3
+- ```feedback``` number between 0 and 999, amount of regeneration from processed signal, defaults to 50
 - ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
 - ```cutoff``` number, frequency where filter is applied, defaults to 2000
+- ```bypass``` boolean, defaults to false
 
 ### compressor
 
-- ```threshold``` number between -100 and 0, decibel value above which the compression will start taking effect, defaults to -24
+- ```threshold``` number between -100 and 0, decibel value above which the compression will start taking effect, defaults to -12
 - ```knee``` number between 0 and 40, decibel value representing the range above the threshold where the curve smoothly transitions to the compressed portion, defaults to 30
 - ```ratio``` number between 0 and 20, amount of change in dB needed in input for 1 dB change in the output, defaults to 12
-- ```reduction``` number between -20 and 0, amount of gain reduction applied by the compressor to the signal, defaults to -20
 - ```attack``` number, seconds required to reduce the gain by 10 dB, defaults to 0
 - ```release``` number, seconds required to increase the gain by 10 dB, defaults to 0.25
 - ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
 
 ### overdrive
 
@@ -249,6 +262,51 @@ pattern.kit(1, kit).start();
 - ```color``` number between 20 and 22050, frequency cutoff for preband filtering, defaults to 800
 - ```postCut``` number between 20 and 22050, frequency cutoff for post filter, defaults to 3000
 - ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### filter
+
+- based on  [BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```shape``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
+- ```frequency``` number between 20 and 22050, frequency at which to apply effect, defaults to 440
+- ```q``` number between 0.001 and 100, controls the frequency band width or peak at cutoff, defaults to 1
+- ```value``` number between -999 and 999, amount of gain to affected frequency band, defaults to 0
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### chorus
+
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```rate``` number between 0.01 and 99, defaults to 1.5
+- ```feedback``` number between 0 and 999, defaults to 0.2
+- ```delay``` number between 0 and 1, defaults to 0.005
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### phaser
+
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```rate``` number between 0.01 and 99, defaults to 1.5
+- ```depth``` number between 0 and 1, defaults to 0.3
+- ```feedback``` number between 0 and 999, defaults to 0.2
+- ```stereoPhase``` number between 0 and 180, defaults to 45
+- ```modulationFrequency``` number between 500 and 1500, defaults to 750
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### ping pong delay
+
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```feedback``` number between 0 and 1, defaults to 0.2
+- ```left``` number between 0.001 and 10, left channel delay in seconds, defaults to 0.15
+- ```right``` number between 0.001 and 10, right channel delay in seconds, defaults to 0.2
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
 
 ## Feedback and issues
 
@@ -285,4 +343,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Tuesday September 22nd, 2015 - 9:43:10 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday October 7th, 2015 - 11:43:04 PM*
