@@ -155,9 +155,30 @@ function effects () {
     ['2.3.01', '1R']
   );
 
+  // chorus
+
+  var pingPongDelayKit = bap.kit();
+  var defaultPingPongDelay = bap.pingpong();
+  pingPongDelayKit.slot('Q').layer(baseSample.with()).connect(defaultPingPongDelay);
+  var secondPingPongDelay = bap.pingpong({ feedback: 0.6, left: 0.3, right: 0.45 });
+  pingPongDelayKit.slot('W').layer(baseSample.with()).connect(secondPingPongDelay);
+  var thirdPingPongDelay = bap.pingpong({ feedback: 1, left: 0.1, right: 0.08 });
+  pingPongDelayKit.slot('E').layer(baseSample.with()).connect(thirdPingPongDelay);
+  var fourthPingPongDelay = bap.pingpong({ feedback: 0.8, left: 0.2, right: 0.3 });
+  pingPongDelayKit.slot('R').layer(baseSample.with()).connect(fourthPingPongDelay);
+
+  pingPongDelayPattern = bap.pattern({ bars: 2 }).kit(1, pingPongDelayKit);
+  pingPongDelayPattern.channel().add(
+    ['1.1.01', '1Q'],
+    ['1.3.01', '1W'],
+    ['2.1.01', '1E'],
+    ['2.3.01', '1R']
+  );
+
   bap.clock.sequence = bap.sequence(
     reverbPattern,
     delayPattern,
+    pingPongDelayPattern,
     filterPattern,
     compressorPattern,
     overdrivePattern,
