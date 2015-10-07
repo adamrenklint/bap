@@ -54,5 +54,16 @@ describe('Params', function () {
         });
       });
     });
+    describe('attack + release', function () {
+      describe('when length is shorter than attack and release together', function () {
+        it('should reduce them both proportionally', function () {
+          var params = { length: 0.5, attack: 0.4, release: 0.3 };
+          var result = Params.fromSources([new Params(params)]);
+          expect(result.length).to.equal(0.5);
+          expect(result.attack).to.equal((0.5/0.7) * 0.4);
+          expect(result.release).to.equal((0.5/0.7) * 0.3);
+        });
+      });
+    });
   });
 });

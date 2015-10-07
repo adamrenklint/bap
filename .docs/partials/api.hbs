@@ -96,6 +96,7 @@
 - ```bitcrush``` number between 0 and 16, resamples waveform to defined bit depth, defaults to ```0```, i.e. no resampling
 - ```bitcrushFrequency``` number between 20 and 22050, normalization frequency at which to apply the bitcrusher effect, defaults to 6500
 - ```bitcrushMix``` number between 0 and 100, ratio of wet bitcrushed signal to mix with dry signal, defaults to 50
+- ```trimToZeroCrossingPoint``` boolean, automatically trim sample start and end to zero crossing point to avoid clipping, defaults to true
 
 ### pattern
 
@@ -160,18 +161,18 @@
 
 - ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
 - ```dry``` number between 0 and 999, amount of dry signal, defaults to 100
-- ```time``` number, delay time in seconds, defaults to 0.3
-- ```feedback``` number, amount of regeneration from processed signal, defaults to 50
+- ```sync``` boolean, sync delay with current tempo, defaults to false
+- ```time``` number between 0.001 and 4, delay time in seconds (or beats if sync is true), defaults to 0.3
+- ```feedback``` number between 0 and 999, amount of regeneration from processed signal, defaults to 50
 - ```filter``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
 - ```cutoff``` number, frequency where filter is applied, defaults to 2000
 - ```bypass``` boolean, defaults to false
 
 ### compressor
 
-- ```threshold``` number between -100 and 0, decibel value above which the compression will start taking effect, defaults to -24
+- ```threshold``` number between -100 and 0, decibel value above which the compression will start taking effect, defaults to -12
 - ```knee``` number between 0 and 40, decibel value representing the range above the threshold where the curve smoothly transitions to the compressed portion, defaults to 30
 - ```ratio``` number between 0 and 20, amount of change in dB needed in input for 1 dB change in the output, defaults to 12
-- ```reduction``` number between -20 and 0, amount of gain reduction applied by the compressor to the signal, defaults to -20
 - ```attack``` number, seconds required to reduce the gain by 10 dB, defaults to 0
 - ```release``` number, seconds required to increase the gain by 10 dB, defaults to 0.25
 - ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
@@ -184,5 +185,49 @@
 - ```preBand``` number between 0 and 100, amount of preband filtering, defaults to 50
 - ```color``` number between 20 and 22050, frequency cutoff for preband filtering, defaults to 800
 - ```postCut``` number between 20 and 22050, frequency cutoff for post filter, defaults to 3000
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### filter
+
+- based on  [BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode)
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```shape``` string, type of filter (highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch, allpass), defaults to highpass
+- ```frequency``` number between 20 and 22050, frequency at which to apply effect, defaults to 440
+- ```q``` number between 0.001 and 100, controls the frequency band width or peak at cutoff, defaults to 1
+- ```value``` number between -999 and 999, amount of gain to affected frequency band, defaults to 0
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### chorus
+
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```rate``` number between 0.01 and 99, defaults to 1.5
+- ```feedback``` number between 0 and 999, defaults to 0.2
+- ```delay``` number between 0 and 1, defaults to 0.005
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### phaser
+
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```rate``` number between 0.01 and 99, defaults to 1.5
+- ```depth``` number between 0 and 1, defaults to 0.3
+- ```feedback``` number between 0 and 999, defaults to 0.2
+- ```stereoPhase``` number between 0 and 180, defaults to 45
+- ```modulationFrequency``` number between 500 and 1500, defaults to 750
+- ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
+- ```bypass``` boolean, defaults to false
+
+### ping pong delay
+
+- ```wet``` number between 0 and 999, amount of wet signal, defaults to 50
+- ```dry``` number between 0 and 999, amount of dry signal, defaults to 50
+- ```feedback``` number between 0 and 1, defaults to 0.2
+- ```left``` number between 0.001 and 10, left channel delay in seconds, defaults to 0.15
+- ```right``` number between 0.001 and 10, right channel delay in seconds, defaults to 0.2
 - ```gain``` number between 0 and 999, amount of gain to processed signal, defaults to 100
 - ```bypass``` boolean, defaults to false

@@ -3,8 +3,8 @@ var bap = require('../index');
 function metronome () {
   var kit = bap.kit();
   var basic = bap.oscillator({
-    attack: 0.001,
-    release: 0.1,
+    attack: 0.01,
+    release: 0.05,
     length: 0.08
   });
 
@@ -22,11 +22,6 @@ function metronome () {
     ['*.1.01',   '1Q'],
     ['*.2%1.01', '1W']
   );
-
-  var reverb = bap.reverb();
-
-  kit.slot('W').connect(reverb);
-  kit.slot('Q').connect([reverb, bap.delay()]);
 
   bap.clock.sequence = pattern.kit(kit);
 }
