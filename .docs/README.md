@@ -12,6 +12,8 @@ Made by [Adam Renklint](http://adamrenklint.com), Berlin april 2015
 
 {{>concepts}}
 
+{{>issues}}
+
 {{>resources}}
 
 {{>api}}

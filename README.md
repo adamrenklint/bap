@@ -59,6 +59,10 @@ pattern.kit(1, kit).start();
 - Positions containing [expressions](https://github.com/adamrenklint/dilla-expressions#operators) are automatically expanded
 - When a layer is played, it merges the params of the note, channel, layer, slot and kit
 
+## Known issues
+
+- Creating effect nodes on-the-fly is not performing well in Firefox, resulting in clipping on the initial run of a pattern
+
 ## Resources
 
 - [Changelog](https://github.com/adamrenklint/bap/blob/master/CHANGELOG.md)
@@ -342,4 +346,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday October 7th, 2015 - 11:56:06 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday October 8th, 2015 - 9:46:47 AM*
