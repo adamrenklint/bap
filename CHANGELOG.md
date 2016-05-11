@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.1 (2016-05-11) [diff](https://github.com/adamrenklint/bap/compare/v0.4.0...v0.4.1)
+
+- Updated [Dilla](https://github.com/adamrenklint/dilla) to fix an issue with dropping notes on patterns with more than 9 beats per bar [#42](https://github.com/adamrenklint/bap/issues/42)
+
 ## v0.4 "apollo" (2015-10-07) [diff](https://github.com/adamrenklint/bap/compare/v0.3.0...v0.4.0)
 
 - **BREAKING:** Changed bitcrusher normalization frequency attribute to a proper frequency range [#37](https://github.com/adamrenklint/bap/issues/37)
@@ -14,14 +18,14 @@
 
 - Added bitcrusher effect for sample layers [#23](https://github.com/adamrenklint/bap/issues/23)
 - Added ```note.after``` callback that is triggered after a note source has stopped playing
-- Added clock.looped attribute, increases each time a sequence reaches its end
+- Added `clock.looped` attribute, increases each time a sequence reaches its end
 - Added ```trigger``` param on note [#24](https://github.com/adamrenklint/bap/issues/24)
 - Deprecated ```key``` parameter on note [#24](https://github.com/adamrenklint/bap/issues/24)
 - Changed ```pattern > kit``` connection to use numeric ids [#24](https://github.com/adamrenklint/bap/issues/24)
 - Changed ```kit > slot``` connection to use ```QWERTY``` ids [#24](https://github.com/adamrenklint/bap/issues/24)
 - Fixed error when reversing sample without offset and duration longer than actual buffer duration [#25](https://github.com/adamrenklint/bap/issues/25)
-- Fixed clock.tempo dropping to 0 when pausing or stopping playback
-- Fixed bap.clock trowing error when starting playback without sequence
+- Fixed `clock.tempo` dropping to 0 when pausing or stopping playback
+- Fixed `bap.clock` trowing error when starting playback without sequence
 - Fixed playback being completely broken in Safari and Mobile Safari [#30](https://github.com/adamrenklint/bap/issues/30)
 
 ## v0.2.2 (2015-05-26) [diff](https://github.com/adamrenklint/bap/compare/v0.2.1...v0.2.2)
@@ -51,4 +55,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Monday November 30th, 2015 - 9:44:20 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday May 11th, 2016 - 8:39:16 PM*
