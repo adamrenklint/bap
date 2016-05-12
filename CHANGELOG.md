@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5 "lotus" (2015-05-12) [diff](https://github.com/adamrenklint/bap/compare/v0.4.1...v0.5.0)
+
+- Added `bap.new()` method to create a completely new instance of Bap, with its clock and event bus separated from all other instances [#43](https://github.com/adamrenklint/bap/issues/43)
+
 ## v0.4.1 (2016-05-11) [diff](https://github.com/adamrenklint/bap/compare/v0.4.0...v0.4.1)
 
 - Updated [Dilla](https://github.com/adamrenklint/dilla) to fix an issue with dropping notes on patterns with more than 9 beats per bar [#42](https://github.com/adamrenklint/bap/issues/42)
@@ -55,4 +59,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday May 11th, 2016 - 8:39:16 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday May 12th, 2016 - 10:19:24 PM*

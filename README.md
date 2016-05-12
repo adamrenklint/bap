@@ -103,6 +103,7 @@ pattern.kit(1, kit).start();
 - ```chorus(params)``` returns a new [chorus](#chorus)
 - ```phaser(params)``` returns a new [phaser](#phaser)
 - ```pingpong(params)``` returns a new [ping pong delay](#ping pong delay)
+- ```new()``` returns a new instance of Bap, with its clock and event bus separated from other instances
 
 #### params
 
@@ -346,4 +347,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Wednesday May 11th, 2016 - 8:39:16 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday May 12th, 2016 - 10:19:24 PM*
