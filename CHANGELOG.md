@@ -59,4 +59,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday May 12th, 2016 - 10:19:24 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday May 12th, 2016 - 10:22:12 PM*
