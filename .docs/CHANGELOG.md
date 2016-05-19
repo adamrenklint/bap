@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.1 (2016-05-19) [diff](https://github.com/adamrenklint/bap/compare/v0.4.1...v0.5.0)
+
+- Fixed setting `pattern.volume` to `0` playing at full volume [#44](https://github.com/adamrenklint/bap/issues/44)
+
 ## v0.5 "lotus" (2015-05-12) [diff](https://github.com/adamrenklint/bap/compare/v0.4.1...v0.5.0)
 
 - Added `bap.new()` method to create a completely new instance of Bap, with its clock and event bus separated from all other instances [#43](https://github.com/adamrenklint/bap/issues/43)
