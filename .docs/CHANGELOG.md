@@ -1,6 +1,11 @@
 # Changelog
 
-## v0.5.1 (2016-05-19) [diff](https://github.com/adamrenklint/bap/compare/v0.4.1...v0.5.0)
+## v0.6 "large" (2016-06-03) [diff](https://github.com/adamrenklint/bap/compare/v0.5.1...v0.6.0)
+
+- Added `pitch` and `pan` attributes on Pattern, which will affect all of its channels and notes
+- Fixed an issue where if a layer was used in multiple slots, the wrong slot would be used to calculate composite params [#46](https://github.com/adamrenklint/bap/issues/46)
+
+## v0.5.1 (2016-05-19) [diff](https://github.com/adamrenklint/bap/compare/v0.5.0...v0.5.1)
 
 - Fixed setting `pattern.volume` to `0` playing at full volume [#44](https://github.com/adamrenklint/bap/issues/44)
 
