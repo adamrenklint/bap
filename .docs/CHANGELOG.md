@@ -1,5 +1,9 @@
 # Changelog
 
+## UNRELEASED
+
+- Changed default attack and release values on `bap.compressor` for better out-of-box result [#48](https://github.com/adamrenklint/bap/issues/48)
+
 ## v0.6 "large" (2016-06-03) [diff](https://github.com/adamrenklint/bap/compare/v0.5.1...v0.6.0)
 
 - Added `pitch` and `pan` attributes on Pattern, which will affect all of its channels and notes
