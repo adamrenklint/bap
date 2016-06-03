@@ -1,7 +1,7 @@
 {
   "name": "bap",
-  "version": "0.5.1",
-  "versionName": "lotus",
+  "version": "0.6.0",
+  "versionName": "large",
   "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
   "homepage": "http://bapjs.org",
   "main": "index.js",
