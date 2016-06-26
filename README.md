@@ -19,7 +19,7 @@ $ npm install --save bap
 ### From rawgit CDN
 
 ```
-<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.6.0/bap.min.js"></script>
+<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.7.0/bap.min.js"></script>
 ```
 
 ## Usage
@@ -115,6 +115,11 @@ pattern.kit(1, kit).start();
 - ```release``` number, release in seconds
 - ```pitch``` number between ```-999``` and ```999``` representing the pitch shift in semitones, defaults to ```0```
 - ```pan``` number between ```-100``` and ```100```, defaults to ```0```
+
+#### events
+
+- ```started``` triggered on Note, Channel, Pattern, Kit, Slot and Layer when sound source starts playing
+- ```stopped``` triggered on Note, Channel, Pattern, Kit, Slot and Layer when sound source stops playing
 
 ### clock
 
@@ -347,4 +352,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Sunday June 26th, 2016 - 10:01:05 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Sunday June 26th, 2016 - 11:39:08 PM*
