@@ -29,7 +29,7 @@ function slices () {
 
   var breakKit = bap.sample({
     src: 'sounds/esther.wav',
-    pitch: -26,
+    pitch: -3,
     bitcrush: 12
   }).slice(16);
   var crushedSample = bap.sample({

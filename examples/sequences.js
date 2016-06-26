@@ -6,7 +6,7 @@ function sequences () {
     src: 'sounds/own_barricade_end.wav',
     attack: 0.01,
     release: 0.01,
-    pitch: -40,
+    pitch: -4,
     pan: 40
   }).connect(bap.filter({ shape: 'highpass', dry: 80, wet: 40 })).slice(8);
 
@@ -22,16 +22,16 @@ function sequences () {
 
   var introPiano = bap.pattern({ tempo: 120, bars: 4 });
   introPiano.kit(1, lowPianoKit).channel(1).add(
-    ['*.1.01', '1E', 192, null, -40],
-    ['*.3.01', '1R', 192, null, -40],
-    ['4.3.25', '1W', 192, null, -40]
+    ['*.1.01', '1E', 192, null, -4],
+    ['*.3.01', '1R', 192, null, -4],
+    ['4.3.25', '1W', 192, null, -4]
   );
 
   var otherPianoKit = bap.sample({
     src: 'sounds/own_barricade_middle.wav',
     attack: 0.05,
     release: 0.05,
-    pitch: -40,
+    pitch: -4,
     pan: -40,
     volume: 100
   }).slice(5);
@@ -71,7 +71,7 @@ function sequences () {
 
   var breakSample = bap.sample({
     src: 'sounds/esther.wav',
-    pitch: -48,
+    pitch: -5,
     volume: 30,
     channel: 'right',
     bitcrush: 12
