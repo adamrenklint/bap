@@ -2,6 +2,8 @@
 
 ## UNRELEASED
 
+- **BREAKING!** Changed `param.pitch` to represent semitones, i.e. `note.pitch = -12` will reduce pitch by one octave, setting the playback rate to `0.5` [#45](https://github.com/adamrenklint/bap/issues/45) [(Manvir Singh)](https://github.com/gurs1kh)
+- Added `bap.pitchByRatio` helper to calculate exact pitch [(Manvir Singh)](https://github.com/gurs1kh)
 - Changed default attack and release values on `bap.compressor` for better out-of-box result [#48](https://github.com/adamrenklint/bap/issues/48)
 
 ## v0.6 "large" (2016-06-03) [diff](https://github.com/adamrenklint/bap/compare/v0.5.1...v0.6.0)

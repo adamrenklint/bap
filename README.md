@@ -19,7 +19,7 @@ $ npm install --save bap
 ### From rawgit CDN
 
 ```
-<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.5.1/bap.min.js"></script>
+<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.6.0/bap.min.js"></script>
 ```
 
 ## Usage
@@ -113,7 +113,7 @@ pattern.kit(1, kit).start();
 - ```duration``` number, duration in ticks, overriden by length if shorter
 - ```attack``` number, attack in seconds
 - ```release``` number, release in seconds
-- ```pitch``` number between ```-999``` and ```999``` representing the pitch shift in percent, defaults to ```0```
+- ```pitch``` number between ```-999``` and ```999``` representing the pitch shift in semitones, defaults to ```0```
 - ```pan``` number between ```-100``` and ```100```, defaults to ```0```
 
 ### clock
@@ -347,4 +347,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Friday June 3rd, 2016 - 3:01:05 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Sunday June 26th, 2016 - 10:01:05 PM*
