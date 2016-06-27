@@ -19,7 +19,7 @@ $ npm install --save bap
 ### From rawgit CDN
 
 ```
-<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.7.0/bap.min.js"></script>
+<script src="https://cdn.rawgit.com/adamrenklint/bap/v0.7.1/bap.min.js"></script>
 ```
 
 ## Usage
@@ -352,4 +352,4 @@ pattern.kit(1, kit).start();
 MIT © 2015 [Adam Renklint](http://adamrenklint.com)
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Sunday June 26th, 2016 - 11:47:31 PM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Tuesday June 28th, 2016 - 12:11:17 AM*

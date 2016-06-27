@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.7.1 (2016-06-28) [diff](https://github.com/adamrenklint/bap/compare/v0.7.0...v0.7.1)
+
+- Fix error when playing a layer without knowing the Channel, Pattern, Kit or Slot
+
 ## v0.7 "geniuz" (2016-06-28) [diff](https://github.com/adamrenklint/bap/compare/v0.6.0...v0.7.0)
 
 - **BREAKING!** Changed `param.pitch` to represent semitones, i.e. `note.pitch = -12` will reduce pitch by one octave, setting the playback rate to `0.5` [#45](https://github.com/adamrenklint/bap/issues/45) [(Manvir Singh)](https://github.com/gurs1kh)
