@@ -1,5 +1,9 @@
 # Changelog
 
+## UNRELEASED
+
+- Added example for using custom oscillator
+
 ## v0.7.2 (2016-06-28) [diff](https://github.com/adamrenklint/bap/compare/v0.7.0...v0.7.1)
 
 - Fix error when playing a layer without knowing the Channel, Pattern, Kit or Slot

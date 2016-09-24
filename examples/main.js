@@ -4,6 +4,7 @@ var boombap = require('./boombap');
 var slices = require('./slices');
 var sequences = require('./sequences');
 var effects = require('./effects');
+var oscillator = require('./oscillator');
 
 var debounce = require('lodash.debounce');
 
@@ -31,7 +32,8 @@ var examples = {
   'boombap': [boombap, 'The boombap demo beat from <a href="https://github.com/adamrenklint/dilla">Dilla</a>, reimplemented with <a href="">Bap</a>.'],
   'slices': [slices, 'Using different parts of same sample for different layers, either by manually defining sample offset and length, or "auto-slicing" sample to a kit.\n\nAlso uses bitcrusher effect on samples.'],
   'sequences': [sequences, 'Layering patterns and sequences into longer and bigger sequences'],
-  'effects': [effects, 'Effect smoke tests.']
+  'effects': [effects, 'Effect smoke tests.'],
+  'oscillator': [oscillator, 'Use custom oscillator.']
 };
 var sourceEl = document.getElementById('source');
 var exampleNameEl = document.getElementById('example-name');
