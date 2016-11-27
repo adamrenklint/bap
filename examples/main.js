@@ -1,5 +1,6 @@
 var bap = require('../index');
 var metronome = require('./metronome');
+var custom = require('./custom');
 var boombap = require('./boombap');
 var slices = require('./slices');
 var sequences = require('./sequences');
@@ -33,7 +34,8 @@ var examples = {
   'slices': [slices, 'Using different parts of same sample for different layers, either by manually defining sample offset and length, or "auto-slicing" sample to a kit.\n\nAlso uses bitcrusher effect on samples.'],
   'sequences': [sequences, 'Layering patterns and sequences into longer and bigger sequences'],
   'effects': [effects, 'Effect smoke tests.'],
-  'oscillator': [oscillator, 'Use custom oscillator.']
+  'oscillator': [oscillator, 'Use custom oscillator.'],
+  'custom': [custom, 'Using the custom waveform option in the oscillator constructor.']
 };
 var sourceEl = document.getElementById('source');
 var exampleNameEl = document.getElementById('example-name');
