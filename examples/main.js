@@ -67,7 +67,7 @@ function navigate () {
     lastEvalFn = fn.toString();
     sourceEl.textContent = unwrap(lastEvalFn);
 
-    hljs.highlightBlock(sourceEl);
+    // hljs.highlightBlock(sourceEl);
     bap.clock.stop();
     fn();
 
