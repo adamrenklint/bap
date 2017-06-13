@@ -1,10 +1,10 @@
 # Changelog
 
-## UNRELEASED
+## v0.7.3 (2017-06-13) [diff](https://github.com/adamrenklint/bap/compare/v0.7.2...v0.7.3)
 
-- Added example for using custom oscillator
+- Expose bap.Model
 
-## v0.7.2 (2016-06-28) [diff](https://github.com/adamrenklint/bap/compare/v0.7.0...v0.7.1)
+## v0.7.2 (2016-06-28) [diff](https://github.com/adamrenklint/bap/compare/v0.7.0...v0.7.2)
 
 - Fix error when playing a layer without knowing the Channel, Pattern, Kit or Slot
 
@@ -83,4 +83,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Tuesday June 28th, 2016 - 12:16:06 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Tuesday June 13th, 2017 - 2:06:55 PM*
