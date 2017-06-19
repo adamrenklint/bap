@@ -3,6 +3,7 @@ var metronome = require('./metronome');
 var boombap = require('./boombap');
 var slices = require('./slices');
 var sequences = require('./sequences');
+var sequences2 = require('./sequences2');
 var effects = require('./effects');
 var oscillator = require('./oscillator');
 
@@ -32,6 +33,7 @@ var examples = {
   'boombap': [boombap, 'The boombap demo beat from <a href="https://github.com/adamrenklint/dilla">Dilla</a>, reimplemented with <a href="">Bap</a>.'],
   'slices': [slices, 'Using different parts of same sample for different layers, either by manually defining sample offset and length, or "auto-slicing" sample to a kit.\n\nAlso uses bitcrusher effect on samples.'],
   'sequences': [sequences, 'Layering patterns and sequences into longer and bigger sequences'],
+  'sequences2': [sequences2, 'Sequences of different length'],
   'effects': [effects, 'Effect smoke tests.'],
   'oscillator': [oscillator, 'Use custom oscillator.']
 };
@@ -58,6 +60,7 @@ var lastEvalFn = null;
 function navigate () {
   var hash = location.hash.substr(1);
   var example = examples[hash];
+
   if (example) {
     var fn = example[0];
     var description = example[1];
