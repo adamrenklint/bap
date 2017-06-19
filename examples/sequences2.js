@@ -37,14 +37,20 @@ function sequences () {
   }));
   drumKit.connect(bap.filter({ shape: 'lowpass', wet: 40, dry: 80 }));
 
-  var drums = bap.pattern({ bars: 2 }).kit(1, drumKit);
-  drums.channel(1).add(
+  var kickSnare = bap.pattern({ bars: 1 }).kit(1, drumKit);
+  kickSnare.channel(1).add(
     ['1.1.01',   '1Q'],
     ['1.3.52',   '1Q'],
+    ['1.odd.92', '1W']
+  );
+
+  var hihat = bap.pattern({ bars: 1 }).kit(1, drumKit);
+  hihat.channel(1).add(
     ['1.*.35',   '1E', null, 30],
-    ['1.odd.92', '1W'],
     ['1.*.%52',  '1E']
   );
+
+  var drums = bap.sequence([kickSnare, hihat]);
 
   bap.clock.sequence = bap.sequence([drums, lead], { loop: true });
 }

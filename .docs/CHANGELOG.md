@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.7.4 (2017-06-19) [diff](https://github.com/adamrenklint/bap/compare/v0.7.3...v0.7.4)
+
+- Fixed nested sequences with different length throwing out-of-bounds errors
+
 ## v0.7.3 (2017-06-13) [diff](https://github.com/adamrenklint/bap/compare/v0.7.2...v0.7.3)
 
 - Expose bap.Model
