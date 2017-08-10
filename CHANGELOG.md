@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.0-beta1 (2017-08-19) [diff](https://github.com/adamrenklint/bap/compare/v0.7.4...v0.8.0-beta1)
+
+- Return `-1` when buffer sourceStartIndex is higher than buffer.length, instead of throwing error
+
 ## v0.7.4 (2017-06-19) [diff](https://github.com/adamrenklint/bap/compare/v0.7.3...v0.7.4)
 
 - Fixed nested sequences with different length throwing out-of-bounds errors

@@ -1,6 +1,6 @@
 {
   "name": "bap",
-  "version": "0.7.4",
+  "version": "0.8.0-beta1",
   "versionName": "geniuz",
   "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
   "homepage": "http://bapjs.org",

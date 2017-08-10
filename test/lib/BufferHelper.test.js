@@ -106,21 +106,19 @@ describe('BufferHelper', function () {
     });
     describe('when params.offset is not 0', function () {
       describe('when offset is more than buffer.duration', function () {
-        it('should throw an error', function () {
-          expect(function () {
-            var params = { offset: 7 };
-            var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-            BufferHelper.getSourceStartIndex(params, buffer);
-          }).to.throw('Invalid buffer source start index');
+        it('should return -1', function () {
+          var params = { offset: 7 };
+          var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
+          var result = BufferHelper.getSourceStartIndex(params, buffer);
+          expect(result).to.equal(-1);
         });
       });
       describe('when offset is equal to buffer.duration', function () {
-        it('should throw an error', function () {
-          expect(function () {
-            var params = { offset: 6 };
-            var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
-            BufferHelper.getSourceStartIndex(params, buffer);
-          }).to.throw('Invalid buffer source start index');
+        it('should return -1', function () {
+          var params = { offset: 6 };
+          var buffer = new MockBuffer({ numberOfChannels: 1, length: 6 * 44100 });
+          var result = BufferHelper.getSourceStartIndex(params, buffer);
+          expect(result).to.equal(-1);
         });
       });
       describe('when offset is less than buffer.duration', function () {
