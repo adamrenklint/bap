@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.0-beta2 (2017-10-12) [diff](https://github.com/adamrenklint/bap/compare/v0.8.0-beta1...v0.8.0-beta2)
+
+- Delegate attribute changes on note with position expression to its expanded ghost notes
+
 ## v0.8.0-beta1 (2017-08-19) [diff](https://github.com/adamrenklint/bap/compare/v0.7.4...v0.8.0-beta1)
 
 - Return `-1` when buffer sourceStartIndex is higher than buffer.length, instead of throwing error
