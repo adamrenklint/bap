@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.8.0-beta2 (2017-10-12) [diff](https://github.com/adamrenklint/bap/compare/v0.8.0-beta1...v0.8.0-beta2)
+## v0.8.0-beta3 (2017-10-12) [diff](https://github.com/adamrenklint/bap/compare/v0.8.0-beta1...v0.8.0-beta3)
 
 - Delegate attribute changes on note with position expression to its expanded ghost notes
 
