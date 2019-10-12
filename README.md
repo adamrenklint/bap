@@ -1,10 +1,10 @@
-[![Bap](https://raw.githubusercontent.com/adamrenklint/bap-logo/master/dist/bap-medium.png)](http://bapjs.org)
+[![Bap](https://raw.githubusercontent.com/adamrenklint/bap-logo/master/dist/bap-medium.png)](https://github.com/adamrenklint/bap)
 
 [![Join the chat at https://gitter.im/adamrenklint/bap](https://img.shields.io/badge/GITTER-join_chat-blue.svg?style=flat-square)](https://gitter.im/adamrenklint/bap) [![npm](https://img.shields.io/npm/v/bap.svg?style=flat-square)](https://www.npmjs.com/package/bap) [![npm](https://img.shields.io/npm/dm/bap.svg?style=flat-square)](https://www.npmjs.com/package/bap) [![GitHub stars](https://img.shields.io/github/stars/adamrenklint/bap.svg?style=flat-square)](https://github.com/adamrenklint/bap/stargazers) [![GitHub forks](https://img.shields.io/github/forks/adamrenklint/bap.svg?style=flat-square)](https://github.com/adamrenklint/bap/network)
 
 [![Travis branch](https://img.shields.io/travis/adamrenklint/bap.svg?style=flat-square)](https://travis-ci.org/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![Code Climate](https://img.shields.io/codeclimate/coverage/github/adamrenklint/bap.svg?style=flat-square)](https://codeclimate.com/github/adamrenklint/bap) [![David dependencies](https://img.shields.io/david/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap) [![David devDependencies](https://img.shields.io/david/dev/adamrenklint/bap.svg?style=flat-square)](https://david-dm.org/adamrenklint/bap#info=devDependencies)
 
-[Bap](http://bapjs.org) is a toolkit for making beats and composing sequences with Javascript and Web Audio for playback in modern browsers. It is inspired by the classic "MPC workflow" and built to make all aspects of beatmaking completely modular and reusable.
+[Bap](https://github.com/adamrenklint/bap) is a toolkit for making beats and composing sequences with Javascript and Web Audio for playback in modern browsers. It is inspired by the classic "MPC workflow" and built to make all aspects of beatmaking completely modular and reusable.
 
 Made by [Adam Renklint](http://adamrenklint.com), Berlin april 2015
 
