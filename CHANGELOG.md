@@ -1,12 +1,10 @@
 # Changelog
 
-## v0.8.0-beta3 (2017-10-12) [diff](https://github.com/adamrenklint/bap/compare/v0.8.0-beta1...v0.8.0-beta3)
+## v0.8 "pferd" (2020-07-23) [diff](https://github.com/adamrenklint/bap/compare/v0.7.4...v0.8.0)
 
+- Resume audio context before decoding loaded sound file, because of changed [Chrome autoplay policy](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio)
 - Delegate attribute changes on note with position expression to its expanded ghost notes
-
-## v0.8.0-beta1 (2017-08-19) [diff](https://github.com/adamrenklint/bap/compare/v0.7.4...v0.8.0-beta1)
-
-- Return `-1` when buffer sourceStartIndex is higher than buffer.length, instead of throwing error
+- Return -1 when buffer sourceStartIndex is higher than buffer.length
 
 ## v0.7.4 (2017-06-19) [diff](https://github.com/adamrenklint/bap/compare/v0.7.3...v0.7.4)
 
@@ -95,4 +93,4 @@
 - Initial public release
 
 ---
-*Generated with [redok](https://github.com/adamrenklint/redok) @ Monday June 19th, 2017 - 10:10:57 AM*
+*Generated with [redok](https://github.com/adamrenklint/redok) @ Thursday July 23rd, 2020 - 11:44:40 PM*
