@@ -3,6 +3,8 @@
 ## v0.8 "pferd"
 
 - Resume audio context before decoding loaded sound file, because of changed [Chrome autoplay policy](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio)
+- Delegate attribute changes on note with position expression to its expanded ghost notes
+- Return -1 when buffer sourceStartIndex is higher than buffer.length
 
 ## v0.7.4 (2017-06-19) [diff](https://github.com/adamrenklint/bap/compare/v0.7.3...v0.7.4)
 
