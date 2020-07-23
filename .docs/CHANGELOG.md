@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8 "pferd"
+
+- Resume audio context before decoding loaded sound file, because of changed [Chrome autoplay policy](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio)
+
 ## v0.7.4 (2017-06-19) [diff](https://github.com/adamrenklint/bap/compare/v0.7.3...v0.7.4)
 
 - Fixed nested sequences with different length throwing out-of-bounds errors
