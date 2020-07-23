@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.8 "pferd"
+## v0.8 "pferd" (2020-07-23) [diff](https://github.com/adamrenklint/bap/compare/v0.7.4...v0.8.0)
 
 - Resume audio context before decoding loaded sound file, because of changed [Chrome autoplay policy](https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio)
 - Delegate attribute changes on note with position expression to its expanded ghost notes

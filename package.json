@@ -1,9 +1,9 @@
 {
   "name": "bap",
-  "version": "0.8.0-beta3",
-  "versionName": "geniuz",
+  "version": "0.8.0",
+  "versionName": "pferd",
   "description": "A toolkit for making beats and composing sequences with Javascript and Web Audio",
-  "homepage": "http://bapjs.org",
+  "homepage": "https://github.com/adamrenklint/bap",
   "main": "index.js",
   "repository": {
     "type": "git",
