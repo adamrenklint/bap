@@ -32,7 +32,7 @@
     "dilla-expressions": "2.1.3",
     "es6-object-assign": "1.0.1",
     "lodash.debounce": "3.0.3",
-    "lodash.merge": "3.1.0",
+    "lodash.merge": "4.6.2",
     "lodash.padleft": "3.1.0",
     "meemo": "1.1.2",
     "soundbank-delay": "2.0.0",
